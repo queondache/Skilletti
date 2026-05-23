@@ -16,10 +16,15 @@ const workflowMdx = readFileSync(
 // Pedagogia.mdx ha un h1 "Un piccolo vocabolario" perché è un documento
 // autonomo. La sezione della home ha già lo stesso titolo (h2), quindi
 // togliamo l'h1 iniziale dal markdown per evitare duplicazione.
+// Poi promuoviamo ## → # così Article li rende come h3 (e non h4):
+// così la gerarchia resta h2 (sezione) → h3 (sottosezioni) senza skip,
+// coerente con la sezione "Metodo" che usa lo stesso pattern.
 const pedagogiaMdx = readFileSync(
   resolve(process.cwd(), 'content/pedagogia.mdx'),
   'utf-8',
-).replace(/^#\s+.+\n+/, '');
+)
+  .replace(/^#\s+.+\n+/, '')
+  .replace(/^##\s/gm, '# ');
 
 /**
  * Home — single-page con ancore (vedi SPEC §7).

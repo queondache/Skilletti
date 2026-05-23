@@ -112,7 +112,7 @@ export function CatalogControls({ temi }: { temi: TemaInfo[] }) {
             label={
               <>
                 {t.short}{' '}
-                <span className="text-muted/70 tabular-figures">({t.count})</span>
+                <span className="text-muted tabular-figures">({t.count})</span>
               </>
             }
             active={active === t.slug}
