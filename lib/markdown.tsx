@@ -92,3 +92,68 @@ export function Prose({ children, className }: { children: string; className?: s
     </div>
   );
 }
+
+/**
+ * Variante long-form per MDX editoriale (content/*.mdx) — workflow e
+ * vocabolario didattica. Estende l'allowlist di Prose con h1/h2/h3, che
+ * vengono demoti semanticamente a h3/h4/h5 (sezione padre = h2) e stilizzati
+ * coerentemente con la tipografia editoriale del sito.
+ *
+ * Strippa i commenti JSX MDX (`{/* ... */ /*`) prima del rendering — markdown
+ * non li riconosce e li mostrerebbe come testo letterale.
+ */
+const ARTICLE_ALLOWED: ReadonlyArray<string> = [...ALLOWED, 'h1', 'h2', 'h3'];
+
+const ARTICLE_COMPONENTS: Components = {
+  ...COMPONENTS,
+  h1({ children }) {
+    // # Markdown → h3 semantico, look "sottosezione editoriale"
+    return (
+      <h3
+        className="mt-12 first:mt-0 text-[clamp(1.375rem,2vw,1.625rem)] font-semibold text-ink balance"
+        style={{
+          lineHeight: 1.2,
+          letterSpacing: 'var(--tracking-display)',
+          fontVariationSettings: '"opsz" 48',
+        }}
+      >
+        {children}
+      </h3>
+    );
+  },
+  h2({ children }) {
+    return (
+      <h4 className="mt-10 first:mt-0 text-[1.1875rem] font-semibold text-ink balance" style={{ lineHeight: 1.25 }}>
+        {children}
+      </h4>
+    );
+  },
+  h3({ children }) {
+    return (
+      <h5 className="mt-8 first:mt-0 text-[1.0625rem] font-semibold text-ink balance">{children}</h5>
+    );
+  },
+  p({ children }) {
+    // Paragrafi long-form: leading più morbido, prosa pretty
+    return (
+      <p
+        className="mt-5 max-w-[var(--measure-prose)] text-[1.0625rem] text-ink/85 prose-pretty"
+        style={{ lineHeight: 1.65, fontVariationSettings: '"opsz" 24' }}
+      >
+        {children}
+      </p>
+    );
+  },
+};
+
+export function Article({ children, className }: { children: string; className?: string }) {
+  // Strippa commenti JSX MDX `{/* … */ /*`} — markdown li renderebbe letterali
+  const cleaned = children.replace(/\{\/\*[\s\S]*?\*\/\}/g, '').trim();
+  return (
+    <div className={className}>
+      <Markdown allowedElements={[...ARTICLE_ALLOWED]} unwrapDisallowed components={ARTICLE_COMPONENTS}>
+        {cleaned}
+      </Markdown>
+    </div>
+  );
+}

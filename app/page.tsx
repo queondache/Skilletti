@@ -1,7 +1,16 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { Hero } from '@/components/Hero';
 import { SkillCard } from '@/components/SkillCard';
+import { Article } from '@/lib/markdown';
 import type { Skill } from '@/types/skill';
 import skillsData from '@/data/skills.json';
+
+// Letto a build time (static export). Single source of truth = il .mdx.
+const workflowMdx = readFileSync(
+  resolve(process.cwd(), 'content/workflow.mdx'),
+  'utf-8',
+);
 
 /**
  * Home — single-page con ancore (vedi SPEC §7).
@@ -107,6 +116,31 @@ export default function HomePage() {
           Le altre {skills.length - partiDaQui.length} schede attive — filtri per tema,
           livello e dove funzionano — apriranno qui appena la Fase 3 sarà pronta.
         </p>
+      </section>
+
+      {/* Workflow — sezione editoriale tra catalogo e didattica.
+          Contenuto canonico in content/workflow.mdx, render via Article. */}
+      <section
+        id="workflow"
+        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-24 border-t border-rule"
+      >
+        <div
+          className="text-[11px] font-medium uppercase tabular-figures text-muted"
+          style={{ letterSpacing: 'var(--tracking-micro)' }}
+        >
+          metodo
+        </div>
+        <h2
+          className="mt-2 text-[clamp(2rem,3.5vw,3rem)] font-semibold text-ink balance"
+          style={{
+            lineHeight: 1.1,
+            letterSpacing: 'var(--tracking-display)',
+            fontVariationSettings: '"opsz" 96',
+          }}
+        >
+          Come uso Claude.ai e Claude Code insieme
+        </h2>
+        <Article className="mt-8">{workflowMdx}</Article>
       </section>
 
       {/* Didattica — placeholder, contenuto in content/pedagogia.mdx già scritto */}
