@@ -13,6 +13,14 @@ const workflowMdx = readFileSync(
   'utf-8',
 );
 
+// Pedagogia.mdx ha un h1 "Un piccolo vocabolario" perché è un documento
+// autonomo. La sezione della home ha già lo stesso titolo (h2), quindi
+// togliamo l'h1 iniziale dal markdown per evitare duplicazione.
+const pedagogiaMdx = readFileSync(
+  resolve(process.cwd(), 'content/pedagogia.mdx'),
+  'utf-8',
+).replace(/^#\s+.+\n+/, '');
+
 /**
  * Home — single-page con ancore (vedi SPEC §7).
  *
@@ -50,6 +58,7 @@ export default function HomePage() {
       <section
         id="parti-da-qui"
         className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-24"
+        style={{ scrollMarginTop: '100px' }}
       >
         <div
           className="text-[11px] font-medium uppercase tabular-figures text-muted"
@@ -128,6 +137,7 @@ export default function HomePage() {
       <section
         id="workflow"
         className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-24 border-t border-rule"
+        style={{ scrollMarginTop: '100px' }}
       >
         <div
           className="text-[11px] font-medium uppercase tabular-figures text-muted"
@@ -148,16 +158,18 @@ export default function HomePage() {
         <Article className="mt-8">{workflowMdx}</Article>
       </section>
 
-      {/* Didattica — placeholder, contenuto in content/pedagogia.mdx già scritto */}
+      {/* Didattica — render reale di content/pedagogia.mdx via Article,
+          stesso pattern di workflow.mdx. */}
       <section
         id="didattica"
         className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-24 border-t border-rule"
+        style={{ scrollMarginTop: '100px' }}
       >
         <div
           className="text-[11px] font-medium uppercase tabular-figures text-muted"
           style={{ letterSpacing: 'var(--tracking-micro)' }}
         >
-          in arrivo · fase 4
+          vocabolario
         </div>
         <h2
           className="mt-2 text-[clamp(2rem,3.5vw,3rem)] font-semibold text-ink balance"
@@ -169,16 +181,7 @@ export default function HomePage() {
         >
           Un piccolo vocabolario
         </h2>
-        <p
-          className="mt-4 max-w-[var(--measure-prose)] text-[1.0625rem] italic text-ink-soft prose-pretty"
-          style={{
-            lineHeight: 1.55,
-            fontVariationSettings: '"opsz" 24',
-          }}
-        >
-          Skill, plugin, MCP, slash command: le parole che servono per leggere
-          le schede senza inciampare. Sezione redatta, ancora da legare alla pagina.
-        </p>
+        <Article className="mt-8">{pedagogiaMdx}</Article>
       </section>
 
       {/* Firma — fondo pagina, non più dentro l'hero */}
