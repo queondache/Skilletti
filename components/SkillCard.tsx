@@ -90,10 +90,42 @@ function formatDate(iso: string): string {
   });
 }
 
+// Formato esteso per la riga riconoscimenti: "maggio 2026"
+function formatMonthYear(iso: string): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString('it-IT', { month: 'long', year: 'numeric' });
+}
+
 function formatStars(stelle: number | null, noteStelle?: string): string {
   if (stelle === null) return noteStelle ?? '— stelle';
   if (stelle >= 1000) return `${(stelle / 1000).toFixed(1).replace('.0', '')}k stelle`;
   return `${stelle} stelle`;
+}
+
+// Versione "corta" per la riga riconoscimenti — senza note_stelle, restituisce
+// null quando stelle è null (in quel caso la riga usa "Ufficiale {autore}").
+function formatStarsShort(stelle: number | null): string | null {
+  if (stelle === null) return null;
+  if (stelle >= 1000) return `${(stelle / 1000).toFixed(1).replace('.0', '')}k stelle`;
+  return `${stelle} stelle`;
+}
+
+// Riga sempre visibile: stelle · licenza · creato da · aggiornato.
+// Per stelle:null la lead diventa "Ufficiale {autore}" (assorbe il "creato da").
+function buildRiconoscimenti(skill: Skill): string {
+  const parts: string[] = [];
+  const starsLabel = formatStarsShort(skill.stelle);
+  if (starsLabel) {
+    parts.push(starsLabel);
+    parts.push(skill.licenza);
+    parts.push(`creato da ${skill.autore}`);
+  } else {
+    parts.push(`Ufficiale ${skill.autore}`);
+    parts.push(skill.licenza);
+  }
+  parts.push(`aggiornato ${formatMonthYear(skill.ultimo_commit)}`);
+  return parts.join(' · ');
 }
 
 export function SkillCard({ skill }: { skill: Skill }) {
@@ -134,6 +166,29 @@ export function SkillCard({ skill }: { skill: Skill }) {
       >
         {skill.tagline}
       </p>
+
+      {/* A che serve — la risposta concreta al "cosa fa", in linguaggio piano.
+          Sempre visibile, sopra la piega. Voce più presente della descrizione
+          personale: questo è il primo paragrafo che l'amico legge. */}
+      <p
+        className="mt-6 max-w-[var(--measure-prose)] text-[1.0625rem] text-ink prose-pretty"
+        style={{
+          lineHeight: 1.55,
+          fontVariationSettings: '"opsz" 24',
+        }}
+      >
+        {skill.a_che_serve}
+      </p>
+
+      {/* Riconoscimenti — micro-riga sempre visibile.
+          Format: "{stelle} · {licenza} · creato da {autore} · aggiornato {mese aaaa}"
+          Per stelle:null → "Ufficiale {autore} · {licenza} · aggiornato …". */}
+      <div
+        className="mt-4 text-[11px] font-medium uppercase tabular-figures text-ink/65"
+        style={{ letterSpacing: 'var(--tracking-micro)' }}
+      >
+        {buildRiconoscimenti(skill)}
+      </div>
 
       {/* Profilo sicurezza — SOPRA la piega: l'amico non-power-user lo vede subito */}
       <div className="mt-6 flex flex-wrap gap-2">
