@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { fraunces } from './fonts';
+import { NavSticky } from '@/components/NavSticky';
 import './globals.css';
 
 const SITE_URL = 'https://queondache.github.io/skilletti';
@@ -48,7 +49,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="it" className={fraunces.variable}>
-      <body className="bg-paper text-ink antialiased">{children}</body>
+      <body className="bg-paper text-ink antialiased">
+        <NavSticky />
+        {children}
+      </body>
     </html>
   );
 }
