@@ -19,12 +19,14 @@
         "importanza",
         "livello",
         "dove_funziona",
+        "a_che_serve",
         "descrizione_personale",
         "profilo_sicurezza",
         "repo_url",
         "stelle",
         "ultimo_commit",
         "licenza",
+        "autore",
         "installazione",
         "data_controllo",
         "stato"
@@ -49,7 +51,8 @@
             "Design & UI",
             "Produttività & workflow",
             "Sicurezza",
-            "Dati"
+            "Dati",
+            "Marketing"
           ]
         },
         "importanza": {
@@ -63,6 +66,12 @@
         "dove_funziona": {
           "type": "string",
           "enum": ["claude.ai", "claude-code", "entrambi"]
+        },
+        "a_che_serve": {
+          "type": "string",
+          "minLength": 50,
+          "maxLength": 500,
+          "description": "Spiegazione concreta in linguaggio piano: cosa fa per l'utente, non come funziona dentro. Sempre visibile nella scheda."
         },
         "descrizione_personale": {
           "type": "string",
@@ -93,12 +102,12 @@
         "stelle": {
           "type": ["integer", "null"],
           "minimum": 0,
-          "description": "Stelle GitHub. Può essere null SOLO per repo anthropics/* — in tal caso note_stelle obbligatorio (vedi regola condizionale)."
+          "description": "Stelle GitHub. Può essere null SOLO per org whitelisted (anthropics, firecrawl) — in tal caso note_stelle obbligatorio (vedi regola condizionale)."
         },
         "note_stelle": {
           "type": "string",
           "minLength": 1,
-          "description": "Obbligatorio solo se stelle === null. Spiega perché non c'è conteggio (es. repo privato, monorepo)."
+          "description": "Obbligatorio solo se stelle === null. Spiega perché non c'è conteggio (es. monorepo, MCP server di lib madre)."
         },
         "ultimo_commit": {
           "type": "string",
@@ -106,6 +115,12 @@
           "description": "Data ISO 8601 (YYYY-MM-DD)."
         },
         "licenza": { "type": "string", "minLength": 1, "maxLength": 40 },
+        "autore": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100,
+          "description": "Maintainer principale o org. Format libero ma leggibile (es. 'Anthropic', 'obra (Jesse Vincent)')."
+        },
         "installazione": {
           "type": "string",
           "minLength": 1,
@@ -127,7 +142,7 @@
       },
       "allOf": [
         {
-          "title": "stelle:null richiede repo anthropics/* AND note_stelle",
+          "title": "stelle:null richiede repo in org whitelisted (anthropics|firecrawl) AND note_stelle",
           "if": {
             "properties": { "stelle": { "type": "null" } },
             "required": ["stelle"]
@@ -141,7 +156,7 @@
               },
               "repo_url": {
                 "type": "string",
-                "pattern": "^https?://github\\.com/anthropics/"
+                "pattern": "^https?://github\\.com/(anthropics|firecrawl)/"
               }
             }
           }

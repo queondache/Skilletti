@@ -14,6 +14,7 @@ export const TEMI = [
   'Produttività & workflow',
   'Sicurezza',
   'Dati',
+  'Marketing',
 ] as const;
 export type Tema = (typeof TEMI)[number];
 
@@ -46,7 +47,7 @@ export const PROFILI_SICUREZZA = [
 export type ProfiloSicurezza = (typeof PROFILI_SICUREZZA)[number];
 
 /**
- * Una skill nel catalogo. 16 campi obbligatori SPEC §5 + 2 opzionali
+ * Una skill nel catalogo. 18 campi obbligatori SPEC §5 + 2 opzionali
  * (`note` free-text per casi edge + `note_stelle` quando `stelle` è null).
  */
 export type Skill = {
@@ -57,6 +58,10 @@ export type Skill = {
   importanza: Importanza;
   livello: Livello;
   dove_funziona: DoveFunziona;
+  /** Spiegazione concreta in linguaggio piano: cosa fa per l'utente, non come
+   *  funziona dentro. Sempre visibile nella scheda, sopra la piega.
+   *  Min 50, max 500 caratteri (vincolato dallo schema). */
+  a_che_serve: string;
   /** Voce personale di Andrea. Può iniziare con "[BOZZA — Andrea rifinisce]"
    *  per marcare schede da rifinire. Il prefisso viene strippato in render
    *  e sostituito da un badge visivo. */
@@ -64,14 +69,18 @@ export type Skill = {
   profilo_sicurezza: readonly ProfiloSicurezza[];
   repo_url: string;
   /** Numero stelle GitHub al momento del controllo.
-   *  Può essere `null` SOLO per skill ufficiali Anthropic (`anthropics/...`)
-   *  — in tal caso `note_stelle` deve essere presente. Vincolato dallo schema. */
+   *  Può essere `null` SOLO per repo in org whitelist (`anthropics/...`,
+   *  `firecrawl/...`) — in tal caso `note_stelle` deve essere presente.
+   *  Vincolato dallo schema. */
   stelle: number | null;
   /** Spiegazione del `null` in `stelle` — obbligatorio se `stelle === null`. */
   note_stelle?: string;
   /** Data ISO 8601 (YYYY-MM-DD). */
   ultimo_commit: string;
   licenza: string;
+  /** Maintainer principale o org. Format libero ma leggibile
+   *  (es. 'Anthropic', 'obra (Jesse Vincent)'). */
+  autore: string;
   installazione: string;
   /** Data ISO 8601 (YYYY-MM-DD). */
   data_controllo: string;
@@ -94,3 +103,10 @@ export const TRUSTED_ORGS = [
   'github',
 ] as const;
 export type TrustedOrg = (typeof TRUSTED_ORGS)[number];
+
+/** Org whitelisted per consentire `stelle: null` (richiede `note_stelle`).
+ *  Sottoinsieme stretto di TRUSTED_ORGS — coerente con la regola if/then
+ *  in skills.schema.json. firecrawl/* è incluso perché firecrawl-mcp è un
+ *  MCP server in un monorepo (lib madre conta ma il server no). */
+export const ORGS_NULL_STARS_OK = ['anthropics', 'firecrawl'] as const;
+export type OrgNullStarsOk = (typeof ORGS_NULL_STARS_OK)[number];

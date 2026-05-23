@@ -7,6 +7,7 @@
     "importanza": "essenziale",
     "livello": "intermedio",
     "dove_funziona": "claude-code",
+    "a_che_serve": "Senza, dici a Claude Code 'fammi questa cosa' e lui parte a scrivere codice subito, spesso sbagliato. Con, prima ti fa due-tre domande per capire cosa vuoi davvero, ti mostra un piano scritto, e solo se gli dici ok comincia. Meno volte a rifare tutto.",
     "descrizione_personale": "Il primo plugin che installo su ogni nuovo progetto. Senza, Claude Code ti scrive 200 righe sbagliate al primo prompt. Con, ti fa le domande giuste prima di scrivere una sola riga: cosa stai cercando di fare, qual è la spec, qual è il piano. Poi guida sub-agenti che lavorano in contesti freschi. Cambio di paradigma.",
     "profilo_sicurezza": [
       "self-contained",
@@ -16,6 +17,7 @@
     "stelle": 150000,
     "ultimo_commit": "2026-05-01",
     "licenza": "MIT",
+    "autore": "obra (Jesse Vincent)",
     "installazione": "/plugin marketplace add obra/superpowers-marketplace && /plugin install superpowers@superpowers-marketplace",
     "data_controllo": "2026-05-22",
     "stato": "attiva"
@@ -28,6 +30,7 @@
     "importanza": "essenziale",
     "livello": "power",
     "dove_funziona": "claude-code",
+    "a_che_serve": "Sui progetti grandi Claude a un certo punto si dimentica le cose già fatte e ricomincia da capo. GSD divide il progetto in piccoli compiti separati, ognuno con la sua testa pulita, e tiene la mappa generale. Serve quando stai costruendo un'app vera, non quando ti basta uno script.",
     "descrizione_personale": "Mio preferito per progetti complessi e lunghi. Risolve il problema del context rot nei progetti lunghi. Workflow in 6 step, sub-agent isolati per ogni task, il main resta al 30-40% di contesto mentre il lavoro pesante succede in stanze separate. Curva di apprendimento minima, disciplina alta. Usato da team Amazon, Google, Shopify. Si sovrappone parzialmente con superpowers — vanno scelti in base al tipo di progetto.",
     "profilo_sicurezza": [
       "self-contained",
@@ -37,6 +40,7 @@
     "stelle": 59600,
     "ultimo_commit": "2026-05-03",
     "licenza": "MIT",
+    "autore": "TACHES (Lex Christopherson)",
     "installazione": "npx get-shit-done install",
     "data_controllo": "2026-05-22",
     "stato": "attiva"
@@ -49,6 +53,7 @@
     "importanza": "essenziale",
     "livello": "base",
     "dove_funziona": "claude-code",
+    "a_che_serve": "Claude conosce le librerie di programmazione come erano mesi fa, quando lo hanno addestrato. Spesso oggi quei comandi non esistono più o funzionano in modo diverso, e lui ti scrive codice che non gira. Context7 va a leggere la documentazione di oggi e gliela passa al volo, così non inventa.",
     "descrizione_personale": "Il problema più stupido degli agenti di coding è inventare API che non esistono perché il training data è vecchio di mesi. Context7 prende la doc fresca da Next.js, Vercel, Supabase, etc., e la inietta nel contesto al momento giusto. Trigger automatico quando vedi che CC sta per usare una libreria con API che cambiano. Da febbraio 2026 ha avuto un CVE (ContextCrush, prompt injection via library content) risolto rapidamente.",
     "profilo_sicurezza": [
       "chiamate-esterne",
@@ -58,6 +63,7 @@
     "stelle": 55700,
     "ultimo_commit": "2026-05-11",
     "licenza": "MIT",
+    "autore": "Upstash",
     "installazione": "claude mcp add context7 -- npx -y @upstash/context7-mcp@latest",
     "data_controllo": "2026-05-22",
     "stato": "attiva"
@@ -70,6 +76,7 @@
     "importanza": "forte",
     "livello": "base",
     "dove_funziona": "claude-code",
+    "a_che_serve": "Se chiedi a Claude di farti una pagina web, di default ti tira fuori una cosa grigia e anonima — la classica roba 'fatta dall'AI'. Questo plugin lo costringe prima a scegliere uno stile preciso, poi a scrivere il codice. Esce qualcosa che sembra disegnato, non sputato.",
     "descrizione_personale": "Auto-invocato per qualsiasi lavoro frontend. Forza Claude a scegliere una direzione estetica chiara prima di scrivere codice, invece di sfornare il solito React+Tailwind grigio. Ufficiale di Anthropic, scritto da Prithvi Rajasekaran e Alexander Bricken. Riferimento: la Frontend Aesthetics Cookbook.",
     "profilo_sicurezza": [
       "self-contained",
@@ -80,6 +87,7 @@
     "note_stelle": "Plugin nel monorepo anthropics/claude-code (whitelist org ufficiale).",
     "ultimo_commit": "2026-05-22",
     "licenza": "MIT",
+    "autore": "Anthropic",
     "installazione": "/plugin install frontend-design@anthropics",
     "data_controllo": "2026-05-22",
     "stato": "attiva"
@@ -92,6 +100,7 @@
     "importanza": "forte",
     "livello": "intermedio",
     "dove_funziona": "entrambi",
+    "a_che_serve": "Stesso problema delle interfacce 'fatte dall'AI', risolto in modo diverso: ti dà tre manopole da regolare prima — quanto audace, quanto animato, quanto denso. Tu scegli 'audace 7, animato 3, denso 4' e Claude lavora dentro quei parametri.",
     "descrizione_personale": "Bundle di 9 skill specializzate (design-taste-frontend, minimalist-ui, brutalist-ui, image-to-code, redesign-existing-projects, ecc.). Tre dial regolabili 1-10: DESIGN_VARIANCE, MOTION_INTENSITY, VISUAL_DENSITY — finalmente puoi dire a Claude \"voglio premium ma sobrio\" e capisce. Framework-agnostic, funziona con React, Vue, Svelte. Si installa anche come skill su Claude.ai (non solo CC).",
     "profilo_sicurezza": [
       "self-contained"
@@ -100,6 +109,7 @@
     "stelle": 13300,
     "ultimo_commit": "2026-04-17",
     "licenza": "MIT",
+    "autore": "Leonxlnx",
     "installazione": "npx skills add https://github.com/Leonxlnx/taste-skill",
     "data_controllo": "2026-05-22",
     "stato": "attiva"
@@ -112,6 +122,7 @@
     "importanza": "forte",
     "livello": "base",
     "dove_funziona": "claude-code",
+    "a_che_serve": "Mentre Claude scrive codice o tocca file, ogni tanto sta per fare qualcosa di pericoloso senza saperlo — cancellare la cosa sbagliata, scrivere una password in chiaro, lasciare un buco di sicurezza. Questo plugin guarda e quando vede uno di questi casi ti avvisa. Tu decidi se procedere o no.",
     "descrizione_personale": "L'unica skill di questa lista che parla quando NON dovresti scrivere qualcosa. Hook silenzioso che monitora 9 pattern noti di vulnerabilità mentre Claude edita file. Non blocca da solo: avvisa. Sei tu a decidere. Per chi gestisce dati medicali o credenziali — io penso a Oculista-AI — è non-negoziabile.",
     "profilo_sicurezza": [
       "self-contained",
@@ -122,6 +133,7 @@
     "note_stelle": "Plugin nel monorepo anthropics/claude-code (whitelist org ufficiale).",
     "ultimo_commit": "2026-05-22",
     "licenza": "MIT",
+    "autore": "Anthropic",
     "installazione": "/plugin install security-guidance@anthropics",
     "data_controllo": "2026-05-22",
     "stato": "attiva"
@@ -134,6 +146,7 @@
     "importanza": "situazionale",
     "livello": "power",
     "dove_funziona": "entrambi",
+    "a_che_serve": "Se ti accorgi di chiedere sempre a Claude la stessa cosa ('ogni volta che inizio un progetto fammi questi 5 step'), puoi cristallizzarla in una skill tua personale che si attiva da sola. Skill Creator ti accompagna a scriverla passo passo.",
     "descrizione_personale": "Skill ufficiale Anthropic per creare nuove skill. Si attiva quando vuoi catturare un workflow ripetitivo (\"ogni volta che inizio un progetto faccio X, Y, Z\") e cristallizzarlo come SKILL.md. Include evals per misurare la qualità del trigger. Power user only — ma se sei al punto di scrivere le tue skill, è esattamente quello che ti serve. Sennò: passa oltre.",
     "profilo_sicurezza": [
       "self-contained",
@@ -144,6 +157,7 @@
     "note_stelle": "Esempio nel repo anthropics/skills (whitelist org ufficiale).",
     "ultimo_commit": "2026-05-22",
     "licenza": "MIT",
+    "autore": "Anthropic",
     "installazione": "Copia il contenuto della cartella in ~/.claude/skills/ oppure in Claude.ai > Competenze",
     "data_controllo": "2026-05-22",
     "stato": "attiva"
