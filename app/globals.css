@@ -80,3 +80,26 @@ p, .prose-pretty {
   outline-offset: 3px;
   border-radius: 2px;
 }
+
+/* Smooth scroll per anchor links (nav sticky + catalogo).
+   Disabilitato automaticamente se l'utente preferisce reduced-motion. */
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Catalogo — fade dei gruppi non-target quando un filtro è attivo.
+   Toggle gestito da CatalogControls via `data-hidden` su `.tema-group`. */
+.tema-group[data-hidden] {
+  opacity: 0.15;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tema-group {
+    transition: opacity 200ms ease-out;
+  }
+}

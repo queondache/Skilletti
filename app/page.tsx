@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { Hero } from '@/components/Hero';
 import { SkillCard } from '@/components/SkillCard';
+import { Catalog } from '@/components/Catalog';
 import { Article } from '@/lib/markdown';
 import type { Skill } from '@/types/skill';
 import skillsData from '@/data/skills.json';
@@ -85,16 +86,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Catalogo — placeholder, render reale arriva in Fase 3 (filtri + catalogo completo) */}
+      {/* Catalogo — schede non-essenziali raggruppate per tema, con controllo
+          ibrido (indice + filtro in un solo controllo). Stato in URL ?tema=. */}
       <section
         id="catalogo"
         className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-24 border-t border-rule"
+        style={{ scrollMarginTop: '100px' }}
       >
         <div
           className="text-[11px] font-medium uppercase tabular-figures text-muted"
           style={{ letterSpacing: 'var(--tracking-micro)' }}
         >
-          in arrivo · fase 3
+          catalogo
         </div>
         <h2
           className="mt-2 text-[clamp(2rem,3.5vw,3rem)] font-semibold text-ink balance"
@@ -104,7 +107,7 @@ export default function HomePage() {
             fontVariationSettings: '"opsz" 96',
           }}
         >
-          Catalogo
+          Le altre {skills.length - partiDaQui.length}
         </h2>
         <p
           className="mt-4 max-w-[var(--measure-prose)] text-[1.0625rem] italic text-ink-soft prose-pretty"
@@ -113,9 +116,11 @@ export default function HomePage() {
             fontVariationSettings: '"opsz" 24',
           }}
         >
-          Le altre {skills.length - partiDaQui.length} schede attive — filtri per tema,
-          livello e dove funzionano — apriranno qui appena la Fase 3 sarà pronta.
+          Tutte le altre schede attive, raggruppate per tema. Scegli un tema
+          dall&rsquo;indice per isolarlo, oppure scorri tutto.
         </p>
+
+        <Catalog skills={skills} />
       </section>
 
       {/* Workflow — sezione editoriale tra catalogo e didattica.
