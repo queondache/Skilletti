@@ -1,0 +1,13 @@
+# Build script allowlist — pnpm 11+.
+#
+# - sharp: vietato. Next.js lo importa per l'ottimizzazione immagini runtime,
+#   ma con `images: { unoptimized: true }` (output:'export' su GitHub Pages)
+#   non serve compilarlo.
+# - esbuild: permesso. Serve a `tsx` per scaricare il binario nativo che
+#   esegue TypeScript senza compile (usato da validate-data.ts).
+# - simple-git-hooks: vietato. Lavora via npm `prepare` script, non via
+#   postinstall — quindi il build hook è ridondante.
+allowBuilds:
+  sharp: false
+  esbuild: true
+  simple-git-hooks: false

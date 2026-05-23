@@ -1,0 +1,151 @@
+[
+  {
+    "id": "superpowers",
+    "nome": "Superpowers",
+    "tagline": "Trasforma Claude Code in un ingegnere disciplinato: brainstorming, spec, plan, TDD — invece di buttare codice.",
+    "tema": "Coding & sviluppo",
+    "importanza": "essenziale",
+    "livello": "intermedio",
+    "dove_funziona": "claude-code",
+    "descrizione_personale": "[BOZZA — Andrea rifinisce] Il primo plugin che installo su ogni nuovo progetto. Senza, Claude Code ti scrive 200 righe sbagliate al primo prompt. Con, ti fa le domande giuste prima di scrivere una sola riga: cosa stai cercando di fare, qual è la spec, qual è il piano. Poi guida sub-agenti che lavorano in contesti freschi. Cambio di paradigma.",
+    "profilo_sicurezza": [
+      "self-contained",
+      "esegue-script"
+    ],
+    "repo_url": "https://github.com/obra/superpowers",
+    "stelle": 150000,
+    "ultimo_commit": "2026-05-01",
+    "licenza": "MIT",
+    "installazione": "/plugin marketplace add obra/superpowers-marketplace && /plugin install superpowers@superpowers-marketplace",
+    "data_controllo": "2026-05-22",
+    "stato": "attiva"
+  },
+  {
+    "id": "gsd",
+    "nome": "GSD (Get Shit Done)",
+    "tagline": "Spec-driven development con context engineering: ogni task in un sub-agente fresco a 200k token. Il contesto del main resta pulito.",
+    "tema": "Produttività & workflow",
+    "importanza": "essenziale",
+    "livello": "power",
+    "dove_funziona": "claude-code",
+    "descrizione_personale": "[BOZZA — Andrea rifinisce] Risolve il problema del context rot nei progetti lunghi. Workflow in 6 step, sub-agent isolati per ogni task, il main resta al 30-40% di contesto mentre il lavoro pesante succede in stanze separate. Curva di apprendimento minima, disciplina alta. Usato da team Amazon, Google, Shopify. Si sovrappone parzialmente con superpowers — vanno scelti in base al tipo di progetto.",
+    "profilo_sicurezza": [
+      "self-contained",
+      "esegue-script"
+    ],
+    "repo_url": "https://github.com/gsd-build/get-shit-done",
+    "stelle": 59600,
+    "ultimo_commit": "2026-05-03",
+    "licenza": "MIT",
+    "installazione": "npx get-shit-done install",
+    "data_controllo": "2026-05-22",
+    "stato": "attiva"
+  },
+  {
+    "id": "context7",
+    "nome": "Context7",
+    "tagline": "Documentazione di librerie sempre aggiornata e iniettata nel contesto. Stop alle API allucinate da training data vecchio.",
+    "tema": "Coding & sviluppo",
+    "importanza": "essenziale",
+    "livello": "base",
+    "dove_funziona": "claude-code",
+    "descrizione_personale": "[BOZZA — Andrea rifinisce] Il problema più stupido degli agenti di coding è inventare API che non esistono perché il training data è vecchio di mesi. Context7 prende la doc fresca da Next.js, Vercel, Supabase, etc., e la inietta nel contesto al momento giusto. Trigger automatico quando vedi che CC sta per usare una libreria con API che cambiano. Da febbraio 2026 ha avuto un CVE (ContextCrush, prompt injection via library content) risolto rapidamente.",
+    "profilo_sicurezza": [
+      "chiamate-esterne",
+      "legge-credenziali"
+    ],
+    "repo_url": "https://github.com/upstash/context7",
+    "stelle": 55700,
+    "ultimo_commit": "2026-05-11",
+    "licenza": "MIT",
+    "installazione": "claude mcp add context7 -- npx -y @upstash/context7-mcp@latest",
+    "data_controllo": "2026-05-22",
+    "stato": "attiva"
+  },
+  {
+    "id": "frontend-design",
+    "nome": "Frontend Design",
+    "tagline": "Plugin ufficiale Anthropic. Genera frontend con direzione estetica, tipografia e attenzione ai dettagli — non templates generici.",
+    "tema": "Design & UI",
+    "importanza": "forte",
+    "livello": "base",
+    "dove_funziona": "claude-code",
+    "descrizione_personale": "[BOZZA — Andrea rifinisce] Auto-invocato per qualsiasi lavoro frontend. Forza Claude a scegliere una direzione estetica chiara prima di scrivere codice, invece di sfornare il solito React+Tailwind grigio. Ufficiale di Anthropic, scritto da Prithvi Rajasekaran e Alexander Bricken. Riferimento: la Frontend Aesthetics Cookbook.",
+    "profilo_sicurezza": [
+      "self-contained",
+      "ufficiale-anthropic"
+    ],
+    "repo_url": "https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design",
+    "stelle": null,
+    "note_stelle": "Plugin nel monorepo anthropics/claude-code (whitelist org ufficiale).",
+    "ultimo_commit": "2026-05-22",
+    "licenza": "MIT",
+    "installazione": "/plugin install frontend-design@anthropics",
+    "data_controllo": "2026-05-22",
+    "stato": "attiva"
+  },
+  {
+    "id": "taste-skill",
+    "nome": "Taste-Skill (High-Agency Frontend)",
+    "tagline": "Bundle di skill che danno taste a Claude. Ferma la produzione di interfacce generiche e \"AI-slop\".",
+    "tema": "Design & UI",
+    "importanza": "forte",
+    "livello": "intermedio",
+    "dove_funziona": "entrambi",
+    "descrizione_personale": "[BOZZA — Andrea rifinisce] Bundle di 9 skill specializzate (design-taste-frontend, minimalist-ui, brutalist-ui, image-to-code, redesign-existing-projects, ecc.). Tre dial regolabili 1-10: DESIGN_VARIANCE, MOTION_INTENSITY, VISUAL_DENSITY — finalmente puoi dire a Claude \"voglio premium ma sobrio\" e capisce. Framework-agnostic, funziona con React, Vue, Svelte. Si installa anche come skill su Claude.ai (non solo CC).",
+    "profilo_sicurezza": [
+      "self-contained"
+    ],
+    "repo_url": "https://github.com/Leonxlnx/taste-skill",
+    "stelle": 13300,
+    "ultimo_commit": "2026-04-17",
+    "licenza": "MIT",
+    "installazione": "npx skills add https://github.com/Leonxlnx/taste-skill",
+    "data_controllo": "2026-05-22",
+    "stato": "attiva"
+  },
+  {
+    "id": "security-guidance",
+    "nome": "Security Guidance",
+    "tagline": "Plugin ufficiale Anthropic. Hook PreToolUse che intercetta pattern pericolosi: command injection, XSS, eval, os.system.",
+    "tema": "Sicurezza",
+    "importanza": "forte",
+    "livello": "base",
+    "dove_funziona": "claude-code",
+    "descrizione_personale": "[BOZZA — Andrea rifinisce] L'unica skill di questa lista che parla quando NON dovresti scrivere qualcosa. Hook silenzioso che monitora 9 pattern noti di vulnerabilità mentre Claude edita file. Non blocca da solo: avvisa. Sei tu a decidere. Per chi gestisce dati medicali o credenziali — io penso a Oculista-AI — è non-negoziabile.",
+    "profilo_sicurezza": [
+      "self-contained",
+      "ufficiale-anthropic"
+    ],
+    "repo_url": "https://github.com/anthropics/claude-code/tree/main/plugins/security-guidance",
+    "stelle": null,
+    "note_stelle": "Plugin nel monorepo anthropics/claude-code (whitelist org ufficiale).",
+    "ultimo_commit": "2026-05-22",
+    "licenza": "MIT",
+    "installazione": "/plugin install security-guidance@anthropics",
+    "data_controllo": "2026-05-22",
+    "stato": "attiva"
+  },
+  {
+    "id": "skill-creator",
+    "nome": "Skill Creator",
+    "tagline": "Crea, modifica, ottimizza skill personalizzate. Meta-skill: serve a fare le altre.",
+    "tema": "Produttività & workflow",
+    "importanza": "situazionale",
+    "livello": "power",
+    "dove_funziona": "entrambi",
+    "descrizione_personale": "[BOZZA — Andrea rifinisce] Skill ufficiale Anthropic per creare nuove skill. Si attiva quando vuoi catturare un workflow ripetitivo (\"ogni volta che inizio un progetto faccio X, Y, Z\") e cristallizzarlo come SKILL.md. Include evals per misurare la qualità del trigger. Power user only — ma se sei al punto di scrivere le tue skill, è esattamente quello che ti serve. Sennò: passa oltre.",
+    "profilo_sicurezza": [
+      "self-contained",
+      "ufficiale-anthropic"
+    ],
+    "repo_url": "https://github.com/anthropics/skills/tree/main/skill-creator",
+    "stelle": null,
+    "note_stelle": "Esempio nel repo anthropics/skills (whitelist org ufficiale).",
+    "ultimo_commit": "2026-05-22",
+    "licenza": "MIT",
+    "installazione": "Copia il contenuto della cartella in ~/.claude/skills/ oppure in Claude.ai > Competenze",
+    "data_controllo": "2026-05-22",
+    "stato": "attiva"
+  }
+]

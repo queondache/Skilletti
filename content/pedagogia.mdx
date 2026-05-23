@@ -1,0 +1,37 @@
+# Un piccolo vocabolario
+
+Prima di scorrere le schede, qualche parola. Non un manuale: una mappa breve per orientarsi fra termini che oggi si rincorrono nei forum e nei changelog, spesso senza spiegazione. Quasi tutto quello che trovi su Skilletti è una **skill**. Le skill funzionano sia su Claude.ai — dove l'interfaccia le chiama _Competenze_ — sia in Claude Code, l'ambiente da terminale. Plugin, MCP e CLI, invece, sono attrezzi pensati per chi sviluppa: utilissimi, ma di un'altra famiglia. Tenere questa distinzione in mente rende tutto più leggibile.
+
+## Skill
+
+Una skill è una cartella di istruzioni che insegna a Claude come fare bene una cosa specifica: scrivere una mail in un certo tono, redigere un report, gestire un file Excel, condurre un'intervista. Si attiva da sola quando il contesto della conversazione la richiama, senza che tu debba evocarla esplicitamente. Vive in due luoghi: come _Competenza_ caricabile su Claude.ai (anche su web e mobile, in Pro o Team) e come cartella `~/.claude/skills/` in Claude Code. È il formato più portatile e meno tecnico — il cuore di Skilletti.
+
+## Plugin
+
+Un plugin è un pacchetto che raggruppa più cose insieme: skill, comandi rapidi, agenti specializzati, hook, server MCP. Pensato per Claude Code, si installa con un singolo comando e porta dentro una collezione coerente di strumenti — per esempio una suite per il DevOps, o un kit per scrivere documentazione. Se la skill è una nota a margine, il plugin è un capitolo intero. Richiede un minimo di familiarità col terminale.
+
+## MCP
+
+MCP sta per _Model Context Protocol_: un protocollo aperto che permette a Claude di parlare con strumenti esterni — un database, una API, un servizio aziendale, GitHub, Notion. In pratica: un MCP _server_ espone funzioni, e Claude può chiamarle durante la conversazione. È la porta sul mondo, ma va configurata: chiavi, indirizzi, permessi. Necessario per integrazioni serie, sovradimensionato per un uso quotidiano leggero.
+
+## CLI / Claude Code
+
+Claude Code è l'edizione di Claude che vive nel terminale: una _CLI_, cioè un programma a riga di comando. Lavora dentro una cartella di progetto, legge e modifica file, esegue comandi, parla coi servizi via MCP. È pensata per chi programma o per chi non ha paura della shell. Se Claude.ai è una conversazione, Claude Code è un collaboratore che siede al tuo stesso computer.
+
+## Slash command
+
+Uno _slash command_ è una scorciatoia che inizia con `/`: un piccolo prompt salvato che esegue un'azione ricorrente — `/review` per chiedere una revisione del codice, `/wrap-up` per chiudere la sessione. Esistono in Claude Code (come file Markdown in `.claude/commands/`) e in forma più limitata su Claude.ai. Servono a non ripetere ogni volta la stessa istruzione lunga. Sono il minimo sforzo per la massima abitudine.
+
+## Subagent
+
+Un _subagent_ è un assistente specializzato che Claude può invocare per delegare una parte del lavoro: un revisore di codice, un esploratore della repo, un esperto di sicurezza. Ognuno ha un proprio contesto e propri strumenti, così la conversazione principale resta pulita. Si definiscono in Claude Code dentro `.claude/agents/`. Utile quando un compito è grande e complesso, eccessivo quando basta una domanda diretta.
+
+## Hook
+
+Un _hook_ è una regola che scatta automaticamente in risposta a un evento: prima che Claude modifichi un file, dopo che ha eseguito un comando, alla chiusura della sessione. Si configura in Claude Code via `settings.json` o nel manifesto di un plugin. Serve per imporre controlli — formattare il codice, validare un commit, bloccare azioni rischiose — senza doverli chiedere ogni volta. È disciplina automatizzata: il muro che ti protegge da te stesso.
+
+## Quando una skill è davvero buona
+
+I criteri di Skilletti sono pochi e severi. Una skill entra in lista se il progetto che la ospita ha almeno mille stelle su GitHub — con eccezione per gli account ufficiali di chi costruisce questo ecosistema, come Anthropic, Vercel, Google. Deve essere viva: aggiornata di recente, con autori che rispondono alle issue. Deve essere installabile davvero, non un esperimento abbandonato. La sicurezza dev'essere leggibile: si capisce cosa fa e cosa tocca, niente magia nera. E infine — il filtro più difficile — deve servire più di una volta. Le skill spettacolari ma da fiera, quelle che dimostrano una possibilità ma non si usano mai, restano fuori.
+
+{/* Definizioni verificate contro docs.claude.com / platform.claude.com via context7, consultazione del 2026-05-23. Fonti: /anthropics/claude-code (Claude Code, plugin structure, slash commands, subagents, hooks, MCP) e /websites/platform_claude_en_api (Agent Skills, API). Terminologia "Competenze" come traduzione italiana ufficiale dell'interfaccia Claude.ai. */}

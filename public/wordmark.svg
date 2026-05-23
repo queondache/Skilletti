@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 160" role="img" aria-label="skilletti">
+  <title>skilletti</title>
+  <!-- Wordmark editoriale. Fraunces, opsz display, weight 600.
+       In Fase 5 verrà esportato in path per OG image (PNG). -->
+  <style>
+    .word { font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+            font-weight: 600; font-size: 120px; letter-spacing: -0.025em;
+            fill: #1A1815; font-feature-settings: 'ss01'; }
+    .dot  { fill: #B85C38; }
+  </style>
+  <text x="20" y="120" class="word">skilletti<tspan class="dot">.</tspan></text>
+</svg>

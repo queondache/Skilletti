@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skilletti.dev/schemas/skills.schema.json",
+  "title": "Skilletti — catalogo skill",
+  "description": "Schema per data/skills.json. Fonte di verità tipata in types/skill.ts. Validato in prebuild e pre-commit.",
+  "type": "array",
+  "minItems": 0,
+  "maxItems": 30,
+  "items": { "$ref": "#/$defs/Skill" },
+  "$defs": {
+    "Skill": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "nome",
+        "tagline",
+        "tema",
+        "importanza",
+        "livello",
+        "dove_funziona",
+        "descrizione_personale",
+        "profilo_sicurezza",
+        "repo_url",
+        "stelle",
+        "ultimo_commit",
+        "licenza",
+        "installazione",
+        "data_controllo",
+        "stato"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "minLength": 2,
+          "maxLength": 64,
+          "description": "Slug univoco. Lowercase, trattini ammessi, niente spazi."
+        },
+        "nome": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "tagline": { "type": "string", "minLength": 1, "maxLength": 140 },
+        "tema": {
+          "type": "string",
+          "enum": [
+            "Scrittura",
+            "Ricerca & web",
+            "Gestione file e documenti",
+            "Coding & sviluppo",
+            "Design & UI",
+            "Produttività & workflow",
+            "Sicurezza",
+            "Dati"
+          ]
+        },
+        "importanza": {
+          "type": "string",
+          "enum": ["essenziale", "forte", "situazionale"]
+        },
+        "livello": {
+          "type": "string",
+          "enum": ["base", "intermedio", "power"]
+        },
+        "dove_funziona": {
+          "type": "string",
+          "enum": ["claude.ai", "claude-code", "entrambi"]
+        },
+        "descrizione_personale": {
+          "type": "string",
+          "minLength": 10,
+          "description": "Markdown ammesso. Può iniziare con '[BOZZA — Andrea rifinisce]' come marker temporaneo — non vincolante in schema."
+        },
+        "profilo_sicurezza": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "self-contained",
+              "legge-credenziali",
+              "esegue-script",
+              "chiamate-esterne",
+              "si-auto-aggiorna",
+              "ufficiale-anthropic"
+            ]
+          }
+        },
+        "repo_url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https?://"
+        },
+        "stelle": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "description": "Stelle GitHub. Può essere null SOLO per repo anthropics/* — in tal caso note_stelle obbligatorio (vedi regola condizionale)."
+        },
+        "note_stelle": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Obbligatorio solo se stelle === null. Spiega perché non c'è conteggio (es. repo privato, monorepo)."
+        },
+        "ultimo_commit": {
+          "type": "string",
+          "format": "date",
+          "description": "Data ISO 8601 (YYYY-MM-DD)."
+        },
+        "licenza": { "type": "string", "minLength": 1, "maxLength": 40 },
+        "installazione": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Comando shell testato per installare la skill."
+        },
+        "data_controllo": {
+          "type": "string",
+          "format": "date",
+          "description": "Data ISO 8601 dell'ultima verifica."
+        },
+        "stato": {
+          "type": "string",
+          "enum": ["attiva", "da-verificare", "archiviata"]
+        },
+        "note": {
+          "type": "string",
+          "description": "Free-text per casi edge non coperti dagli enum. Opzionale."
+        }
+      },
+      "allOf": [
+        {
+          "title": "stelle:null richiede repo anthropics/* AND note_stelle",
+          "if": {
+            "properties": { "stelle": { "type": "null" } },
+            "required": ["stelle"]
+          },
+          "then": {
+            "required": ["note_stelle"],
+            "properties": {
+              "note_stelle": {
+                "type": "string",
+                "minLength": 1
+              },
+              "repo_url": {
+                "type": "string",
+                "pattern": "^https?://github\\.com/anthropics/"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

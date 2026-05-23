@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+/* Palette editoriale — carta da museo.
+ * Tailwind v4 CSS-first config. Le variabili sotto generano
+ * utility automatiche: bg-paper, bg-paper-deep, text-ink, text-terracotta,
+ * border-rule, ecc.
+ */
+@theme {
+  --color-paper: #FAF6F0;
+  --color-paper-deep: #F5EFE6;
+  --color-ink: #1A1815;
+  --color-ink-soft: #2D2A24;
+  --color-muted: #6B655C;
+  --color-rule: #E5DDD0;
+  --color-terracotta: #B85C38;
+  --color-terracotta-deep: #8E4426;
+
+  /* Famiglia unica — display + body. La variazione la fa opsz. */
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-body: var(--font-fraunces), Georgia, "Times New Roman", serif;
+
+  /* Tracking tokens — type-as-hero discipline */
+  --tracking-wordmark: -0.035em;
+  --tracking-display:  -0.02em;
+  --tracking-body:      0em;
+  --tracking-micro:     0.18em;
+
+  /* Spazi editoriali — indent generoso (margine "di pagina") */
+  --gutter-edge: clamp(1.5rem, 5vw, 4rem);
+  --gutter-indent: clamp(2rem, 12vw, 9rem);
+
+  --measure-tagline: 32ch;
+  --measure-prose:   50ch;
+}
+
+/* Base typografica — calmo, libro/editoriale, non SaaS. */
+html {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* Optical sizing usa l'asse opsz di Fraunces — il carattere si adatta
+     automaticamente alla taglia di rendering (più "umano" sul corpo,
+     più chiuso/contrastato sui display). */
+  font-optical-sizing: auto;
+  font-feature-settings: "ss01", "kern", "liga", "calt";
+}
+
+body {
+  background: var(--color-paper) !important;
+  color: var(--color-ink);
+  min-height: 100dvh;
+}
+
+/* Bilanciamento titoli — niente orfani sul wordmark né sulla tagline. */
+h1, h2, .balance {
+  text-wrap: balance;
+}
+
+/* Pretty wrapping per corpi di testo — meno righe orfane finali. */
+p, .prose-pretty {
+  text-wrap: pretty;
+}
+
+/* Cifre tabulari per micro-labels (versione, anno) */
+.tabular-figures {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum", "kern";
+}
+
+::selection {
+  background: var(--color-terracotta);
+  color: var(--color-paper);
+}
+
+/* Focus visibile, accessibile, in tema con la palette */
+:focus-visible {
+  outline: 2px solid var(--color-terracotta);
+  outline-offset: 3px;
+  border-radius: 2px;
+}

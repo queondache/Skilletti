@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://queondache.github.io/skilletti/sitemap.xml
