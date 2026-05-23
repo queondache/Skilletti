@@ -253,5 +253,27 @@
     "installazione": "/plugin install code-review@anthropics",
     "data_controllo": "2026-05-23",
     "stato": "attiva"
+  },
+  {
+    "id": "marketingskills",
+    "nome": "Marketing Skills (bundle)",
+    "tagline": "Tredici skill per fare marketing in Claude: CRO, SEO, copywriting, paid ads, content, analytics. Tutto in un pacchetto installabile.",
+    "tema": "Marketing",
+    "importanza": "forte",
+    "livello": "base",
+    "dove_funziona": "claude-code",
+    "a_che_serve": "Un pacchetto di 13 skill che danno a Claude competenze marketing precise: scrivere ad copy, fare audit SEO, ottimizzare landing page, analizzare concorrenti, scegliere KPI, scrivere social. Installi una volta, hai un team di esperti marketing nel terminale che si attivano quando servono.",
+    "descrizione_personale": "[BOZZA — Andrea rifinisce] Lo uso per i lavori marketing di zeroCO2 e per gestire i progetti dei miei amici imprenditori.",
+    "profilo_sicurezza": [
+      "self-contained"
+    ],
+    "repo_url": "https://github.com/coreyhaines31/marketingskills",
+    "stelle": 30157,
+    "ultimo_commit": "2026-05-21",
+    "licenza": "MIT",
+    "autore": "coreyhaines31 (Corey Haines)",
+    "installazione": "npx skills add coreyhaines31/marketingskills",
+    "data_controllo": "2026-05-23",
+    "stato": "attiva"
   }
 ]
