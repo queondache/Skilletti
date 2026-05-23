@@ -7,7 +7,7 @@
     "importanza": "essenziale",
     "livello": "intermedio",
     "dove_funziona": "claude-code",
-    "descrizione_personale": "[BOZZA — Andrea rifinisce] Il primo plugin che installo su ogni nuovo progetto. Senza, Claude Code ti scrive 200 righe sbagliate al primo prompt. Con, ti fa le domande giuste prima di scrivere una sola riga: cosa stai cercando di fare, qual è la spec, qual è il piano. Poi guida sub-agenti che lavorano in contesti freschi. Cambio di paradigma.",
+    "descrizione_personale": "Il primo plugin che installo su ogni nuovo progetto. Senza, Claude Code ti scrive 200 righe sbagliate al primo prompt. Con, ti fa le domande giuste prima di scrivere una sola riga: cosa stai cercando di fare, qual è la spec, qual è il piano. Poi guida sub-agenti che lavorano in contesti freschi. Cambio di paradigma.",
     "profilo_sicurezza": [
       "self-contained",
       "esegue-script"
@@ -28,7 +28,7 @@
     "importanza": "essenziale",
     "livello": "power",
     "dove_funziona": "claude-code",
-    "descrizione_personale": "[BOZZA — Andrea rifinisce] Risolve il problema del context rot nei progetti lunghi. Workflow in 6 step, sub-agent isolati per ogni task, il main resta al 30-40% di contesto mentre il lavoro pesante succede in stanze separate. Curva di apprendimento minima, disciplina alta. Usato da team Amazon, Google, Shopify. Si sovrappone parzialmente con superpowers — vanno scelti in base al tipo di progetto.",
+    "descrizione_personale": "Mio preferito per progetti complessi e lunghi. Risolve il problema del context rot nei progetti lunghi. Workflow in 6 step, sub-agent isolati per ogni task, il main resta al 30-40% di contesto mentre il lavoro pesante succede in stanze separate. Curva di apprendimento minima, disciplina alta. Usato da team Amazon, Google, Shopify. Si sovrappone parzialmente con superpowers — vanno scelti in base al tipo di progetto.",
     "profilo_sicurezza": [
       "self-contained",
       "esegue-script"
@@ -49,7 +49,7 @@
     "importanza": "essenziale",
     "livello": "base",
     "dove_funziona": "claude-code",
-    "descrizione_personale": "[BOZZA — Andrea rifinisce] Il problema più stupido degli agenti di coding è inventare API che non esistono perché il training data è vecchio di mesi. Context7 prende la doc fresca da Next.js, Vercel, Supabase, etc., e la inietta nel contesto al momento giusto. Trigger automatico quando vedi che CC sta per usare una libreria con API che cambiano. Da febbraio 2026 ha avuto un CVE (ContextCrush, prompt injection via library content) risolto rapidamente.",
+    "descrizione_personale": "Il problema più stupido degli agenti di coding è inventare API che non esistono perché il training data è vecchio di mesi. Context7 prende la doc fresca da Next.js, Vercel, Supabase, etc., e la inietta nel contesto al momento giusto. Trigger automatico quando vedi che CC sta per usare una libreria con API che cambiano. Da febbraio 2026 ha avuto un CVE (ContextCrush, prompt injection via library content) risolto rapidamente.",
     "profilo_sicurezza": [
       "chiamate-esterne",
       "legge-credenziali"
@@ -70,7 +70,7 @@
     "importanza": "forte",
     "livello": "base",
     "dove_funziona": "claude-code",
-    "descrizione_personale": "[BOZZA — Andrea rifinisce] Auto-invocato per qualsiasi lavoro frontend. Forza Claude a scegliere una direzione estetica chiara prima di scrivere codice, invece di sfornare il solito React+Tailwind grigio. Ufficiale di Anthropic, scritto da Prithvi Rajasekaran e Alexander Bricken. Riferimento: la Frontend Aesthetics Cookbook.",
+    "descrizione_personale": "Auto-invocato per qualsiasi lavoro frontend. Forza Claude a scegliere una direzione estetica chiara prima di scrivere codice, invece di sfornare il solito React+Tailwind grigio. Ufficiale di Anthropic, scritto da Prithvi Rajasekaran e Alexander Bricken. Riferimento: la Frontend Aesthetics Cookbook.",
     "profilo_sicurezza": [
       "self-contained",
       "ufficiale-anthropic"
@@ -92,7 +92,7 @@
     "importanza": "forte",
     "livello": "intermedio",
     "dove_funziona": "entrambi",
-    "descrizione_personale": "[BOZZA — Andrea rifinisce] Bundle di 9 skill specializzate (design-taste-frontend, minimalist-ui, brutalist-ui, image-to-code, redesign-existing-projects, ecc.). Tre dial regolabili 1-10: DESIGN_VARIANCE, MOTION_INTENSITY, VISUAL_DENSITY — finalmente puoi dire a Claude \"voglio premium ma sobrio\" e capisce. Framework-agnostic, funziona con React, Vue, Svelte. Si installa anche come skill su Claude.ai (non solo CC).",
+    "descrizione_personale": "Bundle di 9 skill specializzate (design-taste-frontend, minimalist-ui, brutalist-ui, image-to-code, redesign-existing-projects, ecc.). Tre dial regolabili 1-10: DESIGN_VARIANCE, MOTION_INTENSITY, VISUAL_DENSITY — finalmente puoi dire a Claude \"voglio premium ma sobrio\" e capisce. Framework-agnostic, funziona con React, Vue, Svelte. Si installa anche come skill su Claude.ai (non solo CC).",
     "profilo_sicurezza": [
       "self-contained"
     ],
@@ -112,7 +112,7 @@
     "importanza": "forte",
     "livello": "base",
     "dove_funziona": "claude-code",
-    "descrizione_personale": "[BOZZA — Andrea rifinisce] L'unica skill di questa lista che parla quando NON dovresti scrivere qualcosa. Hook silenzioso che monitora 9 pattern noti di vulnerabilità mentre Claude edita file. Non blocca da solo: avvisa. Sei tu a decidere. Per chi gestisce dati medicali o credenziali — io penso a Oculista-AI — è non-negoziabile.",
+    "descrizione_personale": "L'unica skill di questa lista che parla quando NON dovresti scrivere qualcosa. Hook silenzioso che monitora 9 pattern noti di vulnerabilità mentre Claude edita file. Non blocca da solo: avvisa. Sei tu a decidere. Per chi gestisce dati medicali o credenziali — io penso a Oculista-AI — è non-negoziabile.",
     "profilo_sicurezza": [
       "self-contained",
       "ufficiale-anthropic"
@@ -134,7 +134,7 @@
     "importanza": "situazionale",
     "livello": "power",
     "dove_funziona": "entrambi",
-    "descrizione_personale": "[BOZZA — Andrea rifinisce] Skill ufficiale Anthropic per creare nuove skill. Si attiva quando vuoi catturare un workflow ripetitivo (\"ogni volta che inizio un progetto faccio X, Y, Z\") e cristallizzarlo come SKILL.md. Include evals per misurare la qualità del trigger. Power user only — ma se sei al punto di scrivere le tue skill, è esattamente quello che ti serve. Sennò: passa oltre.",
+    "descrizione_personale": "Skill ufficiale Anthropic per creare nuove skill. Si attiva quando vuoi catturare un workflow ripetitivo (\"ogni volta che inizio un progetto faccio X, Y, Z\") e cristallizzarlo come SKILL.md. Include evals per misurare la qualità del trigger. Power user only — ma se sei al punto di scrivere le tue skill, è esattamente quello che ti serve. Sennò: passa oltre.",
     "profilo_sicurezza": [
       "self-contained",
       "ufficiale-anthropic"
