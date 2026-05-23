@@ -161,5 +161,97 @@
     "installazione": "Copia il contenuto della cartella in ~/.claude/skills/ oppure in Claude.ai > Competenze",
     "data_controllo": "2026-05-22",
     "stato": "attiva"
+  },
+  {
+    "id": "ui-ux-pro-max",
+    "nome": "UI/UX Pro Max",
+    "tagline": "Banca dati di stili UI, palette, font: quando chiedi a Claude di disegnare, lui pesca da lì invece di inventare.",
+    "tema": "Design & UI",
+    "importanza": "essenziale",
+    "livello": "intermedio",
+    "dove_funziona": "entrambi",
+    "a_che_serve": "Ti fa un sito o un'app che sembra fatta da uno studio di design, non dall'AI. Animazioni curate, font scelti bene, colori coerenti. Tu gli dici 'fintech dashboard' o 'landing page per spa' e lui prende stile, palette e tipografia dalla sua banca dati di esempi reali.",
+    "descrizione_personale": "[BOZZA — Andrea rifinisce] Il primo strumento di design che installo. Per qualsiasi progetto con frontend serio.",
+    "profilo_sicurezza": [
+      "self-contained"
+    ],
+    "repo_url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+    "stelle": 81800,
+    "ultimo_commit": "2026-04-19",
+    "licenza": "MIT",
+    "autore": "nextlevelbuilder",
+    "installazione": "/plugin marketplace add nextlevelbuilder/ui-ux-pro-max-skill && /plugin install ui-ux-pro-max@ui-ux-pro-max-skill",
+    "data_controllo": "2026-05-23",
+    "stato": "attiva"
+  },
+  {
+    "id": "chrome-devtools-mcp",
+    "nome": "Chrome DevTools MCP",
+    "tagline": "Claude apre Chrome da solo, controlla il sito, trova bug e li sistema senza che tu debba copiare log o screenshot.",
+    "tema": "Coding & sviluppo",
+    "importanza": "forte",
+    "livello": "intermedio",
+    "dove_funziona": "claude-code",
+    "a_che_serve": "Dici a Claude Code 'guarda il sito che ho fatto e dimmi cosa non va' — e lui apre Chrome da solo, naviga, controlla console e velocità, trova i problemi e te li sistema, senza che tu debba copiargli screenshot o log. È Claude che fa debugging del tuo sito da solo, in autonomia.",
+    "descrizione_personale": "[BOZZA — Andrea rifinisce] Lo accendo ogni volta che sto debuggando un sito o un'app web.",
+    "profilo_sicurezza": [
+      "chiamate-esterne",
+      "esegue-script"
+    ],
+    "repo_url": "https://github.com/ChromeDevTools/chrome-devtools-mcp",
+    "stelle": 41242,
+    "ultimo_commit": "2026-05-23",
+    "licenza": "Apache-2.0",
+    "autore": "Google (Chrome DevTools)",
+    "installazione": "/plugin marketplace add ChromeDevTools/chrome-devtools-mcp",
+    "data_controllo": "2026-05-23",
+    "stato": "attiva"
+  },
+  {
+    "id": "firecrawl-mcp",
+    "nome": "Firecrawl MCP",
+    "tagline": "Web scraping per Claude: visita pagine, estrae testo pulito, raccoglie dati strutturati. Richiede API key gratuita.",
+    "tema": "Ricerca & web",
+    "importanza": "situazionale",
+    "livello": "intermedio",
+    "dove_funziona": "claude-code",
+    "a_che_serve": "Quando devi raccogliere informazioni da decine di pagine web (concorrenti, articoli, prezzi, lead), invece di copia-incollare a mano dici a Claude di farlo lui. Lui visita le pagine, estrae quello che ti serve in formato pulito, te lo passa pronto da usare. Serve una API key gratuita di Firecrawl.",
+    "descrizione_personale": "[BOZZA — Andrea rifinisce] Quando devo raccogliere informazioni dal web in modo strutturato.",
+    "profilo_sicurezza": [
+      "chiamate-esterne",
+      "legge-credenziali"
+    ],
+    "repo_url": "https://github.com/firecrawl/firecrawl-mcp-server",
+    "stelle": 6370,
+    "ultimo_commit": "2026-05-22",
+    "licenza": "MIT",
+    "autore": "firecrawl (ex Mendable)",
+    "installazione": "env FIRECRAWL_API_KEY=fc-YOUR_KEY npx -y firecrawl-mcp",
+    "data_controllo": "2026-05-23",
+    "stato": "attiva"
+  },
+  {
+    "id": "code-review",
+    "nome": "Code Review",
+    "tagline": "Claude legge il codice — tuo o suo — e segnala bug, errori di tipo, gestione errori incompleta. Come un collega senior prima del merge.",
+    "tema": "Coding & sviluppo",
+    "importanza": "forte",
+    "livello": "base",
+    "dove_funziona": "claude-code",
+    "a_che_serve": "Quando hai finito di scrivere codice (tuo o di Claude), prima di salvarlo questo plugin lo legge tutto e ti elenca i problemi: bug, errori di tipo, cose dimenticate, parti scritte male. È il collega senior che ti rilegge il lavoro prima che vada in produzione.",
+    "descrizione_personale": "[BOZZA — Andrea rifinisce] Lo accendo prima di ogni PR seria.",
+    "profilo_sicurezza": [
+      "self-contained",
+      "ufficiale-anthropic"
+    ],
+    "repo_url": "https://github.com/anthropics/claude-code/tree/main/plugins/code-review",
+    "stelle": null,
+    "note_stelle": "Plugin nel monorepo anthropics/claude-code (whitelist org ufficiale).",
+    "ultimo_commit": "2026-05-22",
+    "licenza": "MIT",
+    "autore": "Anthropic",
+    "installazione": "/plugin install code-review@anthropics",
+    "data_controllo": "2026-05-23",
+    "stato": "attiva"
   }
 ]
