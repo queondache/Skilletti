@@ -2,14 +2,19 @@ import type { ProfiloSicurezza, Skill } from '@/types/skill';
 import { extractDraftMarker, Prose } from '@/lib/markdown';
 
 /**
- * Scheda skill — server component.
+ * Scheda skill — server component (Round 2: variante compatta unica).
  *
- * Layout editoriale, non card-SaaS:
- * - hairline rule sopra (separa dalla skill precedente)
- * - tipografia primaria leggibile sopra la piega, dettagli tecnici
- *   dentro `<details>` (native, zero JS, accessibile keyboard)
- * - profilo sicurezza SEMPRE sopra la piega (informazione critica)
- * - badge "bozza" se la descrizione inizia con [BOZZA — Andrea rifinisce]
+ * Una sola variante, identica per essenziali e catalogo. Sopra la piega solo
+ * l'informazione che l'amico non-power-user deve poter scansionare al volo:
+ *   tag riga · nome · tagline · a_che_serve · riconoscimenti · profilo sicurezza
+ * Tutto il resto (descrizione personale + tabella tecnica) vive dentro
+ * `<details>` native, zero JS, accessibile da tastiera.
+ *
+ * Note:
+ * - profilo sicurezza resta SOPRA la piega: informazione critica, costo
+ *   verticale minimo (1 riga di badge), serve a chi non aprirà mai i dettagli.
+ * - badge "bozza" appare solo se la descrizione personale comincia con
+ *   [BOZZA — Andrea rifinisce] → marker estratto da `extractDraftMarker`.
  */
 
 // Stile per tag di sicurezza — mappa intento → look.
@@ -197,12 +202,8 @@ export function SkillCard({ skill }: { skill: Skill }) {
         ))}
       </div>
 
-      {/* Descrizione personale — markdown */}
-      <Prose className="mt-7 max-w-[var(--measure-prose)] text-[1.0625rem] text-ink/80 prose-pretty">
-        {content}
-      </Prose>
-
-      {/* Dettagli tecnici — collassabile native, accessibile da tastiera */}
+      {/* Approfondisci — collassabile native, accessibile da tastiera.
+          Contiene: voce di Andrea (descrizione_personale) + tabella tecnica. */}
       <details className="group mt-7 max-w-[var(--measure-prose)]">
         <summary
           className="cursor-pointer select-none list-none text-[11px] font-medium uppercase tabular-figures text-muted hover:text-terracotta-deep [&::-webkit-details-marker]:hidden"
@@ -210,11 +211,16 @@ export function SkillCard({ skill }: { skill: Skill }) {
         >
           <span className="inline-flex items-center gap-2">
             <span aria-hidden="true" className="inline-block h-px w-6 bg-terracotta/50 transition-all group-open:w-10" />
-            dettagli tecnici
+            approfondisci
           </span>
         </summary>
 
-        <dl className="mt-5 grid grid-cols-[max-content_1fr] gap-x-6 gap-y-2 text-[0.95rem] text-ink-soft">
+        {/* Voce personale — markdown, dentro details */}
+        <Prose className="mt-6 max-w-[var(--measure-prose)] text-[1.0625rem] text-ink/80 prose-pretty">
+          {content}
+        </Prose>
+
+        <dl className="mt-7 grid grid-cols-[max-content_1fr] gap-x-6 gap-y-2 text-[0.95rem] text-ink-soft">
           <dt className="text-muted">installazione</dt>
           <dd>
             <code
