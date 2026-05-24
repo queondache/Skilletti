@@ -79,7 +79,7 @@ export function NavSticky() {
     >
       <div
         className={
-          'pointer-events-auto bg-paper/70 backdrop-blur-md ' +
+          'pointer-events-auto bg-paper/85 backdrop-blur-md ' +
           'border-b border-rule/40 ' +
           'pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] ' +
           'py-3'

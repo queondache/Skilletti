@@ -121,7 +121,7 @@ export default function HomePage() {
             fontVariationSettings: '"opsz" 96',
           }}
         >
-          Le altre {skills.length - partiDaQui.length}
+          Le altre
         </h2>
         <p
           className="mt-4 max-w-[var(--measure-prose)] text-[1.0625rem] italic text-ink-soft prose-pretty"
