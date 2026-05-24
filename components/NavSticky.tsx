@@ -81,12 +81,14 @@ export function NavSticky() {
         className={
           'pointer-events-auto bg-paper/85 backdrop-blur-md ' +
           'border-b border-rule/40 ' +
-          'pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] ' +
+          // Mobile: padding ridotto per far stare le 4 voci su una riga.
+          // Desktop: gutter pieno, a specchio della rilegatura.
+          'px-5 sm:pl-[var(--gutter-indent)] sm:pr-[calc(7vw+var(--gutter-edge))] ' +
           'py-3'
         }
       >
         <ul
-          className="flex flex-wrap items-baseline justify-end gap-x-6 gap-y-1 sm:gap-x-7 text-[10px] sm:text-[11px] font-medium uppercase tabular-figures"
+          className="flex items-baseline justify-end gap-x-3 sm:gap-x-7 text-[9px] sm:text-[11px] font-medium uppercase tabular-figures"
           style={{ letterSpacing: 'var(--tracking-micro)' }}
         >
           {SECTIONS.map((s) => {

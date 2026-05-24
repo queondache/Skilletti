@@ -68,21 +68,25 @@ export function Catalog({ skills }: { skills: Skill[] }) {
           >
             <div className="flex items-center gap-4">
               <span aria-hidden="true" className="inline-block h-px w-12 bg-terracotta/60" />
+              {/* Titolo gruppo — più grande delle card (clamp 30→44px) così la
+                  gerarchia regge: sezione 48 > gruppo 44 > card 40. */}
               <h3
-                className="text-[clamp(1.5rem,2.4vw,2rem)] font-semibold text-ink balance"
+                className="text-[clamp(1.875rem,3.05vw,2.75rem)] font-semibold text-ink balance"
                 style={{
                   lineHeight: 1.15,
                   letterSpacing: 'var(--tracking-display)',
-                  fontVariationSettings: '"opsz" 48',
+                  fontVariationSettings: '"opsz" 60',
                 }}
               >
                 {g.label}
               </h3>
             </div>
 
-            <div className="mt-2 max-w-[820px]">
+            {/* Gap titolo→prima card: mt-6 (24px) così la hairline non incolla
+                al titolo del gruppo. Tema nascosto: già nel titolo del gruppo. */}
+            <div className="mt-6 max-w-[820px]">
               {g.skills.map((s) => (
-                <SkillCard key={s.id} skill={s} />
+                <SkillCard key={s.id} skill={s} showTema={false} />
               ))}
             </div>
           </section>

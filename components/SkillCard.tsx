@@ -133,16 +133,24 @@ function buildRiconoscimenti(skill: Skill): string {
   return parts.join(' · ');
 }
 
-export function SkillCard({ skill }: { skill: Skill }) {
+export function SkillCard({ skill, showTema = true }: { skill: Skill; showTema?: boolean }) {
   const { content, isDraft } = extractDraftMarker(skill.descrizione_personale);
 
   return (
     <article className="relative border-t border-rule pt-10 pb-12">
-      {/* Riga superiore — tag tema + dove funziona + badge bozza, tutti allineati a destra */}
-      <div className="mb-4 flex flex-wrap items-center justify-end gap-3">
+      {/* Riga superiore — tag dove funziona + importanza (+ tema se non già
+          implicito dal raggruppamento) + badge bozza. Su mobile allineata a
+          sinistra (evita orfani right-aligned); su desktop a destra, a
+          specchio della rilegatura terracotta. `showTema=false` nel catalogo:
+          il tema è già nel titolo del gruppo, mostrarlo sulla card è ridondante. */}
+      <div className="mb-4 flex flex-wrap items-center justify-start sm:justify-end gap-3">
         {isDraft && <DraftBadge />}
-        <MetaTag>{skill.tema}</MetaTag>
-        <span aria-hidden="true" className="text-muted/40">·</span>
+        {showTema && (
+          <>
+            <MetaTag>{skill.tema}</MetaTag>
+            <span aria-hidden="true" className="text-muted/40">·</span>
+          </>
+        )}
         <MetaTag>{skill.dove_funziona}</MetaTag>
         <span aria-hidden="true" className="text-muted/40">·</span>
         <MetaTag>{skill.importanza}</MetaTag>
@@ -178,7 +186,7 @@ export function SkillCard({ skill }: { skill: Skill }) {
       <p
         className="mt-6 max-w-[var(--measure-prose)] text-[1.0625rem] text-ink prose-pretty"
         style={{
-          lineHeight: 1.55,
+          lineHeight: 1.6,
           fontVariationSettings: '"opsz" 24',
         }}
       >
@@ -190,7 +198,7 @@ export function SkillCard({ skill }: { skill: Skill }) {
           Per stelle:null → "Ufficiale {autore} · {licenza} · aggiornato …". */}
       <div
         className="mt-4 text-[11px] font-medium uppercase tabular-figures text-ink/65"
-        style={{ letterSpacing: 'var(--tracking-micro)' }}
+        style={{ letterSpacing: '0.08em' }}
       >
         {buildRiconoscimenti(skill)}
       </div>
@@ -252,7 +260,7 @@ export function SkillCard({ skill }: { skill: Skill }) {
               href={skill.repo_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="underline decoration-terracotta/40 decoration-1 underline-offset-4 hover:decoration-terracotta"
+              className="underline decoration-terracotta/40 decoration-1 underline-offset-4 hover:decoration-terracotta visited:decoration-muted/50"
             >
               {skill.repo_url.replace(/^https?:\/\//, '')}
             </a>

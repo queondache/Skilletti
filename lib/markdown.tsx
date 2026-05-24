@@ -52,7 +52,7 @@ const COMPONENTS: Components = {
       <a
         href={href}
         {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-        className="underline decoration-terracotta/40 decoration-1 underline-offset-4 hover:decoration-terracotta"
+        className="underline decoration-terracotta/40 decoration-1 underline-offset-4 hover:decoration-terracotta visited:decoration-muted/50"
         {...rest}
       >
         {children}
@@ -72,7 +72,7 @@ const COMPONENTS: Components = {
   },
   // Forza paragrafi a sfruttare il sistema editoriale di leading
   p({ children }) {
-    return <p className="leading-[1.65]">{children}</p>;
+    return <p className="leading-[1.6]">{children}</p>;
   },
 };
 
@@ -134,11 +134,15 @@ const ARTICLE_COMPONENTS: Components = {
     );
   },
   p({ children }) {
-    // Paragrafi long-form: leading più morbido, prosa pretty
+    // Paragrafi long-form: leading 1.6 (allineato al corpo delle card).
+    // Il primo paragrafo dell'articolo (quando precede ogni heading — è il
+    // caso del lede di pedagogia.mdx) diventa intro corsivo ink-soft, a
+    // specchio delle intro di "essenziali" e "catalogo". `first:mt-0` azzera
+    // il gap iniziale così tutti gli Article partono allo stesso modo.
     return (
       <p
-        className="mt-5 max-w-[var(--measure-prose)] text-[1.0625rem] text-ink/85 prose-pretty"
-        style={{ lineHeight: 1.65, fontVariationSettings: '"opsz" 24' }}
+        className="mt-5 first:mt-0 [&:first-child]:italic [&:first-child]:text-ink-soft max-w-[var(--measure-prose)] text-[1.0625rem] text-ink/85 prose-pretty"
+        style={{ lineHeight: 1.6, fontVariationSettings: '"opsz" 24' }}
       >
         {children}
       </p>

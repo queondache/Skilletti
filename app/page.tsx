@@ -62,7 +62,7 @@ export default function HomePage() {
       {/* Parti da qui — porte d'ingresso curate */}
       <section
         id="parti-da-qui"
-        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-24"
+        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-16 sm:py-24"
         style={{ scrollMarginTop: '100px' }}
       >
         <div
@@ -84,7 +84,7 @@ export default function HomePage() {
         <p
           className="mt-4 max-w-[var(--measure-prose)] text-[1.0625rem] italic text-ink-soft prose-pretty"
           style={{
-            lineHeight: 1.55,
+            lineHeight: 1.6,
             fontVariationSettings: '"opsz" 24',
           }}
         >
@@ -104,7 +104,7 @@ export default function HomePage() {
           ibrido (indice + filtro in un solo controllo). Stato in URL ?tema=. */}
       <section
         id="catalogo"
-        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-24 border-t border-rule"
+        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-16 sm:py-24 border-t border-rule"
         style={{ scrollMarginTop: '100px' }}
       >
         <div
@@ -126,7 +126,7 @@ export default function HomePage() {
         <p
           className="mt-4 max-w-[var(--measure-prose)] text-[1.0625rem] italic text-ink-soft prose-pretty"
           style={{
-            lineHeight: 1.55,
+            lineHeight: 1.6,
             fontVariationSettings: '"opsz" 24',
           }}
         >
@@ -141,7 +141,7 @@ export default function HomePage() {
           Contenuto canonico in content/workflow.mdx, render via Article. */}
       <section
         id="workflow"
-        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-24 border-t border-rule"
+        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-16 sm:py-24 border-t border-rule"
         style={{ scrollMarginTop: '100px' }}
       >
         <div
@@ -167,7 +167,7 @@ export default function HomePage() {
           stesso pattern di workflow.mdx. */}
       <section
         id="didattica"
-        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-24 border-t border-rule"
+        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-16 sm:py-24 border-t border-rule"
         style={{ scrollMarginTop: '100px' }}
       >
         <div
