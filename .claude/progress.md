@@ -1,63 +1,87 @@
 # Skilletti — Progress
 
-> Snapshot di fine sessione: cosa è stato fatto, dove ci si è fermati, blocchi aperti.
+> Snapshot di stato: fasi chiuse, fase corrente, blocchi aperti.
 
-## Ultima sessione — 2026-05-23
+## Stato attuale — 2026-05-24
 
-**Fase 2 parziale — pronto per seed reale (no catalog render finché data/skills.json arriva)**
+Sito **completo e funzionante** con seed reale (12 skill). Round 1 + 2 + 2.5 chiusi.
+Repo remoto `queondache/Skilletti` allineato a `38b1af9`.
+**Rimangono Fase 4 (agent settimanale) e Fase 5 (deploy GitHub Pages).**
 
-### Contesto
+`data/skills.json`: 12 skill — 4 essenziale · 6 forte · 2 situazionale.
 
-Andrea ha avuto problemi col download del file seed `data/skills.json`. Su sua indicazione ho proceduto con **opzione 3**:
-- types + schema Ajv + validator
-- SkillCard isolato (con `lib/mock-skills.ts` — 2 mock inline)
-- `app/page.tsx` con anteprima SkillCard + placeholder testuale per "Parti da qui"
-- nessun render del catalogo reale fino al seed
+---
 
-### Cosa è stato fatto
+## Fasi chiuse
 
-1. **`types/skill.ts`** — `Skill` type 16 campi + 2 opzionali (`note`, `note_stelle`). Enum chiusi: `TEMI`, `IMPORTANZE`, `LIVELLI`, `DOVE_FUNZIONA`, `STATI`, `PROFILI_SICUREZZA` (con `ufficiale-anthropic`). `DRAFT_PREFIX` const. `TRUSTED_ORGS` whitelist anthropics/vercel/google/supabase/microsoft/github.
-2. **`data/skills.schema.json`** — JSON Schema 2020-12. `additionalProperties: false`. `maxItems: 30`. Pattern `^[a-z][a-z0-9-]*$` per id. Date `format: date`. Regola condizionale via `if/then`: `stelle:null` ⇒ `note_stelle` obbligatorio + `repo_url` pattern `^https?://github\.com/anthropics/`.
-3. **`scripts/validate-data.ts`** — Ajv2020 + ajv-formats. Strict mode. Vincoli extra non esprimibili in schema: 30-cap rigido, id duplicati, repo_url duplicati. Skip pulito se `skills.json` manca (pre-seed). Errori formattati con path+message+params.
-4. **Hook + CI** — `prebuild` runna `validate:data` (build fallisce se invalido). `simple-git-hooks` installa pre-commit che esegue `pnpm validate:data`. `.git/hooks/pre-commit` verificato attivo. Per Fase 4/5 CI farà lo stesso (`pnpm build` ⇒ `prebuild` ⇒ validate).
-5. **`lib/markdown.tsx`** — `react-markdown` con allowlist stretta (p/em/strong/code/pre/ul/ol/li/a/blockquote). Override `<a>` per `rel="noopener noreferrer"` su esterni. `<code>` inline con bg paper-deep + mono stack. `<p>` con leading editoriale. `extractDraftMarker()` strippa `[BOZZA — Andrea rifinisce]` e ritorna `{ content, isDraft }`.
-6. **`components/SkillCard.tsx`** — server component (zero JS client). Layout editoriale: hairline rule sopra, tag meta (tema · dove_funziona · importanza) a destra in alto, badge "bozza" terracotta su card draft, nome (display weight 600 opsz 60), tagline italic, **profilo sicurezza SOPRA la piega** (badges variant positive/info/caution mappati per ogni tag), descrizione personale renderizzata via `Prose`, dettagli tecnici in `<details>` native (accessibile keyboard).
-7. **`components/Hero.tsx`** — estratto da `app/page.tsx` per pulizia. Composizione asimmetrica Fase 1 preservata.
-8. **`lib/mock-skills.ts`** — 2 mock: standard (con [BOZZA] prefix, stelle 1842) + anthropics edge case (stelle null + note_stelle). Esercita entrambi i path del validator e del rendering.
-9. **`app/page.tsx`** — Hero + sezione "Anteprima scheda" con SkillCard mock + placeholder testuale "Parti da qui" + footer firma in fondo pagina. Colonna paper-deep di rilegatura ora si estende full-page (non solo hero).
+### Fase 1 — Foundation ✅ → `3b13af5`
+Next.js export statico + TS strict + Tailwind. Layout, fonts (Fraunces),
+palette carta-da-museo, SEO/OG (sitemap, robots, opengraph-image, favicon,
+apple-touch-icon). Workflow deploy GitHub Pages bozza.
 
-### Verifiche
+### Fase 2 — Data pipeline + SkillCard ✅ → `27164a4`
+- `types/skill.ts` — type 16 campi + opzionali (`note`, `note_stelle`, poi
+  `a_che_serve`, `autore`). Enum chiusi. `TRUSTED_ORGS` whitelist.
+- `data/skills.schema.json` — JSON Schema 2020-12, `additionalProperties:false`,
+  `maxItems:30`, regola condizionale `stelle:null ⇒ note_stelle + repo anthropics`.
+- `scripts/validate-data.ts` — Ajv2020 strict + vincoli extra (cap 30, id/url dup).
+- Hook `prebuild` + pre-commit (`simple-git-hooks`) eseguono `validate:data`.
+- `lib/markdown.tsx` — react-markdown allowlist stretta, niente rehype-raw.
+- `components/SkillCard.tsx` — server component, profilo sicurezza sopra la piega.
+- Chiusura: wire `skills.json` reale, drop mock (`lib/mock-skills.ts` rimosso).
 
-- `pnpm install` clean (esbuild build permesso per tsx, simple-git-hooks/sharp vietati)
-- `pnpm validate:data` testato su 5 casi: vuoto, valido base, anthropics+null+note (pass), non-anthropics+null (fail), anthropics+null+missing note (fail), duplicate id (fail). Tutti i path corretti.
-- `pnpm build` clean (`prebuild` chiama validate, skip pre-seed, next build OK, 3 static routes prerendered, ~1s con Turbopack)
-- Pre-commit hook installato e operativo (`.git/hooks/pre-commit` verificato)
-- Console browser: 0 errori, 0 warning
-- **Lighthouse desktop**: Accessibility 100, Best Practices 100, SEO 100, Agentic Browsing 100. 45/45 audit, 0 fail.
-- Screenshot persistiti: hero, fullpage closed, fullpage details expanded
-- Reports Lighthouse in `.claude/lighthouse/2026-05-23-desktop-a11y.{html,json}`
+### Fase 3 — Sito completo ✅ → `38b1af9`
+Span round 1 (`3dbba1b`) → round 2 (`0d95804`) → round 2.5 QA (`38b1af9`).
+- Catalogo reale con gruppi per tema, indice, filtri (`Catalog.tsx`).
+- SkillCard single-source: essenziali in variante compatta, stessa sorgente.
+- Card rende `a_che_serve` + riga riconoscimenti (autore).
+- Schema esteso: `a_che_serve` + `autore` required, tema Marketing (`de47dd3`).
+- Dati: +4 skill (ui-ux-pro-max, chrome-devtools-mcp, firecrawl-mcp, code-review)
+  + bundle marketing 13 sub-skill.
+- Sezione workflow + sezione didattica (`pedagogia.mdx`).
+- Nav sticky scroll-aware con active state.
+- Round 2.5 QA: gerarchia titoli, line-height unificato 1.6, layout mobile
+  (nav 1 riga, padding py-16, tag-row left-align). 14 osservazioni audit risolte.
+- **Lighthouse desktop**: A11y 100 · Best Practices 100 · SEO 100 · Agentic 100.
 
-### Dipendenze aggiunte
+---
 
-Runtime: `react-markdown ^9.0.0`
-Dev: `ajv ^8.17.1`, `ajv-formats ^3.0.1`, `tsx ^4.19.2`, `simple-git-hooks ^2.11.1`
+## Fasi rimanenti
 
-Tutte ≥1000★, mature, dichiarate prima dell'install come da convenzione globale.
+### Fase 4 — Agent settimanale ❌ DA FARE
+`scripts/agent/` vuoto (solo `.gitkeep`), nessun `weekly-agent.yml`.
+Da costruire (SPEC §9):
+- `search.ts` / `filter.ts` / `open-pr.ts` — Claude API + web search tool.
+- Flusso: legge `skills.json` → health-check skill esistenti → cerca novità su
+  fonti fisse → filtri binari (≥1000★, vivo, installabile, sicurezza non opaca)
+  → max 3 candidati pre-compilati → apre PR taggata `[agent]`.
+- `.github/workflows/weekly-agent.yml` — cron lunedì mattina.
+- Sicurezza: `ANTHROPIC_API_KEY` in Actions Secrets, `GITHUB_TOKEN` permessi
+  minimi (`pull-requests:write`, `contents:write`), mai push diretto su main.
 
-### Note tecniche
+### Fase 5 — Deploy 🟡 PARZIALE
+`.github/workflows/deploy.yml` esiste (1.5KB) ma **non verificato live**.
+Da fare:
+- Verificare se GitHub Pages è attivo e il sito è raggiungibile.
+- Confermare che il deploy scatti al merge su main e che `prebuild`/validate
+  giri in CI.
+- Branch protection su `main` (no push diretto, vale anche per l'agent).
+- Attivare `gh secret scanning`.
 
-- Ajv strict mode richiede che ogni `required` field abbia anche le `properties` definite nel medesimo subschema. Schema patchato: `then.properties.note_stelle` ridichiarata dentro `then` oltre alla definizione root.
-- Markdown reso solo via react-markdown con allowlist tag. Niente `rehype-raw`. Niente bypass HTML inline. Difesa in profondità anche se input proviene da repo controllato.
-
-## Stato attuale
-
-Pipeline dati + scheda funzionante con mock. **Aspetto seed Andrea.**
-Repo remoto ancora da creare.
+---
 
 ## Blocchi aperti
 
-- **Seed reale `data/skills.json`** — bloccante per chiudere Fase 2 (sostituzione mock → real catalog → sezione "Parti da qui" reale max-5 essenziali).
+Nessuno. Sito completo, seed presente, remote allineato.
 
 ## Cost log API (per agent, dalla Fase 4)
 
 _(da popolare a partire dalla prima esecuzione agent)_
+
+---
+
+## Prossimo step
+
+- [ ] Verificare stato GitHub Pages (Fase 5) prima di trattarla come "da fare" —
+      `deploy.yml` già presente, controllare se il sito è live.
+- [ ] Decidere ordine Fase 4 (agent) vs completamento Fase 5 (deploy live) col prossimo task di Andrea.
