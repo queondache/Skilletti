@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { fraunces } from './fonts';
+import { fraunces, geist, geistMono } from './fonts';
 import { NavSticky } from '@/components/NavSticky';
 import './globals.css';
 
@@ -48,7 +48,10 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="it" className={fraunces.variable}>
+    <html
+      lang="it"
+      className={`${fraunces.variable} ${geist.variable} ${geistMono.variable}`}
+    >
       <body className="bg-paper text-ink antialiased">
         <NavSticky />
         {children}

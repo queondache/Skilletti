@@ -170,7 +170,7 @@ export function SkillCard({ skill, showTema = true }: { skill: Skill; showTema?:
 
       {/* Tagline — italic, opsz medio, prosa stretta */}
       <p
-        className="mt-3 max-w-[50ch] text-[clamp(1.05rem,1.3vw,1.25rem)] italic text-ink-soft"
+        className="lead mt-3 max-w-[50ch] text-[clamp(1.05rem,1.3vw,1.25rem)] italic text-ink-soft"
         style={{
           lineHeight: 1.4,
           letterSpacing: 'var(--tracking-display)',

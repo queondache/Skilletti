@@ -82,7 +82,7 @@ export default function HomePage() {
           Le essenziali
         </h2>
         <p
-          className="mt-4 max-w-[var(--measure-prose)] text-[1.0625rem] italic text-ink-soft prose-pretty"
+          className="lead mt-4 max-w-[var(--measure-prose)] text-[1.0625rem] italic text-ink-soft prose-pretty"
           style={{
             lineHeight: 1.6,
             fontVariationSettings: '"opsz" 24',
@@ -124,7 +124,7 @@ export default function HomePage() {
           Le altre
         </h2>
         <p
-          className="mt-4 max-w-[var(--measure-prose)] text-[1.0625rem] italic text-ink-soft prose-pretty"
+          className="lead mt-4 max-w-[var(--measure-prose)] text-[1.0625rem] italic text-ink-soft prose-pretty"
           style={{
             lineHeight: 1.6,
             fontVariationSettings: '"opsz" 24',

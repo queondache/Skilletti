@@ -36,7 +36,7 @@ export function Hero() {
       <hr aria-hidden="true" className="mt-7 h-[2px] w-16 border-0 bg-terracotta" />
 
       <p
-        className="mt-7 max-w-[var(--measure-tagline)] text-[clamp(1.35rem,2.2vw,1.875rem)] italic font-normal text-ink-soft balance"
+        className="lead mt-7 max-w-[var(--measure-tagline)] text-[clamp(1.35rem,2.2vw,1.875rem)] italic font-normal text-ink-soft balance"
         style={{
           lineHeight: 1.35,
           letterSpacing: 'var(--tracking-display)',
