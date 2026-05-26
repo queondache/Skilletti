@@ -3,7 +3,7 @@ import { loadFraunces } from '@/lib/og-fonts';
 
 // OG image generata a build time (force-static) — Pages serve PNG diretto.
 export const dynamic = 'force-static';
-export const alt = 'skilletti — Trenta skill di Claude. Scelte a mano.';
+export const alt = 'skilletti — Le migliori skill di Claude. Scelte a mano.';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -95,7 +95,7 @@ export default async function OpenGraphImage() {
               fontVariationSettings: '"opsz" 72',
             }}
           >
-            Trenta skill di Claude. Scelte a mano.
+            Le migliori skill di Claude. Scelte a mano.
           </div>
         </div>
 

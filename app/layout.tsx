@@ -4,7 +4,7 @@ import { NavSticky } from '@/components/NavSticky';
 import './globals.css';
 
 const SITE_URL = 'https://queondache.github.io/skilletti';
-const TITLE = 'skilletti — Trenta skill di Claude. Scelte a mano.';
+const TITLE = 'skilletti — Le migliori skill di Claude. Scelte a mano.';
 const DESCRIPTION =
   'Un digest curato di skill di Claude. Massimo trenta, scelte e spiegate a una a una. Museo, non magazzino.';
 
