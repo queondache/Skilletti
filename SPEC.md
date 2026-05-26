@@ -28,7 +28,7 @@ Amici di Andrea che **usano già Claude** (Claude.ai e/o Claude Code). Profilo: 
 - Testo: `#1A1815`
 - Accento: `#B85C38` (terracotta)
 
-**Logo:** wordmark puro (`skilletti` o `skilletti.`). Font serif elegante (es. Fraunces, Cormorant) o grottesco moderno (es. Söhne). Da rifinire in fase di build con `taste-skill` + `frontend-design`.
+**Logo:** wordmark puro `skilletti.`. **Tipografia (decisa):** Fraunces per display e voce (wordmark, titoli, taglini italic), Geist per il body (paragrafi, micro-label, dati), caricati via `next/font`. Terracotta come unico accento.
 
 **Vibe:** museo italiano, libro raffinato, sobrio-personale.
 
@@ -110,14 +110,17 @@ I dati vivono in **`data/skills.json`** versionato nel repo. Nessun database.
 
 ## 7. Struttura del sito
 
-**Single-page con ancore.** Sezioni:
+**Single-page con ancore.** Sezioni, nell'ordine:
 
-1. **Intro** — voce di Andrea, breve.
-2. **Parti da qui** — le essenziali (massimo 5).
-3. **Catalogo** — tutte le schede, filtrabili per tema e importanza.
-4. **Scheda skill** — card espandibile con tutti i campi del modello dati; profilo sicurezza ben visibile.
-5. **Cosa sono skill, plugin, MCP, CLI** — sezione didattica (vedi §8).
-6. **Footer / Come funziona** — come è curata la lista, ogni quanto si aggiorna, chi è Andrea.
+1. **Hero** — wordmark + tagline + manifesto, voce di Andrea.
+2. **Sommario tematico** — sala d'ingresso: chip `Essenziali (4)` (asse "parti da qui", distinto strutturalmente) + 6 chip per tema con conteggi auto-derivati; click = jump all'ancora.
+3. **Parti da qui** — le essenziali (massimo 5), in **griglia 2×2** da desktop large (≥1280px), colonna singola sotto.
+4. **Catalogo** — tutte le schede, raggruppate per tema, filtrabili.
+5. **Scheda skill (SkillCard)** — layout **"open-pages" 60/40** su desktop (≥1024px): sinistra la voce (nome, tagline, a_che_serve, "approfondisci"), destra il pannello info pratiche sempre visibile (installazione + copia, riconoscimenti, profilo sicurezza, repo). Colonna singola su mobile.
+6. **Metodo** — come Andrea usa Claude.ai e Claude Code insieme.
+7. **Template** — due file starter copiabili (`CLAUDE.md` + `SPEC.md` base), tra Metodo e Vocabolario.
+8. **Vocabolario** — sezione didattica "Cosa sono skill, plugin, MCP, CLI" (vedi §8).
+9. **Footer / Come funziona** — come è curata la lista, ogni quanto si aggiorna, chi è Andrea.
 
 ---
 
@@ -137,21 +140,21 @@ Spiega in linguaggio piano, senza gergo:
 
 ---
 
-## 9. Agent di ricerca settimanale
+## 9. Agent di ricerca mensile
 
 ### Architettura
 
 L'agent vive in **GitHub Actions**. Stesso repo del sito. Zero dipendenze esterne (niente Vercel Cron, niente Resend, niente domain setup).
 
-- **Trigger** — GitHub Actions cron schedule, ogni lunedì mattina.
-- **Cervello** — chiama la Claude API con il **web search tool** attivo.
+- **Trigger** — GitHub Actions cron schedule, **mensile** (`0 9 1 * *`, 1° del mese ore 9 UTC).
+- **Cervello** — **pre-filtra** candidati via **GitHub API** su awesome-list curate, poi usa la Claude API per **valutare e ordinare la shortlist** (fetch mirato dei README). Niente web search generica.
 - **Output** — apre una **PR automatica** sul repo con i candidati pre-compilati come modifica a `skills.json`. Niente email.
 
 ### Flusso, passo per passo
 
 1. Legge `data/skills.json` → sa cosa è già in lista (evita duplicati).
 2. **Health-check**: per ogni skill in lista verifica che il repo sia ancora vivo (commit recenti, non archiviato). Segnala le morte.
-3. **Ricerca novità** su fonti fisse: awesome-list su GitHub (es. travisvn/awesome-claude-skills, hesreallyhim/awesome-claude-code), blog Anthropic, changelog dei marketplace, r/ClaudeAI.
+3. **Ricerca novità** SOLO da fonti GitHub via API: awesome-list curate (es. travisvn/awesome-claude-skills, hesreallyhim/awesome-claude-code). **Niente Reddit/Twitter/blog.**
 4. Estrae candidati nuovi.
 5. Applica i **filtri binari** (stelle ≥ 1000, vivo, installabile, sicurezza non opaca).
 6. Valuta i sopravvissuti sui criteri di qualità, ordina per stelle decrescente.
@@ -160,9 +163,9 @@ L'agent vive in **GitHub Actions**. Stesso repo del sito. Zero dipendenze estern
 
 ### Regola non negoziabile
 
-**L'agent non pubblica mai da solo.** Solo ciò che Andrea fa merge entra in `skills.json`. Il `GITHUB_TOKEN` dell'Action ha permessi minimi (`pull-requests: write`, `contents: write`) e branch `main` è protetto. L'agent legge contenuto web non fidato — la review umana sulla PR è il muro di sicurezza.
+**L'agent non pubblica mai da solo.** Solo ciò che Andrea fa merge entra in `skills.json`. Il `GITHUB_TOKEN` dell'Action ha permessi minimi (`pull-requests: write`, `contents: write`) e branch `main` è protetto. L'agent legge README/contenuto GitHub non fidato — la review umana sulla PR è il muro di sicurezza.
 
-Lavoro settimanale di Andrea: aprire la PR, leggere 3 schede, mergere 0-1, chiudere il resto. ~10 minuti.
+Lavoro mensile di Andrea: aprire la PR, leggere 3 schede, mergere 0-1, chiudere il resto. ~10 minuti.
 
 ---
 
@@ -170,11 +173,11 @@ Lavoro settimanale di Andrea: aprire la PR, leggere 3 schede, mergere 0-1, chiud
 
 | Componente | Scelta | Perché |
 |---|---|---|
-| Frontend | Next.js (export statico) + TypeScript + Tailwind | Stack che Andrea conosce; export statico va su Pages |
-| Hosting | GitHub Pages | Gratis, niente Vercel, niente domain obbligatorio |
+| Frontend | Next.js (export statico) + TypeScript + Tailwind | Stack che Andrea conosce; export statico |
+| Hosting | **Vercel** (`skilletti.vercel.app`) | Deploy in pochi minuti, preview per PR, alias stabile |
 | Dati | `data/skills.json` versionato | 30 record curati a mano → niente DB; versionato su Git; sito 100% statico |
-| Cron | GitHub Actions (schedule) | Nativo, gratis, stesso repo |
-| Agent | GitHub Action + Claude API + web search tool | Web search nativo nell'API |
+| Cron | GitHub Actions (schedule, mensile) | Nativo, gratis, stesso repo |
+| Agent | GitHub Action + GitHub API (pre-filtro) + Claude API (rank shortlist) | Fonti GitHub controllabili; niente web search |
 | Output agent | PR automatica | Nessuna email, audit trail nativo Git |
 | Doc librerie | context7 in CC | API che cambiano (Next.js) |
 
@@ -195,7 +198,7 @@ Lavoro settimanale di Andrea: aprire la PR, leggere 3 schede, mergere 0-1, chiud
 │   └── progress.md
 ├── .github/
 │   └── workflows/
-│       └── weekly-agent.yml      ← cron settimanale
+│       └── monthly-agent.yml     ← cron mensile (0 9 1 * *)
 ├── data/
 │   └── skills.json               ← fonte di verità delle schede
 ├── scripts/
@@ -219,10 +222,10 @@ Lavoro settimanale di Andrea: aprire la PR, leggere 3 schede, mergere 0-1, chiud
 ## 12. Edge case identificati
 
 - **Candidato già in lista** → dedup leggendo `skills.json` (step 1 dell'agent).
-- **Meno di 3 candidati validi in una settimana** → l'agent apre PR con quelli che ha, anche 0. Mai forzare il numero.
+- **Meno di 3 candidati validi in un mese** → l'agent apre PR con quelli che ha, anche 0. Mai forzare il numero.
 - **Skill in lista che muore** (repo archiviato) → l'health-check la segnala nella PR; Andrea decide se marcarla `archiviata` o rimuoverla.
-- **Web search restituisce risultati di bassa qualità** → i filtri binari scartano in automatico.
-- **PR non si apre** (Action fallisce) → notifica GitHub nativa; retry alla settimana successiva.
+- **Le fonti GitHub restituiscono risultati di bassa qualità** → i filtri binari scartano in automatico.
+- **PR non si apre** (Action fallisce) → notifica GitHub nativa; retry al mese successivo.
 - **Skill ottima ma < 1000 stelle** → esclusa per regola; l'agent può segnalarla nel body della PR come "watchlist", senza inserirla in `skills.json`.
 
 ---
@@ -231,8 +234,8 @@ Lavoro settimanale di Andrea: aprire la PR, leggere 3 schede, mergere 0-1, chiud
 
 - `ANTHROPIC_API_KEY` solo in **GitHub Actions Secrets** — mai nel repo, mai in `.env` committato.
 - `GITHUB_TOKEN` dell'Action: permessi minimi (`pull-requests: write`, `contents: write`).
-- Branch `main` **protetto**: nessun push diretto, solo via PR. Vale anche per l'agent.
-- L'agent legge contenuto web non fidato → output sempre via PR review umana, mai direct commit.
+- Branch `main` **protetto**: nessun push diretto, solo via PR (squash merge, no merge commits). Vale anche per l'agent.
+- L'agent legge README/contenuto GitHub non fidato → output sempre via PR review umana, mai direct commit.
 - `.env*` in `.gitignore` da subito; `.gitleaks` o `gh secret scanning` attivo.
 
 ---
@@ -241,8 +244,8 @@ Lavoro settimanale di Andrea: aprire la PR, leggere 3 schede, mergere 0-1, chiud
 
 - Un amico arriva sul sito e in **meno di 2 minuti** capisce quali 5 skill installare per prime.
 - Ogni scheda ha tutti i campi compilati, inclusi voce personale, profilo sicurezza e `dove_funziona`.
-- L'agent gira ogni lunedì e apre una PR con 0-3 candidati + stato delle skill esistenti.
-- Andrea aggiorna la lista in **meno di 10 minuti a settimana**.
+- L'agent gira ogni mese e apre una PR con 0-3 candidati + stato delle skill esistenti.
+- Andrea aggiorna la lista in **meno di 10 minuti al mese**.
 - Il sito resta sotto le 30 skill — la qualità non scende mai per fare numero.
 
 ---
@@ -250,5 +253,5 @@ Lavoro settimanale di Andrea: aprire la PR, leggere 3 schede, mergere 0-1, chiud
 ## 15. Decisioni ancora aperte
 
 1. **Lista skill di partenza (seed)** — Andrea sta preparando la sua lista aggiornata. Senza questa l'agent può girare lo stesso (parte da zero e propone candidati), ma il sito ha bisogno di almeno 5-10 seed iniziali per non apparire vuoto al lancio.
-2. **Dominio personalizzato** — opzionale. Default: `[andrea-username].github.io/skilletti`. Si può collegare un dominio acquistato in seguito.
-3. **Font esatto del wordmark** — da decidere in fase di build con `taste-skill` (proverà 3-4 opzioni).
+2. **Dominio personalizzato** — opzionale. Default attuale: `skilletti.vercel.app` (Vercel). Si può collegare un dominio acquistato in seguito.
+3. ~~**Font esatto del wordmark**~~ — **deciso**: Fraunces (display/voce) + Geist (body).

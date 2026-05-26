@@ -1,15 +1,17 @@
 # Skilletti — Project Context
 
-> Sito curato di skill di Claude per amici. **Max 30 schede**, voce personale, agent settimanale che propone novità via PR automatica. Vedi `SPEC.md` per i requisiti completi.
+> Sito curato di skill di Claude per amici. **Max 30 schede**, voce personale, agent mensile che propone novità via PR automatica. Live su [skilletti.vercel.app](https://skilletti.vercel.app). Vedi `SPEC.md` per i requisiti completi.
 
 ---
 
 ## Stack
 
 - **Frontend**: Next.js (export statico) + TypeScript + Tailwind
-- **Hosting**: GitHub Pages
-- **Agent settimanale**: GitHub Actions (cron, lunedì mattina)
-- **LLM**: Claude API + web search tool nativo
+- **Tipografia**: Fraunces (display/voce) + Geist (body) via `next/font`
+- **Hosting**: Vercel ([skilletti.vercel.app](https://skilletti.vercel.app)) — deploy al merge su `main`
+- **Agent mensile**: GitHub Actions (cron `0 9 1 * *`, 1° del mese)
+- **LLM**: Claude API che *valuta e ordina* una shortlist pre-filtrata via GitHub API (no web search generica)
+- **Fonti agent**: GitHub API + awesome-list curate — niente Reddit/Twitter/blog
 - **Dati**: `data/skills.json` versionato nel repo — niente DB
 
 ---
@@ -21,9 +23,14 @@
 - Testo: `#1A1815`
 - Accento: `#B85C38` (terracotta)
 
-**Logo**: wordmark puro (`skilletti` o `skilletti.`). Font serif elegante o grottesco moderno — da rifinire con `taste-skill`.
+**Logo**: wordmark puro `skilletti.` in Fraunces (display). Body in Geist (grottesco moderno).
 
 **Vibe**: museo italiano, libro raffinato, sobrio-personale.
+
+**Struttura pagina** (single-page con ancore): Hero → sommario tematico (chip
+`Essenziali (4)` + 6 chip tema) → Essenziali (griglia 2×2 da ≥1280px) → Catalogo →
+Metodo → Template → Vocabolario → Footer. SkillCard: layout "open-pages" 60/40 su
+desktop (≥1024px), colonna singola su mobile.
 
 ---
 
@@ -42,17 +49,17 @@
 
 Vedi `SPEC.md` §11. Cartelle critiche:
 - `data/skills.json` — fonte di verità delle schede
-- `scripts/agent/` — logica dell'agent settimanale
-- `.github/workflows/weekly-agent.yml` — cron + esecuzione agent
+- `scripts/agent/` — logica dell'agent mensile (da costruire, Fase 4)
+- `.github/workflows/` — agent mensile (cron `0 9 1 * *`) + deploy
 
 ---
 
 ## Workflow Git
 
-- Branch **`main` protetto**: nessun push diretto, solo via PR
-- L'agent settimanale apre PR taggate `[agent]` con candidati nuovi
+- Branch **`main` protetto**: nessun push diretto, solo via PR (squash merge, no merge commits)
+- L'agent mensile apre PR taggate `[agent]` con candidati nuovi
 - Andrea: review → merge / close / modifica
-- Deploy automatico su GitHub Pages al merge
+- Deploy automatico su Vercel al merge
 
 ---
 
@@ -62,7 +69,7 @@ Vedi `SPEC.md` §11. Cartelle critiche:
 - `ANTHROPIC_API_KEY` solo in **GitHub Actions Secrets**
 - `GITHUB_TOKEN` dell'Action: permessi minimi (`pull-requests: write`, `contents: write`)
 - L'agent **non può pushare su `main`**, solo aprire PR
-- Web search legge contenuto non fidato → review umana sulla PR è il muro di sicurezza
+- L'agent legge README/contenuto GitHub non fidato → review umana sulla PR è il muro di sicurezza
 - Attivare `gh secret scanning` sul repo
 
 ---
@@ -84,7 +91,7 @@ Vedi `SPEC.md` §11. Cartelle critiche:
 - **30 skill è un tetto rigido.** Mai superare per fare numero.
 - **Filtro 1000 stelle binario** (eccezione: org ufficiali — Anthropic, Vercel, Google, Supabase).
 - **L'agent non pubblica mai autonomamente.** PR sempre, review sempre.
-- Health-check settimanale anche per le skill già in lista.
+- Health-check mensile anche per le skill già in lista.
 
 ---
 
