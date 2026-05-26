@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
  * Comportamento:
  * - Nascosta sotto la soglia di scroll (85% del primo viewport) per
  *   far respirare l'hero.
- * - 4 ancore: essenziali · catalogo · metodo · vocabolario.
+ * - 5 ancore: essenziali · catalogo · metodo · template · vocabolario.
  * - Stato attivo via IntersectionObserver con rootMargin che attiva
  *   la sezione quando il suo bordo superiore passa ~30% dall'alto.
  * - Sfondo bg-paper/70 + backdrop-blur-md: leggibile su qualsiasi
@@ -22,6 +22,7 @@ const SECTIONS = [
   { id: 'parti-da-qui', label: 'essenziali' },
   { id: 'catalogo', label: 'catalogo' },
   { id: 'workflow', label: 'metodo' },
+  { id: 'template', label: 'template' },
   { id: 'didattica', label: 'vocabolario' },
 ] as const;
 
@@ -81,7 +82,7 @@ export function NavSticky() {
         className={
           'pointer-events-auto bg-paper/85 backdrop-blur-md ' +
           'border-b border-rule/40 ' +
-          // Mobile: padding ridotto per far stare le 4 voci su una riga.
+          // Mobile: padding ridotto per far stare le 5 voci su una riga.
           // Desktop: gutter pieno, a specchio della rilegatura.
           'px-5 sm:pl-[var(--gutter-indent)] sm:pr-[calc(7vw+var(--gutter-edge))] ' +
           'py-3'
