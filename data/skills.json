@@ -171,7 +171,7 @@
     "livello": "intermedio",
     "dove_funziona": "entrambi",
     "a_che_serve": "Ti fa un sito o un'app che sembra fatta da uno studio di design, non dall'AI. Animazioni curate, font scelti bene, colori coerenti. Tu gli dici 'fintech dashboard' o 'landing page per spa' e lui prende stile, palette e tipografia dalla sua banca dati di esempi reali.",
-    "descrizione_personale": "[BOZZA — Andrea rifinisce] Il primo strumento di design che installo. Per qualsiasi progetto con frontend serio.",
+    "descrizione_personale": "Il primo strumento di design che installo su un progetto con frontend serio. Dentro ha una banca dati di stili, palette e abbinamenti di font: chiedo una dashboard o una landing e Claude pesca da lì invece di inventare. Funziona sia su Claude.ai sia su Claude Code. Coerenza visiva, non il solito grigio dell'AI.",
     "profilo_sicurezza": [
       "self-contained"
     ],
@@ -193,7 +193,7 @@
     "livello": "intermedio",
     "dove_funziona": "claude-code",
     "a_che_serve": "Dici a Claude Code 'guarda il sito che ho fatto e dimmi cosa non va' — e lui apre Chrome da solo, naviga, controlla console e velocità, trova i problemi e te li sistema, senza che tu debba copiargli screenshot o log. È Claude che fa debugging del tuo sito da solo, in autonomia.",
-    "descrizione_personale": "[BOZZA — Andrea rifinisce] Lo accendo ogni volta che sto debuggando un sito o un'app web.",
+    "descrizione_personale": "Lo accendo quando debuggo un sito o un'app web. Invece di copiare a Claude screenshot e log, gli dico 'guarda cosa non va': apre Chrome, naviga, legge console e prestazioni, trova il problema e lo sistema. È di Google, parte di Chrome DevTools — la lettura della pagina è seria. Soprattutto per i bug che vivono solo nel browser.",
     "profilo_sicurezza": [
       "chiamate-esterne",
       "esegue-script"
@@ -216,7 +216,7 @@
     "livello": "intermedio",
     "dove_funziona": "claude-code",
     "a_che_serve": "Quando devi raccogliere informazioni da decine di pagine web (concorrenti, articoli, prezzi, lead), invece di copia-incollare a mano dici a Claude di farlo lui. Lui visita le pagine, estrae quello che ti serve in formato pulito, te lo passa pronto da usare. Serve una API key gratuita di Firecrawl.",
-    "descrizione_personale": "[BOZZA — Andrea rifinisce] Quando devo raccogliere informazioni dal web in modo strutturato.",
+    "descrizione_personale": "Lo tiro fuori quando raccogliere dati dal web a mano sarebbe una giornata persa: decine di pagine di concorrenti, prezzi, lead. Dico a Claude quali pagine guardare e cosa estrarre, lui restituisce testo pulito pronto all'uso. Serve una API key gratuita di Firecrawl. Non di tutti i giorni: roba da lavori di ricerca.",
     "profilo_sicurezza": [
       "chiamate-esterne",
       "legge-credenziali"
@@ -239,7 +239,7 @@
     "livello": "base",
     "dove_funziona": "claude-code",
     "a_che_serve": "Quando hai finito di scrivere codice (tuo o di Claude), prima di salvarlo questo plugin lo legge tutto e ti elenca i problemi: bug, errori di tipo, cose dimenticate, parti scritte male. È il collega senior che ti rilegge il lavoro prima che vada in produzione.",
-    "descrizione_personale": "[BOZZA — Andrea rifinisce] Lo accendo prima di ogni PR seria.",
+    "descrizione_personale": "Lo accendo prima di ogni PR seria. Quando ho finito — codice mio o di Claude — gli faccio rileggere tutto: bug, errori di tipo, gestione errori a metà, parti scritte di fretta. È il collega senior che ti rilegge prima del merge, sempre disponibile. Ufficiale di Anthropic: per il codice in produzione, un passaggio in più che mi tengo.",
     "profilo_sicurezza": [
       "self-contained",
       "ufficiale-anthropic"
@@ -263,7 +263,7 @@
     "livello": "base",
     "dove_funziona": "claude-code",
     "a_che_serve": "Un pacchetto di 13 skill che danno a Claude competenze marketing precise: scrivere ad copy, fare audit SEO, ottimizzare landing page, analizzare concorrenti, scegliere KPI, scrivere social. Installi una volta, hai un team di esperti marketing nel terminale che si attivano quando servono.",
-    "descrizione_personale": "[BOZZA — Andrea rifinisce] Lo uso per i lavori marketing di zeroCO2 e per gestire i progetti dei miei amici imprenditori.",
+    "descrizione_personale": "Lo uso per il marketing di zeroCO2 e per dare una mano agli amici imprenditori. È un pacchetto di 13 skill di Corey Haines: ad copy, audit SEO, landing, analisi concorrenti, KPI, social. Le installi una volta e ognuna si attiva quando serve: chiedo 'un audit SEO di questa pagina' e parte quella giusta. Tredici cappelli in uno.",
     "profilo_sicurezza": [
       "self-contained"
     ],
