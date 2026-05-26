@@ -102,7 +102,7 @@ html {
   }
 }
 
-/* Catalogo — fade dei gruppi non-target quando un filtro è attivo.
+/* Catalogo — fade dei gruppi non-target quando un filtro tema è attivo.
    Toggle gestito da CatalogControls via `data-hidden` su `.tema-group`. */
 .tema-group[data-hidden] {
   opacity: 0.15;
@@ -112,4 +112,14 @@ html {
   .tema-group {
     transition: opacity 200ms ease-out;
   }
+}
+
+/* Filtro contesto d'uso (ContextFilter) — hide reale, non fade: "mostra solo".
+   Le schede non-corrispondenti collassano (griglia/colonna), e i gruppi tema
+   rimasti vuoti spariscono per non lasciare titoli orfani. */
+[data-skill-card][data-ctx-hidden] {
+  display: none;
+}
+.tema-group[data-ctx-empty] {
+  display: none;
 }

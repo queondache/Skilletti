@@ -1,4 +1,5 @@
-import type { ProfiloSicurezza, Skill } from '@/types/skill';
+import type { DoveFunziona, ProfiloSicurezza, Skill } from '@/types/skill';
+import { DOVE_FUNZIONA_LABEL } from '@/types/skill';
 import { extractDraftMarker, Prose } from '@/lib/markdown';
 import { CopyButton } from '@/components/CopyButton';
 
@@ -79,6 +80,13 @@ function MetaTag({ children }: { children: React.ReactNode }) {
       {children}
     </span>
   );
+}
+
+// Contesti d'uso (dove_funziona) → micro-label compatti, niente emoji.
+// Più contesti uniti da "/" (es. "CLI / VS Code") per distinguerli dal "·"
+// che separa i campi meta (tema · dove · importanza).
+function doveLabel(contexts: DoveFunziona[]): string {
+  return contexts.map((c) => DOVE_FUNZIONA_LABEL[c]).join(' / ');
 }
 
 // Micro-label di sezione nel pannello "info pratiche" (destra): 11px uppercase
@@ -174,7 +182,11 @@ export function SkillCard({
   // dalla variante open di proposito, per non toccare il layout open già in uso.
   if (variant === 'doorway') {
     return (
-      <article className="relative border-t border-rule pt-10 pb-10">
+      <article
+        data-skill-card
+        data-contexts={skill.dove_funziona.join(' ')}
+        className="relative border-t border-rule pt-10 pb-10"
+      >
         <div className="mb-4 flex flex-wrap items-center justify-start gap-3">
           {isDraft && <DraftBadge />}
           {showTema && (
@@ -183,7 +195,7 @@ export function SkillCard({
               <span aria-hidden="true" className="text-muted/40">·</span>
             </>
           )}
-          <MetaTag>{skill.dove_funziona}</MetaTag>
+          <MetaTag>{doveLabel(skill.dove_funziona)}</MetaTag>
           <span aria-hidden="true" className="text-muted/40">·</span>
           <MetaTag>{skill.importanza}</MetaTag>
         </div>
@@ -253,7 +265,11 @@ export function SkillCard({
   }
 
   return (
-    <article className="relative border-t border-rule pt-10 pb-12">
+    <article
+      data-skill-card
+      data-contexts={skill.dove_funziona.join(' ')}
+      className="relative border-t border-rule pt-10 pb-12"
+    >
       {/*
         Griglia "open pages". Su mobile colonna singola (default). Da lg in su
         diventa 60/40 SENZA gap: la separazione è data dalla hairline verticale
@@ -275,7 +291,7 @@ export function SkillCard({
                 <span aria-hidden="true" className="text-muted/40">·</span>
               </>
             )}
-            <MetaTag>{skill.dove_funziona}</MetaTag>
+            <MetaTag>{doveLabel(skill.dove_funziona)}</MetaTag>
             <span aria-hidden="true" className="text-muted/40">·</span>
             <MetaTag>{skill.importanza}</MetaTag>
           </div>
