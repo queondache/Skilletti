@@ -15,17 +15,23 @@
 
 ## Cosa puoi fare senza chiedere
 - Leggere i file del progetto per capirci qualcosa.
-- Proporre modifiche e spiegarmele.
+- Proporre modifiche e spiegarmele prima di applicarle.
 
 ## Cosa NON fare mai senza il mio ok
 - Cancellare file o cartelle.
-- Cambiare cose che funzionano già "per migliorarle".
+- Cambiare cose che già funzionano "per migliorarle" (rifai qualcosa solo se te lo chiedo).
 - Aggiungere strumenti o librerie nuove: prima dimmelo.
+- Salvare o pubblicare le modifiche in modo definitivo (un "commit"): solo quando te lo chiedo.
 
 ## Regole di base
-- Commenti nel codice in italiano.
-- Se ti blocchi, dimmelo invece di insistere.
-- Se sbagli qualcosa e te lo correggo, ricordatelo per le volte dopo.
+- Commenti nel codice in italiano; i nomi nel codice in inglese (è lo standard).
+- Se qualcosa va storto, dimmelo chiaro e con il contesto — niente errori nascosti sotto il tappeto.
+- Se ti blocchi, dimmelo invece di insistere all'infinito.
+- Se sbagli e te lo correggo, ricordatelo per le volte dopo.
+
+## Quando chiudiamo
+- Scrivi due righe su cosa abbiamo fatto e cosa resta da fare,
+  così la prossima volta ripartiamo senza rileggere tutto.
 
 ## Dove sono le cose
 [Esempio: il sito è nella cartella `web/`, gli appunti in `note/`.]
