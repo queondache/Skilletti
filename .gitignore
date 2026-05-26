@@ -50,3 +50,4 @@ scripts/agent/*.log
 .claude/lighthouse/*-trace.json.gz
 .claude/lighthouse/raw/
 .claude/screenshots/
+.vercel

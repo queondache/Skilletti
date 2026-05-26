@@ -4,7 +4,11 @@ import type { NextConfig } from 'next';
 // da root → il basePath va attivato SOLO nella build CI per Pages.
 // Convenzione: la GitHub Action setta PAGES_BASE_PATH=/skilletti prima del build.
 // Build locale: variabile assente ⇒ basePath vuoto ⇒ asset servibili da `/`.
-const basePath = process.env.PAGES_BASE_PATH ?? '';
+// Su Vercel il sito vive alla root del dominio *.vercel.app → basePath sempre
+// vuoto, anche se PAGES_BASE_PATH fosse ereditato dall'ambiente. Vercel espone
+// VERCEL=1 in build.
+const isVercel = process.env.VERCEL === '1';
+const basePath = isVercel ? '' : (process.env.PAGES_BASE_PATH ?? '');
 
 const nextConfig: NextConfig = {
   output: 'export',
