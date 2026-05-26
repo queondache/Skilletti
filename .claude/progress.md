@@ -5,7 +5,7 @@
 ## Stato attuale — 2026-05-26
 
 Sito **completo e live su Vercel** (`skilletti.vercel.app`) con seed reale (12 skill).
-Round 1 + 2 + 2.5 + **3 (UX revamp)** chiusi.
+Round 1 + 2 + 2.5 + 3 (UX revamp) + **4 (refinements)** chiusi.
 **Rimangono Fase 4 (agent mensile) e Fase 5 (deploy GitHub Pages — opzionale, ora live su Vercel).**
 
 `data/skills.json`: 12 skill — 4 essenziale · 6 forte · 2 situazionale.
@@ -60,22 +60,35 @@ basePath condizionale Vercel (`VERCEL=1` ⇒ vuoto) + `.gitignore .vercel` (PR #
 - **C5** sezione **Template** (`TemplateSection.tsx` + `content/templates/`
   claude-base.md/spec-base.md) tra Metodo e Vocabolario; nav 5ª ancora.
 QA: responsive 1440/1024/768/390 ok, nav sticky 5 sezioni + active-state ok,
-zero overflow orizzontale, build verde.
+zero overflow orizzontale, build verde. Lighthouse prod 100/100/100/100
+(desktop + mobile), dopo fix contrasto count sommario (PR #4).
+
+### Round 4 — Refinements ✅ (PR squash su main)
+- **Tagline**: "Trenta skill di Claude" → "Le migliori skill di Claude" (Hero,
+  title/metadata, OG image alt + render). "Massimo trenta" tenuto (tetto-cap, non tagline).
+- **Essenziali in griglia 2×2** da ≥1280px (xl); colonna singola sotto (le card
+  open-pages restano a piena larghezza tra 1024-1279). Anchor `#parti-da-qui` invariato.
+- **Docs**: CLAUDE.md + SPEC.md sincronizzati allo stato live (Vercel, font duplice,
+  open-pages, sommario, Template, agent mensile, fonti GitHub, no merge commits).
+- **Template** `content/templates/claude-base.md` rinfrescato dai pattern universali
+  del master `~/Dev/CLAUDE.md` (esempio didattico non-dev, no roba interna).
 
 ---
 
 ## Fasi rimanenti
 
-### Fase 4 — Agent settimanale ❌ DA FARE
-`scripts/agent/` vuoto (solo `.gitkeep`), nessun `weekly-agent.yml`.
-Da costruire (SPEC §9):
-- `search.ts` / `filter.ts` / `open-pr.ts` — Claude API + web search tool.
-- Flusso: legge `skills.json` → health-check skill esistenti → cerca novità su
-  fonti fisse → filtri binari (≥1000★, vivo, installabile, sicurezza non opaca)
+### Fase 4 — Agent mensile ❌ DA FARE
+`scripts/agent/` vuoto (solo `.gitkeep`), nessun workflow agent.
+Da costruire (SPEC §9, aggiornata):
+- `search.ts` / `filter.ts` / `open-pr.ts` — GitHub API (pre-filtro su awesome-list
+  curate) + Claude API che **valuta e ordina la shortlist** (no web search generica).
+- Flusso: legge `skills.json` → health-check skill esistenti → cerca novità SOLO da
+  fonti GitHub → filtri binari (≥1000★, vivo, installabile, sicurezza non opaca)
   → max 3 candidati pre-compilati → apre PR taggata `[agent]`.
-- `.github/workflows/weekly-agent.yml` — cron lunedì mattina.
+- `.github/workflows/monthly-agent.yml` — cron `0 9 1 * *` (1° del mese).
 - Sicurezza: `ANTHROPIC_API_KEY` in Actions Secrets, `GITHUB_TOKEN` permessi
   minimi (`pull-requests:write`, `contents:write`), mai push diretto su main.
+- Manca ancora il prompt Fase 4 completo (finora solo placeholder × 2).
 
 ### Fase 5 — Deploy 🟡 PARZIALE
 `.github/workflows/deploy.yml` esiste (1.5KB) ma **non verificato live**.
@@ -100,10 +113,8 @@ _(da popolare a partire dalla prima esecuzione agent)_
 
 ## Prossimo step
 
-- [ ] **SPEC.md update** (deferred post-Round3): allineare §9/§10 alla Fase 4 reale —
-      agent **mensile** (1° del mese 9 UTC, non settimanale), fonti **GitHub API +
-      awesome-list curate** (no Reddit/blog), paradigma **rank-shortlist** (no web
-      search nativo). + aggiungere Vercel come hosting live accanto a GitHub Pages.
+- [x] ~~**SPEC.md update**~~ — fatto in Round 4 (Task 3a): §3/§7/§9/§10/§13/§14
+      allineati a stato live (Vercel, font duplice, open-pages, agent mensile, fonti GitHub).
 - [ ] **Fase 4 — agent mensile**: costruire `scripts/agent/` + workflow cron. Manca
       ancora il prompt Fase 4 completo (due volte arrivato solo come placeholder).
       Conferme già date: regola d'oro = gate umano sulla review PR (agent non verifica);
