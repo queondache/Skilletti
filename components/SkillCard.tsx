@@ -1,20 +1,30 @@
 import type { ProfiloSicurezza, Skill } from '@/types/skill';
 import { extractDraftMarker, Prose } from '@/lib/markdown';
+import { CopyButton } from '@/components/CopyButton';
 
 /**
- * Scheda skill — server component (Round 2: variante compatta unica).
+ * Scheda skill — server component (Round 3: layout "open pages").
  *
- * Una sola variante, identica per essenziali e catalogo. Sopra la piega solo
- * l'informazione che l'amico non-power-user deve poter scansionare al volo:
- *   tag riga · nome · tagline · a_che_serve · riconoscimenti · profilo sicurezza
- * Tutto il resto (descrizione personale + tabella tecnica) vive dentro
- * `<details>` native, zero JS, accessibile da tastiera.
+ * Doppia pagina di libro aperto. La hairline verticale tra le due colonne è la
+ * "spina" del libro.
+ *
+ * Desktop ≥1024px (lg): due colonne dentro un grid 60/40 senza gap.
+ *   SINISTRA (~60%): tag-row → nome → tagline → a_che_serve → <details>
+ *     "approfondisci" (descrizione personale + note).
+ *   DESTRA (~40%, pannello "info pratiche" sempre visibile): installazione +
+ *     copia → riconoscimenti → badge sicurezza → repo → fine-print
+ *     (livello · verificata).
+ *
+ * Mobile <1024px: singola colonna impilata, ordine tag-row → nome → tagline →
+ *   a_che_serve → [pannello info pratiche] → approfondisci. Nessun bordo
+ *   verticale.
  *
  * Note:
- * - profilo sicurezza resta SOPRA la piega: informazione critica, costo
- *   verticale minimo (1 riga di badge), serve a chi non aprirà mai i dettagli.
+ * - il pannello info pratiche è SEMPRE visibile: chi non aprirà mai i dettagli
+ *   ha comunque install, sicurezza, repo e provenienza sotto gli occhi.
  * - badge "bozza" appare solo se la descrizione personale comincia con
  *   [BOZZA — Andrea rifinisce] → marker estratto da `extractDraftMarker`.
+ * - il pulsante copia (CopyButton) è l'unica parte client della scheda.
  */
 
 // Stile per tag di sicurezza — mappa intento → look.
@@ -68,6 +78,19 @@ function MetaTag({ children }: { children: React.ReactNode }) {
     >
       {children}
     </span>
+  );
+}
+
+// Micro-label di sezione nel pannello "info pratiche" (destra): 11px uppercase
+// tracking ampio, neutro. Marca ogni riga del pannello senza rumore visivo.
+function InfoLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      className="text-[11px] font-medium uppercase tabular-figures text-muted"
+      style={{ letterSpacing: 'var(--tracking-micro)' }}
+    >
+      {children}
+    </div>
   );
 }
 
@@ -138,142 +161,183 @@ export function SkillCard({ skill, showTema = true }: { skill: Skill; showTema?:
 
   return (
     <article className="relative border-t border-rule pt-10 pb-12">
-      {/* Riga superiore — tag dove funziona + importanza (+ tema se non già
-          implicito dal raggruppamento) + badge bozza. Su mobile allineata a
-          sinistra (evita orfani right-aligned); su desktop a destra, a
-          specchio della rilegatura terracotta. `showTema=false` nel catalogo:
-          il tema è già nel titolo del gruppo, mostrarlo sulla card è ridondante. */}
-      <div className="mb-4 flex flex-wrap items-center justify-start sm:justify-end gap-3">
-        {isDraft && <DraftBadge />}
-        {showTema && (
-          <>
-            <MetaTag>{skill.tema}</MetaTag>
+      {/*
+        Griglia "open pages". Su mobile colonna singola (default). Da lg in su
+        diventa 60/40 SENZA gap: la separazione è data dalla hairline verticale
+        (border-l su .info-panel), la "spina" del libro. La colonna sinistra
+        respira con padding-right, la destra rientra dalla spina con padding-left.
+      */}
+      <div className="lg:grid lg:grid-cols-[60fr_40fr]">
+        {/* ── PAGINA SINISTRA — voce, lettura ───────────────────────── */}
+        <div className="lg:pr-[clamp(1.5rem,3vw,2.5rem)]">
+          {/* Riga superiore — tag dove funziona + importanza (+ tema se non già
+              implicito dal raggruppamento) + badge bozza. Allineata a sinistra:
+              apre la pagina come una riga di catalogo. `showTema=false` nel
+              catalogo: il tema è già nel titolo del gruppo. */}
+          <div className="mb-4 flex flex-wrap items-center justify-start gap-3">
+            {isDraft && <DraftBadge />}
+            {showTema && (
+              <>
+                <MetaTag>{skill.tema}</MetaTag>
+                <span aria-hidden="true" className="text-muted/40">·</span>
+              </>
+            )}
+            <MetaTag>{skill.dove_funziona}</MetaTag>
             <span aria-hidden="true" className="text-muted/40">·</span>
-          </>
-        )}
-        <MetaTag>{skill.dove_funziona}</MetaTag>
-        <span aria-hidden="true" className="text-muted/40">·</span>
-        <MetaTag>{skill.importanza}</MetaTag>
+            <MetaTag>{skill.importanza}</MetaTag>
+          </div>
+
+          {/* Nome — corpo display, sobrio, weight 600 */}
+          <h2
+            className="text-[clamp(1.75rem,3vw,2.5rem)] font-semibold text-ink balance"
+            style={{
+              lineHeight: 1.1,
+              letterSpacing: 'var(--tracking-display)',
+              fontVariationSettings: '"opsz" 60',
+            }}
+          >
+            {skill.nome}
+          </h2>
+
+          {/* Tagline — italic, opsz medio, prosa stretta */}
+          <p
+            className="lead mt-3 max-w-[50ch] text-[clamp(1.05rem,1.3vw,1.25rem)] italic text-ink-soft"
+            style={{
+              lineHeight: 1.4,
+              letterSpacing: 'var(--tracking-display)',
+              fontVariationSettings: '"opsz" 24',
+            }}
+          >
+            {skill.tagline}
+          </p>
+
+          {/* A che serve — la risposta concreta al "cosa fa", in linguaggio
+              piano. Voce più presente della descrizione personale: questo è il
+              primo paragrafo che l'amico legge. */}
+          <p
+            className="mt-6 max-w-[var(--measure-prose)] text-[1.0625rem] text-ink prose-pretty"
+            style={{
+              lineHeight: 1.6,
+              fontVariationSettings: '"opsz" 24',
+            }}
+          >
+            {skill.a_che_serve}
+          </p>
+
+          {/* ── PANNELLO INFO PRATICHE — su mobile vive QUI, nel flusso della
+              pagina, tra "a che serve" e "approfondisci". Da lg in su è
+              nascosto qui e mostrato nella colonna destra (vedi sotto). ──── */}
+          <div className="lg:hidden">
+            <InfoPanel skill={skill} />
+          </div>
+
+          {/* Approfondisci — collassabile native, accessibile da tastiera.
+              Round 3: contiene SOLO la voce di Andrea (descrizione_personale)
+              + eventuale `note`. I dati tecnici sono migrati nel pannello
+              info pratiche. */}
+          <details className="group mt-7 max-w-[var(--measure-prose)]">
+            <summary
+              className="cursor-pointer select-none list-none text-[11px] font-medium uppercase tabular-figures text-muted hover:text-terracotta-deep [&::-webkit-details-marker]:hidden"
+              style={{ letterSpacing: 'var(--tracking-micro)' }}
+            >
+              <span className="inline-flex items-center gap-2">
+                <span aria-hidden="true" className="inline-block h-px w-6 bg-terracotta/50 transition-all group-open:w-10" />
+                approfondisci
+              </span>
+            </summary>
+
+            {/* Voce personale — markdown, dentro details */}
+            <Prose className="mt-6 max-w-[var(--measure-prose)] text-[1.0625rem] text-ink/80 prose-pretty">
+              {content}
+            </Prose>
+
+            {/* Note free-text (caso edge) — sotto la descrizione, muted italic */}
+            {skill.note && (
+              <p className="mt-4 max-w-[var(--measure-prose)] text-[0.95rem] italic text-muted">
+                {skill.note}
+              </p>
+            )}
+          </details>
+        </div>
+
+        {/* ── PAGINA DESTRA — info pratiche, sempre visibile da lg in su.
+            La hairline verticale (border-l border-rule) è la spina del libro;
+            il padding-left fa rientrare il contenuto dalla spina. ─────────── */}
+        <div className="hidden lg:block lg:border-l lg:border-rule lg:pl-[clamp(2rem,4vw,3.5rem)]">
+          <InfoPanel skill={skill} />
+        </div>
+      </div>
+    </article>
+  );
+}
+
+/**
+ * Pannello "info pratiche" — colonna destra (desktop) / blocco impilato
+ * (mobile). Ordine fisso: installazione + copia → riconoscimenti → badge
+ * sicurezza → repo → fine-print (livello · verificata). Server component:
+ * solo il pulsante copia (CopyButton) è client.
+ *
+ * Body in Geist (ereditato): nessun font-family forzato, a parte il mono del
+ * comando di installazione che usa la CSS var --font-mono.
+ */
+function InfoPanel({ skill }: { skill: Skill }) {
+  return (
+    <div className="mt-8 lg:mt-0 flex flex-col gap-6">
+      {/* (1) Installazione — comando in mono + pulsante copia */}
+      <div>
+        <div className="flex items-baseline justify-between gap-3">
+          <InfoLabel>installazione</InfoLabel>
+          <CopyButton text={skill.installazione} />
+        </div>
+        <code
+          className="mt-2 block overflow-x-auto rounded-sm bg-paper-deep px-3 py-2 text-[0.85rem] text-ink-soft"
+          style={{ fontFamily: 'var(--font-mono)' }}
+        >
+          {skill.installazione}
+        </code>
       </div>
 
-      {/* Nome — corpo display, sobrio, weight 600 */}
-      <h2
-        className="text-[clamp(1.75rem,3vw,2.5rem)] font-semibold text-ink balance"
-        style={{
-          lineHeight: 1.1,
-          letterSpacing: 'var(--tracking-display)',
-          fontVariationSettings: '"opsz" 60',
-        }}
-      >
-        {skill.nome}
-      </h2>
-
-      {/* Tagline — italic, opsz medio, prosa stretta */}
-      <p
-        className="lead mt-3 max-w-[50ch] text-[clamp(1.05rem,1.3vw,1.25rem)] italic text-ink-soft"
-        style={{
-          lineHeight: 1.4,
-          letterSpacing: 'var(--tracking-display)',
-          fontVariationSettings: '"opsz" 24',
-        }}
-      >
-        {skill.tagline}
-      </p>
-
-      {/* A che serve — la risposta concreta al "cosa fa", in linguaggio piano.
-          Sempre visibile, sopra la piega. Voce più presente della descrizione
-          personale: questo è il primo paragrafo che l'amico legge. */}
-      <p
-        className="mt-6 max-w-[var(--measure-prose)] text-[1.0625rem] text-ink prose-pretty"
-        style={{
-          lineHeight: 1.6,
-          fontVariationSettings: '"opsz" 24',
-        }}
-      >
-        {skill.a_che_serve}
-      </p>
-
-      {/* Riconoscimenti — micro-riga sempre visibile.
-          Format: "{stelle} · {licenza} · creato da {autore} · aggiornato {mese aaaa}"
+      {/* (2) Riconoscimenti — stelle · licenza · creato da · aggiornato.
           Per stelle:null → "Ufficiale {autore} · {licenza} · aggiornato …". */}
       <div
-        className="mt-4 text-[11px] font-medium uppercase tabular-figures text-ink/65"
+        className="text-[11px] font-medium uppercase tabular-figures text-ink/65"
         style={{ letterSpacing: '0.08em' }}
       >
         {buildRiconoscimenti(skill)}
       </div>
 
-      {/* Profilo sicurezza — SOPRA la piega: l'amico non-power-user lo vede subito */}
-      <div className="mt-6 flex flex-wrap gap-2">
+      {/* (3) Profilo sicurezza — badge impilati/wrap */}
+      <div className="flex flex-wrap gap-2">
         {skill.profilo_sicurezza.map((tag) => (
           <SecurityBadge key={tag} tag={tag} />
         ))}
       </div>
 
-      {/* Approfondisci — collassabile native, accessibile da tastiera.
-          Contiene: voce di Andrea (descrizione_personale) + tabella tecnica. */}
-      <details className="group mt-7 max-w-[var(--measure-prose)]">
-        <summary
-          className="cursor-pointer select-none list-none text-[11px] font-medium uppercase tabular-figures text-muted hover:text-terracotta-deep [&::-webkit-details-marker]:hidden"
-          style={{ letterSpacing: 'var(--tracking-micro)' }}
+      {/* (4) Repository — link esterno */}
+      <div>
+        <InfoLabel>repository</InfoLabel>
+        <a
+          href={skill.repo_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-1 block break-all text-[0.95rem] text-ink-soft underline decoration-terracotta/40 decoration-1 underline-offset-4 hover:decoration-terracotta visited:decoration-muted/50"
         >
-          <span className="inline-flex items-center gap-2">
-            <span aria-hidden="true" className="inline-block h-px w-6 bg-terracotta/50 transition-all group-open:w-10" />
-            approfondisci
-          </span>
-        </summary>
+          {repoLabelOf(skill.repo_url)}
+        </a>
+      </div>
 
-        {/* Voce personale — markdown, dentro details */}
-        <Prose className="mt-6 max-w-[var(--measure-prose)] text-[1.0625rem] text-ink/80 prose-pretty">
-          {content}
-        </Prose>
-
-        <dl className="mt-7 grid grid-cols-[max-content_1fr] gap-x-6 gap-y-2 text-[0.95rem] text-ink-soft">
-          <dt className="text-muted">installazione</dt>
-          <dd>
-            <code
-              className="rounded-sm bg-paper-deep px-2 py-1 font-mono text-[0.85rem] text-ink-soft"
-              style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace' }}
-            >
-              {skill.installazione}
-            </code>
-          </dd>
-
-          <dt className="text-muted">stelle</dt>
-          <dd className="tabular-figures">{formatStars(skill.stelle, skill.note_stelle)}</dd>
-
-          <dt className="text-muted">ultimo commit</dt>
-          <dd className="tabular-figures">{formatDate(skill.ultimo_commit)}</dd>
-
-          <dt className="text-muted">licenza</dt>
-          <dd>{skill.licenza}</dd>
-
-          <dt className="text-muted">livello</dt>
-          <dd>{skill.livello}</dd>
-
-          <dt className="text-muted">verifica</dt>
-          <dd className="tabular-figures">{formatDate(skill.data_controllo)}</dd>
-
-          <dt className="text-muted">repository</dt>
-          <dd>
-            <a
-              href={skill.repo_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline decoration-terracotta/40 decoration-1 underline-offset-4 hover:decoration-terracotta visited:decoration-muted/50"
-            >
-              {skill.repo_url.replace(/^https?:\/\//, '')}
-            </a>
-          </dd>
-
-          {skill.note && (
-            <>
-              <dt className="text-muted">note</dt>
-              <dd className="italic text-muted">{skill.note}</dd>
-            </>
-          )}
-        </dl>
-      </details>
-    </article>
+      {/* (5) Fine-print — compatto: livello · verificata {data} */}
+      <div
+        className="text-[11px] tabular-figures text-muted"
+        style={{ letterSpacing: '0.04em' }}
+      >
+        {skill.livello} · verificata {formatDate(skill.data_controllo)}
+      </div>
+    </div>
   );
+}
+
+// Estrae label leggibile dall'URL repo (toglie lo schema http/https).
+function repoLabelOf(url: string): string {
+  return url.replace(/^https?:\/\//, '');
 }
