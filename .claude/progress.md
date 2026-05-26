@@ -2,11 +2,11 @@
 
 > Snapshot di stato: fasi chiuse, fase corrente, blocchi aperti.
 
-## Stato attuale — 2026-05-24
+## Stato attuale — 2026-05-26
 
-Sito **completo e funzionante** con seed reale (12 skill). Round 1 + 2 + 2.5 chiusi.
-Repo remoto `queondache/Skilletti` allineato a `38b1af9`.
-**Rimangono Fase 4 (agent settimanale) e Fase 5 (deploy GitHub Pages).**
+Sito **completo e live su Vercel** (`skilletti.vercel.app`) con seed reale (12 skill).
+Round 1 + 2 + 2.5 + **3 (UX revamp)** chiusi.
+**Rimangono Fase 4 (agent mensile) e Fase 5 (deploy GitHub Pages — opzionale, ora live su Vercel).**
 
 `data/skills.json`: 12 skill — 4 essenziale · 6 forte · 2 situazionale.
 
@@ -43,6 +43,24 @@ Span round 1 (`3dbba1b`) → round 2 (`0d95804`) → round 2.5 QA (`38b1af9`).
 - Round 2.5 QA: gerarchia titoli, line-height unificato 1.6, layout mobile
   (nav 1 riga, padding py-16, tag-row left-align). 14 osservazioni audit risolte.
 - **Lighthouse desktop**: A11y 100 · Best Practices 100 · SEO 100 · Agentic 100.
+
+### Round 3 — UX revamp ✅ (branch `feat/round3-ux` → PR squash su main)
+Sito ora **live su Vercel** (`skilletti.vercel.app`). Pre-round3: `next.config.ts`
+basePath condizionale Vercel (`VERCEL=1` ⇒ vuoto) + `.gitignore .vercel` (PR #2 `8f39dec`).
+5 cambiamenti:
+- **C1** font duplice: Fraunces display + Geist body (`next/font/google`), `--font-mono`,
+  measure-prose 62ch. Heading/`.lead` ancorati a `--font-display`.
+- **C2** SkillCard "open pages" 2-col ≥1024px (sx voce 60% / dx info pratiche 40%,
+  hairline "spina"), single-col sotto. Nuovo `CopyButton.tsx` (isola client).
+- **C3** sommario tematico (`Summary.tsx`) dopo Hero: chip `Essenziali (4)`
+  (distinto strutturalmente) + chip tema, count auto-derivati (Modello B);
+  `TEMA_ORDER` esportato da Catalog (fonte unica).
+- **C4** rimossi 5 marker `[BOZZA]` + descrizioni reali (voce Andrea, no hype,
+  lunghezza allineata alle esistenti). Tagline/a_che_serve invariati.
+- **C5** sezione **Template** (`TemplateSection.tsx` + `content/templates/`
+  claude-base.md/spec-base.md) tra Metodo e Vocabolario; nav 5ª ancora.
+QA: responsive 1440/1024/768/390 ok, nav sticky 5 sezioni + active-state ok,
+zero overflow orizzontale, build verde.
 
 ---
 
@@ -82,6 +100,17 @@ _(da popolare a partire dalla prima esecuzione agent)_
 
 ## Prossimo step
 
-- [ ] Verificare stato GitHub Pages (Fase 5) prima di trattarla come "da fare" —
-      `deploy.yml` già presente, controllare se il sito è live.
-- [ ] Decidere ordine Fase 4 (agent) vs completamento Fase 5 (deploy live) col prossimo task di Andrea.
+- [ ] **SPEC.md update** (deferred post-Round3): allineare §9/§10 alla Fase 4 reale —
+      agent **mensile** (1° del mese 9 UTC, non settimanale), fonti **GitHub API +
+      awesome-list curate** (no Reddit/blog), paradigma **rank-shortlist** (no web
+      search nativo). + aggiungere Vercel come hosting live accanto a GitHub Pages.
+- [ ] **Fase 4 — agent mensile**: costruire `scripts/agent/` + workflow cron. Manca
+      ancora il prompt Fase 4 completo (due volte arrivato solo come placeholder).
+      Conferme già date: regola d'oro = gate umano sulla review PR (agent non verifica);
+      watchlist <1000★ nel body PR (mai in skills.json); agent mai merge autonomo.
+- [ ] **Fase 5 — deploy**: decidere se Vercel è definitivo o tenere anche GitHub Pages.
+      Se Vercel: branch protection su `main` + `gh secret scanning`. Nota: deploy
+      intermedi di verifica = preview (auth-walled), solo il finale va in prod.
+- [ ] **Conflitto schema vs SPEC** (minore): `stelle:null` whitelist è
+      `anthropics|firecrawl` in `skills.schema.json`, ma SPEC §6 cita anche
+      Vercel/Google/Supabase. Decidere se allargare il pattern.
