@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { fraunces, geist, geistMono } from './fonts';
 import { NavSticky } from '@/components/NavSticky';
+import { Reveal } from '@/components/Reveal';
 import './globals.css';
 
 const SITE_URL = 'https://queondache.github.io/skilletti';
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body className="bg-paper text-ink antialiased">
         <NavSticky />
+        <Reveal />
         {children}
       </body>
     </html>

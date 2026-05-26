@@ -80,7 +80,7 @@ export default function HomePage() {
       {/* Parti da qui — porte d'ingresso curate */}
       <section
         id="parti-da-qui"
-        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-16 sm:py-24"
+        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] min-[1440px]:pr-[calc(7vw+var(--gutter-edge)+8rem)] py-12 sm:py-20"
         style={{ scrollMarginTop: '100px' }}
       >
         <div
@@ -90,6 +90,7 @@ export default function HomePage() {
           parti da qui
         </div>
         <h2
+          data-reveal
           className="mt-2 text-[clamp(2rem,3.5vw,3rem)] font-semibold text-ink balance"
           style={{
             lineHeight: 1.1,
@@ -126,7 +127,7 @@ export default function HomePage() {
           ibrido (indice + filtro in un solo controllo). Stato in URL ?tema=. */}
       <section
         id="catalogo"
-        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-16 sm:py-24 border-t border-rule"
+        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] min-[1440px]:pr-[calc(7vw+var(--gutter-edge)+8rem)] py-12 sm:py-20 border-t border-rule"
         style={{ scrollMarginTop: '100px' }}
       >
         <div
@@ -136,6 +137,7 @@ export default function HomePage() {
           catalogo
         </div>
         <h2
+          data-reveal
           className="mt-2 text-[clamp(2rem,3.5vw,3rem)] font-semibold text-ink balance"
           style={{
             lineHeight: 1.1,
@@ -163,7 +165,7 @@ export default function HomePage() {
           Contenuto canonico in content/workflow.mdx, render via Article. */}
       <section
         id="workflow"
-        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-16 sm:py-24 border-t border-rule"
+        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] min-[1440px]:pr-[calc(7vw+var(--gutter-edge)+8rem)] py-12 sm:py-20 border-t border-rule"
         style={{ scrollMarginTop: '100px' }}
       >
         <div
@@ -173,6 +175,7 @@ export default function HomePage() {
           metodo
         </div>
         <h2
+          data-reveal
           className="mt-2 text-[clamp(2rem,3.5vw,3rem)] font-semibold text-ink balance"
           style={{
             lineHeight: 1.1,
@@ -189,7 +192,7 @@ export default function HomePage() {
           Testo grezzo letto a build time, render via TemplateSection. */}
       <section
         id="template"
-        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-16 sm:py-24 border-t border-rule"
+        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] min-[1440px]:pr-[calc(7vw+var(--gutter-edge)+8rem)] py-12 sm:py-20 border-t border-rule"
         style={{ scrollMarginTop: '100px' }}
       >
         <div
@@ -199,6 +202,7 @@ export default function HomePage() {
           template
         </div>
         <h2
+          data-reveal
           className="mt-2 text-[clamp(2rem,3.5vw,3rem)] font-semibold text-ink balance"
           style={{
             lineHeight: 1.1,
@@ -215,7 +219,7 @@ export default function HomePage() {
           stesso pattern di workflow.mdx. */}
       <section
         id="didattica"
-        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-16 sm:py-24 border-t border-rule"
+        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] min-[1440px]:pr-[calc(7vw+var(--gutter-edge)+8rem)] py-12 sm:py-20 border-t border-rule"
         style={{ scrollMarginTop: '100px' }}
       >
         <div
@@ -225,6 +229,7 @@ export default function HomePage() {
           vocabolario
         </div>
         <h2
+          data-reveal
           className="mt-2 text-[clamp(2rem,3.5vw,3rem)] font-semibold text-ink balance"
           style={{
             lineHeight: 1.1,
@@ -239,7 +244,7 @@ export default function HomePage() {
 
       {/* Firma — fondo pagina, non più dentro l'hero */}
       <footer
-        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-12 border-t border-rule"
+        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] min-[1440px]:pr-[calc(7vw+var(--gutter-edge)+8rem)] py-12 border-t border-rule"
       >
         <div
           className="text-[11px] font-medium uppercase tabular-figures text-ink/65"

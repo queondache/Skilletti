@@ -45,7 +45,7 @@ export function Summary({ skills }: { skills: Skill[] }) {
     <section
       id="sommario"
       aria-label="Sommario"
-      className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-10 sm:py-12 border-t border-rule"
+      className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] min-[1440px]:pr-[calc(7vw+var(--gutter-edge)+8rem)] py-10 sm:py-12 border-t border-rule"
       style={{ scrollMarginTop: '100px' }}
     >
       <div className={MICRO} style={{ letterSpacing: 'var(--tracking-micro)' }}>

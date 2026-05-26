@@ -64,7 +64,7 @@ export function Catalog({ skills }: { skills: Skill[] }) {
             id={`tema-${g.slug}`}
             data-tema={g.slug}
             className={`tema-group transition-opacity duration-200 ease-out ${
-              i === 0 ? '' : 'mt-20'
+              i === 0 ? '' : 'mt-14'
             }`}
             style={{ scrollMarginTop: '120px' }}
           >
