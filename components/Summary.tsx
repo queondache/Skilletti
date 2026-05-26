@@ -88,7 +88,7 @@ export function Summary({ skills }: { skills: Skill[] }) {
                   className="text-muted transition-colors hover:text-ink hover:underline hover:decoration-terracotta/60 hover:underline-offset-[6px]"
                 >
                   {t.short}{' '}
-                  <span className="text-ink/55">({t.count})</span>
+                  <span className="text-muted">({t.count})</span>
                 </a>
               </span>
             ))}
