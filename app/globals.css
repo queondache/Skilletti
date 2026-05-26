@@ -15,9 +15,11 @@
   --color-terracotta: #B85C38;
   --color-terracotta-deep: #8E4426;
 
-  /* Famiglia unica — display + body. La variazione la fa opsz. */
+  /* Sistema duplice (Round 3): Fraunces display/voce, Geist body, Geist Mono code.
+     Fallback body: Inter → system sans (vedi app/fonts.ts). */
   --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
-  --font-body: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-body: var(--font-geist), Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* Tracking tokens — type-as-hero discipline */
   --tracking-wordmark: -0.035em;
@@ -30,7 +32,7 @@
   --gutter-indent: clamp(2rem, 12vw, 9rem);
 
   --measure-tagline: 32ch;
-  --measure-prose:   50ch;
+  --measure-prose:   62ch;
 }
 
 /* Base typografica — calmo, libro/editoriale, non SaaS. */
@@ -51,6 +53,14 @@ body {
   background: var(--color-paper) !important;
   color: var(--color-ink);
   min-height: 100dvh;
+}
+
+/* Famiglia display ancorata esplicitamente (Round 3 split): titoli e taglini
+   italic. Senza, erediterebbero --font-body (Geist). I titoli usano l'asse
+   opsz di Fraunces via font-variation-settings inline → famiglia qui, asse là.
+   `.lead` = taglina/intro editoriale italic (voce d'autore, resta serif). */
+h1, h2, h3, .lead {
+  font-family: var(--font-display);
 }
 
 /* Bilanciamento titoli — niente orfani sul wordmark né sulla tagline. */

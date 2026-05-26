@@ -1,8 +1,10 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { Hero } from '@/components/Hero';
+import { Summary } from '@/components/Summary';
 import { SkillCard } from '@/components/SkillCard';
 import { Catalog } from '@/components/Catalog';
+import { TemplateSection } from '@/components/TemplateSection';
 import { Article } from '@/lib/markdown';
 import type { Skill } from '@/types/skill';
 import skillsData from '@/data/skills.json';
@@ -25,6 +27,19 @@ const pedagogiaMdx = readFileSync(
 )
   .replace(/^#\s+.+\n+/, '')
   .replace(/^##\s/gm, '# ');
+
+// Template versionati (fonte unica copiabile) — testo grezzo mostrato in
+// blocco mono dalla sezione "Template". Stesso pattern readFileSync a build
+// time degli .mdx sopra; qui niente trasformazioni, l'utente copia 1:1.
+const claudeBaseMd = readFileSync(
+  resolve(process.cwd(), 'content/templates/claude-base.md'),
+  'utf-8',
+).trimEnd();
+
+const specBaseMd = readFileSync(
+  resolve(process.cwd(), 'content/templates/spec-base.md'),
+  'utf-8',
+).trimEnd();
 
 /**
  * Home — single-page con ancore (vedi SPEC §7).
@@ -59,6 +74,9 @@ export default function HomePage() {
 
       <Hero />
 
+      {/* Sommario tematico — sala d'ingresso, orientamento immediato */}
+      <Summary skills={skills} />
+
       {/* Parti da qui — porte d'ingresso curate */}
       <section
         id="parti-da-qui"
@@ -82,7 +100,7 @@ export default function HomePage() {
           Le essenziali
         </h2>
         <p
-          className="mt-4 max-w-[var(--measure-prose)] text-[1.0625rem] italic text-ink-soft prose-pretty"
+          className="lead mt-4 max-w-[var(--measure-prose)] text-[1.0625rem] italic text-ink-soft prose-pretty"
           style={{
             lineHeight: 1.6,
             fontVariationSettings: '"opsz" 24',
@@ -124,7 +142,7 @@ export default function HomePage() {
           Le altre
         </h2>
         <p
-          className="mt-4 max-w-[var(--measure-prose)] text-[1.0625rem] italic text-ink-soft prose-pretty"
+          className="lead mt-4 max-w-[var(--measure-prose)] text-[1.0625rem] italic text-ink-soft prose-pretty"
           style={{
             lineHeight: 1.6,
             fontVariationSettings: '"opsz" 24',
@@ -161,6 +179,32 @@ export default function HomePage() {
           Come uso Claude.ai e Claude Code insieme
         </h2>
         <Article className="mt-8">{workflowMdx}</Article>
+      </section>
+
+      {/* Template — due file per partire (CLAUDE.md + SPEC.md), copiabili.
+          Testo grezzo letto a build time, render via TemplateSection. */}
+      <section
+        id="template"
+        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-16 sm:py-24 border-t border-rule"
+        style={{ scrollMarginTop: '100px' }}
+      >
+        <div
+          className="text-[11px] font-medium uppercase tabular-figures text-muted"
+          style={{ letterSpacing: 'var(--tracking-micro)' }}
+        >
+          template
+        </div>
+        <h2
+          className="mt-2 text-[clamp(2rem,3.5vw,3rem)] font-semibold text-ink balance"
+          style={{
+            lineHeight: 1.1,
+            letterSpacing: 'var(--tracking-display)',
+            fontVariationSettings: '"opsz" 96',
+          }}
+        >
+          Due file per partire
+        </h2>
+        <TemplateSection claudeMd={claudeBaseMd} specMd={specBaseMd} />
       </section>
 
       {/* Didattica — render reale di content/pedagogia.mdx via Article,
