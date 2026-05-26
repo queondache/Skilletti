@@ -156,8 +156,101 @@ function buildRiconoscimenti(skill: Skill): string {
   return parts.join(' · ');
 }
 
-export function SkillCard({ skill, showTema = true }: { skill: Skill; showTema?: boolean }) {
+export function SkillCard({
+  skill,
+  showTema = true,
+  variant = 'open',
+}: {
+  skill: Skill;
+  showTema?: boolean;
+  variant?: 'open' | 'doorway';
+}) {
   const { content, isDraft } = extractDraftMarker(skill.descrizione_personale);
+
+  // Variante "doorway" — usata dalle essenziali in griglia 2×2. Card-porta calma
+  // in colonna singola: niente spina 60/40 (a metà larghezza affolla). Il profilo
+  // sicurezza resta sopra la piega (SPEC §7); install, riconoscimenti e repo
+  // vivono dentro "approfondisci". Testa (tag/nome/tagline/a_che_serve) duplicata
+  // dalla variante open di proposito, per non toccare il layout open già in uso.
+  if (variant === 'doorway') {
+    return (
+      <article className="relative border-t border-rule pt-10 pb-10">
+        <div className="mb-4 flex flex-wrap items-center justify-start gap-3">
+          {isDraft && <DraftBadge />}
+          {showTema && (
+            <>
+              <MetaTag>{skill.tema}</MetaTag>
+              <span aria-hidden="true" className="text-muted/40">·</span>
+            </>
+          )}
+          <MetaTag>{skill.dove_funziona}</MetaTag>
+          <span aria-hidden="true" className="text-muted/40">·</span>
+          <MetaTag>{skill.importanza}</MetaTag>
+        </div>
+
+        <h2
+          className="text-[clamp(1.75rem,3vw,2.5rem)] font-semibold text-ink balance"
+          style={{
+            lineHeight: 1.1,
+            letterSpacing: 'var(--tracking-display)',
+            fontVariationSettings: '"opsz" 60',
+          }}
+        >
+          {skill.nome}
+        </h2>
+
+        <p
+          className="lead mt-3 max-w-[50ch] text-[clamp(1.05rem,1.3vw,1.25rem)] italic text-ink-soft"
+          style={{
+            lineHeight: 1.4,
+            letterSpacing: 'var(--tracking-display)',
+            fontVariationSettings: '"opsz" 24',
+          }}
+        >
+          {skill.tagline}
+        </p>
+
+        <p
+          className="mt-6 max-w-[var(--measure-prose)] text-[1.0625rem] text-ink prose-pretty"
+          style={{ lineHeight: 1.6, fontVariationSettings: '"opsz" 24' }}
+        >
+          {skill.a_che_serve}
+        </p>
+
+        {/* Profilo sicurezza — visibile sopra la piega */}
+        <div className="mt-6 flex flex-wrap gap-2">
+          {skill.profilo_sicurezza.map((tag) => (
+            <SecurityBadge key={tag} tag={tag} />
+          ))}
+        </div>
+
+        {/* Approfondisci — voce di Andrea + info pratiche (badge esclusi: già sopra) */}
+        <details className="group mt-7 max-w-[var(--measure-prose)]">
+          <summary
+            className="cursor-pointer select-none list-none text-[11px] font-medium uppercase tabular-figures text-muted hover:text-terracotta-deep [&::-webkit-details-marker]:hidden"
+            style={{ letterSpacing: 'var(--tracking-micro)' }}
+          >
+            <span className="inline-flex items-center gap-2">
+              <span aria-hidden="true" className="inline-block h-px w-6 bg-terracotta/50 transition-all group-open:w-10" />
+              approfondisci
+            </span>
+          </summary>
+
+          <Prose className="mt-6 max-w-[var(--measure-prose)] text-[1.0625rem] text-ink/80 prose-pretty">
+            {content}
+          </Prose>
+
+          {skill.note && (
+            <p className="mt-4 max-w-[var(--measure-prose)] text-[0.95rem] italic text-muted">
+              {skill.note}
+            </p>
+          )}
+
+          <InfoPanel skill={skill} showSecurity={false} />
+        </details>
+      </article>
+    );
+  }
 
   return (
     <article className="relative border-t border-rule pt-10 pb-12">
@@ -280,7 +373,7 @@ export function SkillCard({ skill, showTema = true }: { skill: Skill; showTema?:
  * Body in Geist (ereditato): nessun font-family forzato, a parte il mono del
  * comando di installazione che usa la CSS var --font-mono.
  */
-function InfoPanel({ skill }: { skill: Skill }) {
+function InfoPanel({ skill, showSecurity = true }: { skill: Skill; showSecurity?: boolean }) {
   return (
     <div className="mt-8 lg:mt-0 flex flex-col gap-6">
       {/* (1) Installazione — comando in mono + pulsante copia */}
@@ -306,12 +399,15 @@ function InfoPanel({ skill }: { skill: Skill }) {
         {buildRiconoscimenti(skill)}
       </div>
 
-      {/* (3) Profilo sicurezza — badge impilati/wrap */}
-      <div className="flex flex-wrap gap-2">
-        {skill.profilo_sicurezza.map((tag) => (
-          <SecurityBadge key={tag} tag={tag} />
-        ))}
-      </div>
+      {/* (3) Profilo sicurezza — badge impilati/wrap. Nascosti se già mostrati
+          sopra la piega (variante doorway). */}
+      {showSecurity && (
+        <div className="flex flex-wrap gap-2">
+          {skill.profilo_sicurezza.map((tag) => (
+            <SecurityBadge key={tag} tag={tag} />
+          ))}
+        </div>
+      )}
 
       {/* (4) Repository — link esterno */}
       <div>
