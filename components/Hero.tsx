@@ -43,7 +43,7 @@ export function Hero() {
           fontVariationSettings: '"opsz" 36',
         }}
       >
-        Trenta skill di Claude. Scelte a mano, raccontate una a una.
+        Le migliori skill di Claude. Scelte a mano, raccontate una a una.
       </p>
 
       <p
