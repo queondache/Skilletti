@@ -18,7 +18,9 @@ import type { Skill } from '@/types/skill';
 // Ordine semantico user-first (decisione Fase A Round 2).
 // `match` è il valore esatto del campo `tema` in skills.json.
 // `slug` è l'anchor e l'identificatore URL.
-const TEMA_ORDER = [
+// Esportato: anche Summary (sommario tematico) deriva conteggi e ancore da qui
+// → ordine e slug restano fonte unica, niente divergenze tra indice e catalogo.
+export const TEMA_ORDER = [
   { slug: 'design', label: 'Design & UI', short: 'Design', match: 'Design & UI' },
   { slug: 'coding', label: 'Coding & sviluppo', short: 'Coding', match: 'Coding & sviluppo' },
   { slug: 'marketing', label: 'Marketing', short: 'Marketing', match: 'Marketing' },

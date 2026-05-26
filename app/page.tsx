@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { Hero } from '@/components/Hero';
+import { Summary } from '@/components/Summary';
 import { SkillCard } from '@/components/SkillCard';
 import { Catalog } from '@/components/Catalog';
 import { Article } from '@/lib/markdown';
@@ -58,6 +59,9 @@ export default function HomePage() {
       />
 
       <Hero />
+
+      {/* Sommario tematico — sala d'ingresso, orientamento immediato */}
+      <Summary skills={skills} />
 
       {/* Parti da qui — porte d'ingresso curate */}
       <section
