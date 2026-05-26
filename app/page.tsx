@@ -111,12 +111,13 @@ export default function HomePage() {
           una alla volta, senza fretta.
         </p>
 
-        {/* Essenziali in griglia 2×2 da xl (≥1280px): sotto, colonna singola a
-            piena larghezza (le card open-pages hanno bisogno di respiro). I top
-            si allineano (items-start) lasciando variare l'altezza delle card. */}
-        <div className="mt-10 grid max-w-[820px] grid-cols-1 gap-x-14 xl:max-w-[1180px] xl:grid-cols-2 xl:items-start">
+        {/* Essenziali in griglia 2×2 da xl (≥1280px); sotto, colonna singola.
+            Variante "doorway": card-porta calme (niente spina 60/40, che a metà
+            larghezza affolla). gap-y per staccare le righe; items-start lascia
+            variare l'altezza senza stiramenti. */}
+        <div className="mt-10 grid max-w-[820px] grid-cols-1 gap-x-16 gap-y-2 xl:max-w-[1180px] xl:grid-cols-2 xl:items-start">
           {partiDaQui.map((skill) => (
-            <SkillCard key={skill.id} skill={skill} />
+            <SkillCard key={skill.id} skill={skill} variant="doorway" />
           ))}
         </div>
       </section>
