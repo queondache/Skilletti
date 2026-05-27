@@ -102,7 +102,7 @@ html {
   }
 }
 
-/* Catalogo — fade dei gruppi non-target quando un filtro è attivo.
+/* Catalogo — fade dei gruppi non-target quando un filtro tema è attivo.
    Toggle gestito da CatalogControls via `data-hidden` su `.tema-group`. */
 .tema-group[data-hidden] {
   opacity: 0.15;
@@ -111,5 +111,46 @@ html {
 @media (prefers-reduced-motion: no-preference) {
   .tema-group {
     transition: opacity 200ms ease-out;
+  }
+}
+
+/* Filtro contesto d'uso (ContextFilter) — hide reale, non fade: "mostra solo".
+   Le schede non-corrispondenti collassano (griglia/colonna), e i gruppi tema
+   rimasti vuoti spariscono per non lasciare titoli orfani. */
+[data-skill-card][data-ctx-hidden] {
+  display: none;
+}
+.tema-group[data-ctx-empty] {
+  display: none;
+}
+
+/* ── Reveal gentile all'ingresso (Reveal.tsx) ────────────────────────────
+   La classe `reveal-ready` viene aggiunta su <html> SOLO via JS e SOLO se
+   l'utente non preferisce reduced-motion → senza JS / reduced-motion tutto
+   resta visibile (nessun contenuto nascosto a chi non ha l'animazione). */
+[data-reveal] {
+  transition: opacity 500ms ease-out, transform 500ms ease-out;
+}
+.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.reveal-ready [data-reveal][data-revealed] {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none;
+  }
+}
+
+/* ── Hover scheda — accento sobrio, niente ombra (resta piatto/museo).
+   La hairline superiore vira verso terracotta: "una linea che si rivela". */
+@media (prefers-reduced-motion: no-preference) {
+  article[data-skill-card] {
+    transition: border-color 220ms ease-out;
   }
 }

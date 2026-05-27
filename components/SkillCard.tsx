@@ -1,4 +1,5 @@
-import type { ProfiloSicurezza, Skill } from '@/types/skill';
+import type { DoveFunziona, ProfiloSicurezza, Skill } from '@/types/skill';
+import { DOVE_FUNZIONA_LABEL } from '@/types/skill';
 import { extractDraftMarker, Prose } from '@/lib/markdown';
 import { CopyButton } from '@/components/CopyButton';
 
@@ -81,6 +82,13 @@ function MetaTag({ children }: { children: React.ReactNode }) {
   );
 }
 
+// Contesti d'uso (dove_funziona) → micro-label compatti, niente emoji.
+// Più contesti uniti da "/" (es. "CLI / VS Code") per distinguerli dal "·"
+// che separa i campi meta (tema · dove · importanza).
+function doveLabel(contexts: DoveFunziona[]): string {
+  return contexts.map((c) => DOVE_FUNZIONA_LABEL[c]).join(' / ');
+}
+
 // Micro-label di sezione nel pannello "info pratiche" (destra): 11px uppercase
 // tracking ampio, neutro. Marca ogni riga del pannello senza rumore visivo.
 function InfoLabel({ children }: { children: React.ReactNode }) {
@@ -141,19 +149,31 @@ function formatStarsShort(stelle: number | null): string | null {
 
 // Riga sempre visibile: stelle · licenza · creato da · aggiornato.
 // Per stelle:null la lead diventa "Ufficiale {autore}" (assorbe il "creato da").
-function buildRiconoscimenti(skill: Skill): string {
-  const parts: string[] = [];
+// Il conteggio stelle prende un accento terracotta all'hover della scheda
+// (group/card) — micro-delizia, niente di più.
+function Riconoscimenti({ skill }: { skill: Skill }) {
   const starsLabel = formatStarsShort(skill.stelle);
+  const tail: string[] = [];
   if (starsLabel) {
-    parts.push(starsLabel);
-    parts.push(skill.licenza);
-    parts.push(`creato da ${skill.autore}`);
+    tail.push(skill.licenza, `creato da ${skill.autore}`);
   } else {
-    parts.push(`Ufficiale ${skill.autore}`);
-    parts.push(skill.licenza);
+    tail.push(skill.licenza);
   }
-  parts.push(`aggiornato ${formatMonthYear(skill.ultimo_commit)}`);
-  return parts.join(' · ');
+  tail.push(`aggiornato ${formatMonthYear(skill.ultimo_commit)}`);
+
+  return (
+    <>
+      {starsLabel ? (
+        <span className="transition-colors duration-200 group-hover/card:text-terracotta-deep">
+          {starsLabel}
+        </span>
+      ) : (
+        `Ufficiale ${skill.autore}`
+      )}
+      {' · '}
+      {tail.join(' · ')}
+    </>
+  );
 }
 
 export function SkillCard({
@@ -174,7 +194,12 @@ export function SkillCard({
   // dalla variante open di proposito, per non toccare il layout open già in uso.
   if (variant === 'doorway') {
     return (
-      <article className="relative border-t border-rule pt-10 pb-10">
+      <article
+        data-skill-card
+        data-contexts={skill.dove_funziona.join(' ')}
+        data-reveal
+        className="group/card relative border-t border-rule pt-8 pb-8 hover:border-terracotta/50"
+      >
         <div className="mb-4 flex flex-wrap items-center justify-start gap-3">
           {isDraft && <DraftBadge />}
           {showTema && (
@@ -183,7 +208,7 @@ export function SkillCard({
               <span aria-hidden="true" className="text-muted/40">·</span>
             </>
           )}
-          <MetaTag>{skill.dove_funziona}</MetaTag>
+          <MetaTag>{doveLabel(skill.dove_funziona)}</MetaTag>
           <span aria-hidden="true" className="text-muted/40">·</span>
           <MetaTag>{skill.importanza}</MetaTag>
         </div>
@@ -253,7 +278,12 @@ export function SkillCard({
   }
 
   return (
-    <article className="relative border-t border-rule pt-10 pb-12">
+    <article
+      data-skill-card
+      data-contexts={skill.dove_funziona.join(' ')}
+      data-reveal
+      className="group/card relative border-t border-rule pt-9 pb-10 hover:border-terracotta/50"
+    >
       {/*
         Griglia "open pages". Su mobile colonna singola (default). Da lg in su
         diventa 60/40 SENZA gap: la separazione è data dalla hairline verticale
@@ -275,7 +305,7 @@ export function SkillCard({
                 <span aria-hidden="true" className="text-muted/40">·</span>
               </>
             )}
-            <MetaTag>{skill.dove_funziona}</MetaTag>
+            <MetaTag>{doveLabel(skill.dove_funziona)}</MetaTag>
             <span aria-hidden="true" className="text-muted/40">·</span>
             <MetaTag>{skill.importanza}</MetaTag>
           </div>
@@ -396,7 +426,7 @@ function InfoPanel({ skill, showSecurity = true }: { skill: Skill; showSecurity?
         className="text-[11px] font-medium uppercase tabular-figures text-ink/65"
         style={{ letterSpacing: '0.08em' }}
       >
-        {buildRiconoscimenti(skill)}
+        <Riconoscimenti skill={skill} />
       </div>
 
       {/* (3) Profilo sicurezza — badge impilati/wrap. Nascosti se già mostrati

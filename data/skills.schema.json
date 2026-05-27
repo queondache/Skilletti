@@ -64,8 +64,14 @@
           "enum": ["base", "intermedio", "power"]
         },
         "dove_funziona": {
-          "type": "string",
-          "enum": ["claude.ai", "claude-code", "entrambi"]
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "description": "Contesti d'uso. Array: una skill può girare su più contesti (es. CLI + VS Code). Niente claude.ai (decisione strategica: il sito copre solo Claude Code/IDE).",
+          "items": {
+            "type": "string",
+            "enum": ["claude-code", "claude-in-vscode", "claude-mobile"]
+          }
         },
         "a_che_serve": {
           "type": "string",

@@ -24,8 +24,26 @@ export type Importanza = (typeof IMPORTANZE)[number];
 export const LIVELLI = ['base', 'intermedio', 'power'] as const;
 export type Livello = (typeof LIVELLI)[number];
 
-export const DOVE_FUNZIONA = ['claude.ai', 'claude-code', 'entrambi'] as const;
+/**
+ * Contesti d'uso. Una skill può girare su più contesti (campo array).
+ * - claude-code     → CLI da terminale
+ * - claude-in-vscode → estensione VS Code di Claude Code
+ * - claude-mobile   → app iOS/Android
+ * Niente `claude.ai`: decisione strategica, il sito copre solo Claude Code/IDE.
+ */
+export const DOVE_FUNZIONA = [
+  'claude-code',
+  'claude-in-vscode',
+  'claude-mobile',
+] as const;
 export type DoveFunziona = (typeof DOVE_FUNZIONA)[number];
+
+/** Etichette brevi per il render (micro-label, niente emoji — coerenza editoriale). */
+export const DOVE_FUNZIONA_LABEL: Record<DoveFunziona, string> = {
+  'claude-code': 'CLI',
+  'claude-in-vscode': 'VS Code',
+  'claude-mobile': 'Mobile',
+};
 
 export const STATI = ['attiva', 'da-verificare', 'archiviata'] as const;
 export type Stato = (typeof STATI)[number];
@@ -57,7 +75,8 @@ export type Skill = {
   tema: Tema;
   importanza: Importanza;
   livello: Livello;
-  dove_funziona: DoveFunziona;
+  /** Contesti d'uso. Array non vuoto: una skill può girare su più contesti. */
+  dove_funziona: DoveFunziona[];
   /** Spiegazione concreta in linguaggio piano: cosa fa per l'utente, non come
    *  funziona dentro. Sempre visibile nella scheda, sopra la piega.
    *  Min 50, max 500 caratteri (vincolato dallo schema). */

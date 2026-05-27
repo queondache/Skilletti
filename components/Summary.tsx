@@ -1,5 +1,6 @@
 import type { Skill } from '@/types/skill';
 import { TEMA_ORDER } from '@/components/Catalog';
+import { ContextFilter, type CtxCounts } from '@/components/ContextFilter';
 
 /**
  * Sommario tematico — "sala d'ingresso" subito dopo l'Hero (vedi SPEC §7,
@@ -33,18 +34,33 @@ export function Summary({ skills }: { skills: Skill[] }) {
     count: nonEssenziali.filter((s) => s.tema === t.match).length,
   })).filter((t) => t.count > 0);
 
+  // Conteggi per contesto d'uso (una skill conta su ogni contesto che dichiara).
+  const ctxCounts: CtxCounts = {
+    'claude-code': skills.filter((s) => s.dove_funziona.includes('claude-code')).length,
+    'claude-in-vscode': skills.filter((s) => s.dove_funziona.includes('claude-in-vscode')).length,
+    'claude-mobile': skills.filter((s) => s.dove_funziona.includes('claude-mobile')).length,
+  };
+
   return (
     <section
       id="sommario"
       aria-label="Sommario"
-      className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-10 sm:py-12 border-t border-rule"
+      className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] min-[1440px]:pr-[calc(7vw+var(--gutter-edge)+8rem)] py-10 sm:py-12 border-t border-rule"
       style={{ scrollMarginTop: '100px' }}
     >
       <div className={MICRO} style={{ letterSpacing: 'var(--tracking-micro)' }}>
         sommario
       </div>
 
-      <div className="mt-6 flex flex-col gap-8 sm:flex-row sm:items-stretch sm:gap-10">
+      {/* Filtro contesto d'uso — globale (essenziali + catalogo), stato in URL */}
+      <div className="mt-6">
+        <ContextFilter counts={ctxCounts} />
+      </div>
+
+      {/* Divisore tra filtro contesto e navigazione tematica */}
+      <div aria-hidden="true" className="mt-8 h-px w-full bg-rule" />
+
+      <div className="mt-8 flex flex-col gap-8 sm:flex-row sm:items-stretch sm:gap-10">
         {/* Asse 1 — PARTI DA QUI. Distinto: label propria + chip più pesante e
             non-uppercase, separato dalla hairline. */}
         <div className="shrink-0">

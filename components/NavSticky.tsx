@@ -3,19 +3,22 @@
 import { useEffect, useState } from 'react';
 
 /**
- * Nav sticky tipografica — appare dopo l'hero, allineata a destra
- * (mirror della colonna paper-deep di rilegatura).
+ * Indice di pagina tipografico — due forme responsive che condividono lo stesso
+ * stato (visibilità + sezione attiva):
  *
- * Comportamento:
- * - Nascosta sotto la soglia di scroll (85% del primo viewport) per
- *   far respirare l'hero.
+ * - < 1280px (sotto xl): barra orizzontale fissa in alto, allineata a destra
+ *   (mirror della colonna paper-deep di rilegatura). Appare dopo l'hero.
+ * - ≥ 1280px (xl): rail verticale nella marginalia destra — sfrutta il
+ *   whitespace che a video largo restava vuoto a destra della colonna di prosa
+ *   (~62ch). Indice "da museo": etichette a filo destro, pallino terracotta sul
+ *   capitolo corrente (lo stesso punto del wordmark `skilletti.`).
+ *
+ * Comportamento condiviso:
+ * - Nascosto sotto la soglia di scroll (85% del primo viewport) per far
+ *   respirare l'hero.
  * - 5 ancore: essenziali · catalogo · metodo · template · vocabolario.
- * - Stato attivo via IntersectionObserver con rootMargin che attiva
- *   la sezione quando il suo bordo superiore passa ~30% dall'alto.
- * - Sfondo bg-paper/70 + backdrop-blur-md: leggibile su qualsiasi
- *   sezione, non spezza la pagina.
- * - Rispetta `prefers-reduced-motion` (la transizione di opacità
- *   diventa istantanea).
+ * - Sezione attiva via IntersectionObserver (banda 10%-40% dall'alto).
+ * - Rispetta `prefers-reduced-motion` (transizioni di opacità istantanee).
  */
 
 const SECTIONS = [
@@ -51,15 +54,12 @@ export function NavSticky() {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        // Trova l'entry "più in alto" tra quelle che intersecano
         const intersecting = entries
           .filter((e) => e.isIntersecting)
           .map((e) => e.target as HTMLElement)
           .sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
         const first = intersecting[0];
-        if (first) {
-          setActive(first.id as SectionId);
-        }
+        if (first) setActive(first.id as SectionId);
       },
       { rootMargin: '-10% 0px -60% 0px', threshold: 0 },
     );
@@ -69,29 +69,65 @@ export function NavSticky() {
   }, []);
 
   return (
-    <nav
-      aria-label="Indice della pagina"
-      data-visible={visible || undefined}
-      className={
-        'fixed top-0 left-0 right-0 z-40 pointer-events-none ' +
-        'transition-opacity duration-200 ease-out ' +
-        (visible ? 'opacity-100' : 'opacity-0')
-      }
-    >
-      <div
+    <>
+      {/* ── Barra orizzontale — sotto 1440px ────────────────────────────── */}
+      <nav
+        aria-label="Indice della pagina"
+        data-visible={visible || undefined}
         className={
-          'pointer-events-auto bg-paper/85 backdrop-blur-md ' +
-          'border-b border-rule/40 ' +
-          // Mobile: padding ridotto per far stare le 5 voci su una riga.
-          // Desktop: gutter pieno, a specchio della rilegatura.
-          'px-5 sm:pl-[var(--gutter-indent)] sm:pr-[calc(7vw+var(--gutter-edge))] ' +
-          'py-3'
+          'min-[1440px]:hidden fixed top-0 left-0 right-0 z-40 pointer-events-none ' +
+          'transition-opacity duration-200 ease-out ' +
+          (visible ? 'opacity-100' : 'opacity-0')
         }
       >
-        <ul
-          className="flex items-baseline justify-end gap-x-3 sm:gap-x-7 text-[9px] sm:text-[11px] font-medium uppercase tabular-figures"
-          style={{ letterSpacing: 'var(--tracking-micro)' }}
+        <div
+          className={
+            'pointer-events-auto bg-paper/85 backdrop-blur-md ' +
+            'border-b border-rule/40 ' +
+            'px-5 sm:pl-[var(--gutter-indent)] sm:pr-[calc(7vw+var(--gutter-edge))] ' +
+            'py-3'
+          }
         >
+          <ul
+            className="flex items-baseline justify-end gap-x-3 sm:gap-x-7 text-[9px] sm:text-[11px] font-medium uppercase tabular-figures"
+            style={{ letterSpacing: 'var(--tracking-micro)' }}
+          >
+            {SECTIONS.map((s) => {
+              const isActive = active === s.id;
+              return (
+                <li key={s.id}>
+                  <a
+                    href={`#${s.id}`}
+                    data-active={isActive || undefined}
+                    className={
+                      'transition-opacity duration-150 ' +
+                      (isActive
+                        ? 'text-ink opacity-100'
+                        : 'text-ink/55 hover:opacity-85 hover:text-ink')
+                    }
+                  >
+                    {s.label}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </nav>
+
+      {/* ── Rail verticale — da 1440px, nella marginalia destra (si sblocca
+          quando lo spazio a destra è davvero ampio) ─────────────────────── */}
+      <nav
+        aria-label="Indice della pagina"
+        data-visible={visible || undefined}
+        className={
+          'hidden min-[1440px]:block fixed z-40 ' +
+          'top-1/2 -translate-y-1/2 right-[calc(7vw_+_1rem)] ' +
+          'transition-opacity duration-300 ease-out ' +
+          (visible ? 'opacity-100' : 'opacity-0 pointer-events-none')
+        }
+      >
+        <ul className="flex flex-col items-end gap-y-3.5">
           {SECTIONS.map((s) => {
             const isActive = active === s.id;
             return (
@@ -99,20 +135,37 @@ export function NavSticky() {
                 <a
                   href={`#${s.id}`}
                   data-active={isActive || undefined}
-                  className={
-                    'transition-opacity duration-150 ' +
-                    (isActive
-                      ? 'text-ink opacity-100'
-                      : 'text-ink/55 hover:opacity-85 hover:text-ink')
-                  }
+                  className="group flex items-center justify-end gap-x-3"
                 >
-                  {s.label}
+                  <span
+                    className={
+                      'text-right text-[11px] font-medium uppercase tabular-figures transition-colors duration-150 ' +
+                      (isActive
+                        ? 'text-ink'
+                        : 'text-muted/70 group-hover:text-ink')
+                    }
+                    style={{ letterSpacing: 'var(--tracking-micro)' }}
+                  >
+                    {s.label}
+                  </span>
+                  {/* Marcatore: pallino terracotta sul capitolo corrente (motivo
+                      del wordmark), hairline che cresce sugli altri all'hover. */}
+                  <span
+                    aria-hidden="true"
+                    className="flex w-4 shrink-0 items-center justify-end"
+                  >
+                    {isActive ? (
+                      <span className="h-1.5 w-1.5 rounded-full bg-terracotta" />
+                    ) : (
+                      <span className="h-px w-2.5 bg-rule transition-all duration-150 group-hover:w-4 group-hover:bg-terracotta/60" />
+                    )}
+                  </span>
                 </a>
               </li>
             );
           })}
         </ul>
-      </div>
-    </nav>
+      </nav>
+    </>
   );
 }
