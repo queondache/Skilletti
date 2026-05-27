@@ -28,9 +28,10 @@
 **Vibe**: museo italiano, libro raffinato, sobrio-personale.
 
 **Struttura pagina** (single-page con ancore): Hero → sommario tematico (chip
-`Essenziali (4)` + 6 chip tema) → Essenziali (griglia 2×2 da ≥1280px) → Catalogo →
-Metodo → Template → Vocabolario → Footer. SkillCard: layout "open-pages" 60/40 su
-desktop (≥1024px), colonna singola su mobile.
+`Essenziali (4)` + 6 chip tema) → Essenziali (griglia 2×2 da ≥1280px) → Come
+iniziare (setup CLI/VS Code/Mobile, 3 blocchi) → Catalogo → Metodo → Template →
+Vocabolario → Footer. SkillCard: layout "open-pages" 60/40 su desktop (≥1024px),
+colonna singola su mobile.
 
 ---
 
