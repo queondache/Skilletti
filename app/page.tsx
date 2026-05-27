@@ -4,6 +4,7 @@ import { Hero } from '@/components/Hero';
 import { Summary } from '@/components/Summary';
 import { SkillCard } from '@/components/SkillCard';
 import { Catalog } from '@/components/Catalog';
+import { ComeIniziare } from '@/components/ComeIniziare';
 import { TemplateSection } from '@/components/TemplateSection';
 import { Article } from '@/lib/markdown';
 import type { Skill } from '@/types/skill';
@@ -121,6 +122,34 @@ export default function HomePage() {
             <SkillCard key={skill.id} skill={skill} variant="doorway" />
           ))}
         </div>
+      </section>
+
+      {/* Come iniziare — prerequisito pratico: come installare l'ambiente
+          (CLI, VS Code, Mobile) prima del catalogo. "Vedi cosa puoi installare
+          → ecco come si fa." Pubblico non-dev tech-friendly. */}
+      <section
+        id="come-iniziare"
+        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] min-[1440px]:pr-[calc(7vw+var(--gutter-edge)+8rem)] py-12 sm:py-20 border-t border-rule"
+        style={{ scrollMarginTop: '100px' }}
+      >
+        <div
+          className="text-[11px] font-medium uppercase tabular-figures text-muted"
+          style={{ letterSpacing: 'var(--tracking-micro)' }}
+        >
+          come iniziare
+        </div>
+        <h2
+          data-reveal
+          className="mt-2 text-[clamp(2rem,3.5vw,3rem)] font-semibold text-ink balance"
+          style={{
+            lineHeight: 1.1,
+            letterSpacing: 'var(--tracking-display)',
+            fontVariationSettings: '"opsz" 96',
+          }}
+        >
+          Come iniziare
+        </h2>
+        <ComeIniziare />
       </section>
 
       {/* Catalogo — schede non-essenziali raggruppate per tema, con controllo
