@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Skilletti — Round 6 · Direzione 2: Cartografia Viva</title>
+
+<!-- Google Fonts: Fraunces (display + body), Inter Tight (labels + CTA) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,500&family=Inter+Tight:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<style>
+/* =========================================================
+   CARTOGRAFIA VIVA — palette (Direzione 2)
+   ========================================================= */
+:root {
+  /* --- terreno (sfondo) --- */
+  --bg-indigo:        #0E1330; /* deep indigo ground */
+  --indigo-2:         #182150; /* secondary indigo  */
+  /* --- carta (card) --- */
+  --parchment:        #F3E9D6; /* parchment card    */
+  --card-ink:         #1A1714; /* card-ink          */
+  /* --- accenti luminosi --- */
+  --amber:            #F2A93B; /* accent amber/gold */
+  --terracotta-line:  #C9743A; /* cartographic line */
+  /* --- testo su scuro --- */
+  --text-on-dark:     #EDE6D6; /* text-on-dark      */
+  --muted-on-dark:    #9AA0C2; /* muted-on-dark     */
+
+  /* derivati */
+  --amber-soft:       rgba(242,169,59,0.16);
+  --amber-glow:       rgba(242,169,59,0.42);
+  --line-faint:       rgba(154,160,194,0.22);
+  --parchment-edge:   #E2D2B2;
+
+  --ease: cubic-bezier(.22,.61,.36,1);
+  --radius: 14px;
+}
+
+/* =========================================================
+   Reset + base
+   ========================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg-indigo);
+  color: var(--text-on-dark);
+  font-family: "Fraunces", Georgia, serif;
+  font-optical-sizing: auto;
+  font-size: 18px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Atmosfera del terreno: alone radiale + texture griglia cartografica */
+body::before {
+  /* alone luminoso al centro-alto, come la luce di una mappa illuminata */
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(120% 80% at 50% -8%, rgba(242,169,59,0.14), transparent 46%),
+    radial-gradient(90% 70% at 84% 12%, rgba(24,33,80,0.9), transparent 55%),
+    radial-gradient(120% 120% at 16% 100%, rgba(201,116,58,0.10), transparent 50%),
+    linear-gradient(180deg, var(--bg-indigo), #0B0F26 70%, var(--bg-indigo));
+}
+body::after {
+  /* reticolo cartografico tenue su tutta la pagina */
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--line-faint) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-faint) 1px, transparent 1px);
+  background-size: 96px 96px;
+  opacity: 0.30;
+  mask-image: radial-gradient(120% 100% at 50% 30%, #000 55%, transparent 92%);
+  -webkit-mask-image: radial-gradient(120% 100% at 50% 30%, #000 55%, transparent 92%);
+}
+
+a { color: inherit; }
+img, svg { display: block; max-width: 100%; }
+
+/* Focus visibile (AA) */
+:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* =========================================================
+   Tipografia: utilità micro-label cartografica
+   ========================================================= */
+.label {
+  font-family: "Inter Tight", system-ui, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-weight: 700;
+  font-size: 0.7rem;
+  line-height: 1;
+}
+.label--amber { color: var(--amber); }
+.label--muted { color: var(--muted-on-dark); }
+
+/* coordinate / tick di stile cartografico */
+.coord {
+  font-family: "Inter Tight", monospace, sans-serif;
+  font-size: 0.64rem;
+  letter-spacing: 0.18em;
+  color: var(--muted-on-dark);
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   Layout
+   ========================================================= */
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+section { position: relative; }
+
+/* divisore cartografico (linea tratteggiata terracotta con nodo) */
+.map-divider {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--muted-on-dark);
+}
+.map-divider::before,
+.map-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-image: linear-gradient(90deg, var(--terracotta-line) 0 6px, transparent 6px 14px);
+  background-size: 14px 1px;
+  opacity: 0.5;
+}
+.map-divider .dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 0 4px var(--amber-soft), 0 0 14px var(--amber-glow);
+}
+
+/* =========================================================
+   1. TAG STRIP
+   ========================================================= */
+.tagstrip {
+  position: relative;
+  z-index: 2;
+  border-bottom: 1px solid var(--line-faint);
+  background: linear-gradient(180deg, rgba(24,33,80,0.55), rgba(14,19,48,0));
+  backdrop-filter: blur(2px);
+}
+.tagstrip__inner {
+  max-width: 1200px; margin: 0 auto; padding: 12px 28px;
+  display: flex; align-items: center; gap: 12px;
+  font-family: "Inter Tight", sans-serif;
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--muted-on-dark);
+}
+.tagstrip__pin {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--amber); box-shadow: 0 0 10px var(--amber-glow);
+  flex: none;
+}
+.tagstrip__inner b { color: var(--amber); font-weight: 800; }
+
+/* =========================================================
+   2. HERO — atlante a costellazione
+   ========================================================= */
+.hero {
+  position: relative;
+  padding: 54px 0 30px;
+  overflow: hidden;
+}
+.hero__grid {
+  max-width: 1200px; margin: 0 auto; padding: 0 28px;
+  display: grid;
+  grid-template-columns: 1.02fr 1.18fr;
+  gap: 40px;
+  align-items: center;
+}
+
+/* colonna testo */
+.hero__wordmark {
+  font-family: "Fraunces", serif;
+  font-weight: 900;
+  font-size: clamp(3.4rem, 8vw, 6.6rem);
+  line-height: 0.86;
+  letter-spacing: -0.03em;
+  color: var(--parchment);
+  margin: 0 0 8px;
+}
+.hero__wordmark .dot { color: var(--amber); }
+.hero__wordmark::after {
+  /* sottotitolo coordinate sotto al wordmark */
+  content: "ATLANTE · 41.9°N 12.5°E";
+  display: block;
+  font-family: "Inter Tight", sans-serif;
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.32em;
+  color: var(--muted-on-dark);
+  margin-top: 14px;
+}
+.hero__headline {
+  font-family: "Fraunces", serif;
+  font-weight: 500;
+  font-size: clamp(1.55rem, 2.6vw, 2.2rem);
+  line-height: 1.16;
+  letter-spacing: -0.01em;
+  color: var(--text-on-dark);
+  margin: 26px 0 18px;
+  max-width: 24ch;
+}
+.hero__headline em {
+  font-style: italic;
+  color: var(--amber);
+}
+.hero__lede {
+  color: var(--muted-on-dark);
+  font-size: 1.02rem;
+  line-height: 1.7;
+  max-width: 46ch;
+  margin: 0 0 30px;
+}
+.hero__cta-row {
+  display: flex; align-items: center; gap: 26px; flex-wrap: wrap;
+}
+
+/* Bottone primario amber */
+.btn {
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 700;
+  font-size: 0.96rem;
+  letter-spacing: 0.02em;
+  border: none;
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 15px 34px;
+  display: inline-flex; align-items: center; gap: 10px;
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease);
+}
+.btn--primary {
+  background: linear-gradient(180deg, #FFC468, var(--amber));
+  color: #2A1606;
+  box-shadow: 0 0 0 1px rgba(255,210,140,0.6) inset,
+              0 10px 30px -8px var(--amber-glow),
+              0 0 40px -6px var(--amber-glow);
+}
+.btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px rgba(255,210,140,0.8) inset,
+              0 16px 40px -8px var(--amber-glow),
+              0 0 56px -4px var(--amber-glow);
+}
+.btn--primary svg { transition: transform .25s var(--ease); }
+.btn--primary:hover svg { transform: translateX(4px); }
+
+.textlink {
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-on-dark);
+  text-decoration: none;
+  border-bottom: 1.5px dashed var(--terracotta-line);
+  padding-bottom: 3px;
+  transition: color .2s var(--ease), border-color .2s var(--ease);
+}
+.textlink:hover { color: var(--amber); border-color: var(--amber); }
+
+/* ---- costellazione (visualizzazione firma) ---- */
+.constellation {
+  position: relative;
+  aspect-ratio: 1 / 0.92;
+  min-height: 420px;
+}
+.constellation svg { width: 100%; height: 100%; overflow: visible; }
+
+/* linee luminose: tratteggio cartografico animato lievemente */
+.c-line {
+  stroke: var(--terracotta-line);
+  stroke-width: 1.1;
+  stroke-dasharray: 3 6;
+  opacity: 0.55;
+  filter: drop-shadow(0 0 3px rgba(201,116,58,0.5));
+}
+.c-line--lit {
+  stroke: var(--amber);
+  opacity: 0.85;
+  filter: drop-shadow(0 0 6px var(--amber-glow));
+}
+
+/* nodi tema = etichette parchment */
+.node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  cursor: default;
+}
+.node__dot {
+  width: 11px; height: 11px; border-radius: 50%;
+  background: var(--amber);
+  margin: 0 auto 8px;
+  box-shadow: 0 0 0 4px var(--amber-soft), 0 0 14px var(--amber-glow);
+  position: relative;
+  animation: twinkle 4.5s ease-in-out infinite;
+}
+@keyframes twinkle {
+  0%, 100% { box-shadow: 0 0 0 4px var(--amber-soft), 0 0 12px var(--amber-glow); }
+  50%      { box-shadow: 0 0 0 5px var(--amber-soft), 0 0 22px var(--amber-glow); }
+}
+.node__label {
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--text-on-dark);
+  background: rgba(24,33,80,0.7);
+  border: 1px solid var(--line-faint);
+  border-radius: 999px;
+  padding: 5px 13px;
+  white-space: nowrap;
+  backdrop-filter: blur(3px);
+}
+/* coordinata tenue sotto al nodo */
+.node__coord {
+  display: block;
+  text-align: center;
+  margin-top: 5px;
+  font-family: "Inter Tight", sans-serif;
+  font-size: 0.56rem;
+  letter-spacing: 0.18em;
+  color: var(--muted-on-dark);
+  text-transform: uppercase;
+}
+
+/* nodo centrale = wordmark skilletti. */
+.node--center .node__label {
+  font-family: "Fraunces", serif;
+  font-weight: 900;
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+  color: var(--parchment);
+  background: linear-gradient(180deg, rgba(24,33,80,0.92), rgba(14,19,48,0.92));
+  border: 1px solid var(--amber);
+  padding: 12px 22px;
+  box-shadow: 0 0 0 6px var(--amber-soft), 0 0 50px -6px var(--amber-glow);
+}
+.node--center .node__label .dot { color: var(--amber); }
+.node--center .node__dot { display: none; }
+
+/* delay scintille (varietà) */
+.node:nth-child(2) .node__dot  { animation-delay: .3s; }
+.node:nth-child(3) .node__dot  { animation-delay: .9s; }
+.node:nth-child(4) .node__dot  { animation-delay: 1.6s; }
+.node:nth-child(5) .node__dot  { animation-delay: 2.2s; }
+.node:nth-child(6) .node__dot  { animation-delay: 1.1s; }
+.node:nth-child(7) .node__dot  { animation-delay: 2.8s; }
+
+/* stelle decorative di sfondo nella costellazione */
+.starfield circle { fill: var(--text-on-dark); }
+
+/* =========================================================
+   3. STEP NAVIGATOR
+   ========================================================= */
+.section-head {
+  display: flex; align-items: baseline; gap: 14px;
+  margin-bottom: 22px;
+}
+.section-head .num {
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 800; font-size: 0.72rem; letter-spacing: 0.24em;
+  color: var(--amber); text-transform: uppercase;
+}
+.section-head h2 {
+  font-family: "Fraunces", serif;
+  font-weight: 600; font-size: clamp(1.4rem, 2.4vw, 2rem);
+  margin: 0; color: var(--text-on-dark); letter-spacing: -0.01em;
+}
+.block { padding: 56px 0; }
+
+.stepnav {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 22px;
+  background: linear-gradient(180deg, rgba(24,33,80,0.7), rgba(14,19,48,0.5));
+  border: 1px solid var(--line-faint);
+  border-radius: var(--radius);
+  padding: 22px 26px;
+  box-shadow: 0 18px 50px -28px #000;
+}
+.stepnav__center { text-align: center; }
+.stepnav__crumb {
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase;
+  font-size: 0.72rem; color: var(--amber);
+}
+.stepnav__title {
+  font-family: "Fraunces", serif; font-weight: 500;
+  font-size: 1.45rem; color: var(--text-on-dark); margin-top: 4px;
+}
+/* progress: una sottile traccia 2/5 (nessun dot/carosello) */
+.stepnav__track {
+  margin: 14px auto 0; max-width: 280px;
+  height: 4px; border-radius: 999px;
+  background: rgba(154,160,194,0.22);
+  overflow: hidden;
+}
+.stepnav__track > i {
+  display: block; height: 100%; width: 40%;
+  background: linear-gradient(90deg, var(--terracotta-line), var(--amber));
+  border-radius: 999px;
+  box-shadow: 0 0 12px var(--amber-glow);
+}
+.stepbtn {
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 700; font-size: 0.9rem;
+  background: transparent;
+  color: var(--text-on-dark);
+  border: 1px solid var(--line-faint);
+  border-radius: 999px;
+  padding: 11px 18px;
+  cursor: pointer; white-space: nowrap;
+  transition: border-color .2s var(--ease), color .2s var(--ease), background .2s var(--ease);
+}
+.stepbtn:hover { border-color: var(--amber); color: var(--amber); }
+.stepbtn--next {
+  background: var(--amber-soft);
+  border-color: var(--amber);
+  color: var(--amber);
+}
+.stepbtn--next:hover { background: var(--amber); color: #2A1606; }
+
+/* =========================================================
+   4. SKILLCARD specimen
+   ========================================================= */
+.card-zone { display: grid; grid-template-columns: 1fr; max-width: 560px; }
+.skillcard {
+  background:
+    radial-gradient(140% 120% at 0% 0%, #FBF3E3, var(--parchment) 60%);
+  color: var(--card-ink);
+  border-radius: 16px;
+  padding: 26px 28px 24px;
+  border: 1px solid var(--parchment-edge);
+  position: relative;
+  box-shadow:
+    0 0 0 1px rgba(242,169,59,0.18),
+    0 28px 70px -30px rgba(0,0,0,0.8),
+    0 0 60px -22px var(--amber-glow);
+  overflow: hidden;
+}
+/* texture cartografica tenue dentro la carta */
+.skillcard::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(26,23,20,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,23,20,0.04) 1px, transparent 1px);
+  background-size: 26px 26px;
+  pointer-events: none;
+  mask-image: radial-gradient(120% 120% at 100% 100%, #000, transparent 70%);
+  -webkit-mask-image: radial-gradient(120% 120% at 100% 100%, #000, transparent 70%);
+}
+.skillcard > * { position: relative; }
+.skillcard__top {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.pill {
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 700; font-size: 0.66rem; letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 11px; border-radius: 999px;
+}
+.pill--essenziale {
+  background: var(--card-ink); color: var(--amber);
+}
+.pill--tema {
+  background: rgba(201,116,58,0.16); color: #9A4F23;
+  border: 1px solid rgba(201,116,58,0.4);
+}
+.pill--ctx {
+  background: transparent; color: #6E5B45;
+  border: 1px dashed #B79A6E;
+  font-weight: 600; letter-spacing: 0.08em;
+}
+.skillcard__title {
+  font-family: "Fraunces", serif;
+  font-weight: 700; font-size: 2rem; line-height: 1;
+  margin: 6px 0 12px; color: var(--card-ink);
+  letter-spacing: -0.015em;
+}
+.skillcard__desc {
+  font-family: "Fraunces", serif;
+  font-size: 1rem; line-height: 1.55; color: #4A3F31;
+  margin: 0 0 20px; max-width: 42ch;
+}
+.skillcard__foot {
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px dashed #C9B690;
+  padding-top: 14px;
+}
+.skillcard__stars {
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 800; font-size: 0.92rem;
+  color: #8A4B1E; letter-spacing: 0.04em;
+}
+.skillcard__stars span { color: var(--terracotta-line); }
+.skillcard__go {
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 700; font-size: 0.8rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--card-ink);
+  text-decoration: none; display: inline-flex; gap: 6px; align-items: center;
+}
+.skillcard__go:hover { color: #8A4B1E; }
+
+/* =========================================================
+   5. ESPLORA — mappa parole (la stella della direzione)
+   ========================================================= */
+.esplora {
+  background:
+    radial-gradient(90% 120% at 50% -10%, rgba(242,169,59,0.10), transparent 50%);
+  border-top: 1px solid var(--line-faint);
+  border-bottom: 1px solid var(--line-faint);
+}
+.esplora__intro { max-width: 52ch; color: var(--muted-on-dark); margin: 0 0 26px; }
+
+/* riga filtri contesto */
+.ctx-filter {
+  display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 34px;
+}
+.ctx-chip {
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 700; font-size: 0.82rem; letter-spacing: 0.04em;
+  background: rgba(24,33,80,0.55);
+  border: 1px solid var(--line-faint);
+  color: var(--muted-on-dark);
+  border-radius: 999px;
+  padding: 9px 18px; cursor: pointer;
+  transition: all .2s var(--ease);
+}
+.ctx-chip:hover { color: var(--text-on-dark); border-color: var(--terracotta-line); }
+.ctx-chip[aria-pressed="true"] {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: #2A1606;
+  box-shadow: 0 0 28px -6px var(--amber-glow);
+}
+
+/* mappa interattiva */
+.mappa {
+  position: relative;
+  border: 1px solid var(--line-faint);
+  border-radius: 18px;
+  background:
+    radial-gradient(70% 90% at 50% 40%, rgba(24,33,80,0.6), rgba(11,15,38,0.4)),
+    var(--bg-indigo);
+  padding: 18px;
+  overflow: hidden;
+  box-shadow: inset 0 0 80px -20px rgba(0,0,0,0.8);
+}
+/* angoli cartografici con coordinate */
+.mappa .corner {
+  position: absolute;
+  font-family: "Inter Tight", sans-serif;
+  font-size: 0.6rem; letter-spacing: 0.2em; font-weight: 700;
+  color: var(--muted-on-dark);
+  opacity: 0.6;
+}
+.mappa .corner.tl { top: 12px; left: 16px; }
+.mappa .corner.tr { top: 12px; right: 16px; }
+.mappa .corner.bl { bottom: 12px; left: 16px; }
+.mappa .corner.br { bottom: 12px; right: 16px; }
+
+.mappa__stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  min-height: 380px;
+}
+.mappa__stage svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+
+/* nodi cliccabili della mappa-parole */
+.mnode {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 700; font-size: 0.92rem; letter-spacing: 0.02em;
+  color: var(--text-on-dark);
+  background: linear-gradient(180deg, rgba(28,38,86,0.92), rgba(18,25,62,0.92));
+  border: 1px solid var(--line-faint);
+  border-radius: 999px;
+  padding: 12px 22px;
+  cursor: pointer;
+  display: inline-flex; align-items: center; gap: 9px;
+  transition: transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease), color .25s var(--ease);
+  white-space: nowrap;
+}
+.mnode::before {
+  content: "";
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 10px var(--amber-glow);
+  flex: none;
+}
+.mnode small {
+  font-size: 0.62rem; letter-spacing: 0.14em;
+  color: var(--muted-on-dark); font-weight: 600;
+}
+.mnode:hover,
+.mnode:focus-visible {
+  transform: translate(-50%, -50%) scale(1.06);
+  border-color: var(--amber);
+  color: var(--amber);
+  box-shadow: 0 0 30px -4px var(--amber-glow);
+}
+.mnode.is-active {
+  background: linear-gradient(180deg, #FFC468, var(--amber));
+  color: #2A1606; border-color: var(--amber);
+  box-shadow: 0 0 36px -2px var(--amber-glow);
+}
+.mnode.is-active::before { background: #2A1606; box-shadow: none; }
+.mnode.is-active small { color: #5A3208; }
+
+/* hub centrale della mappa */
+.mhub {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-family: "Fraunces", serif;
+  font-weight: 900; font-size: 1.2rem; letter-spacing: -0.02em;
+  color: var(--parchment);
+  background: rgba(14,19,48,0.85);
+  border: 1px solid var(--amber);
+  border-radius: 999px;
+  padding: 10px 18px;
+  box-shadow: 0 0 0 6px var(--amber-soft), 0 0 44px -8px var(--amber-glow);
+}
+.mhub .dot { color: var(--amber); }
+
+.m-line {
+  stroke: var(--terracotta-line);
+  stroke-width: 1.2; stroke-dasharray: 3 7;
+  opacity: 0.5;
+  filter: drop-shadow(0 0 3px rgba(201,116,58,0.5));
+  transition: opacity .3s var(--ease), stroke .3s var(--ease);
+}
+.m-line.lit {
+  stroke: var(--amber); opacity: 0.95; stroke-dasharray: none;
+  filter: drop-shadow(0 0 7px var(--amber-glow));
+}
+
+/* =========================================================
+   6. SYSTEM block — specimen tipografico + palette
+   ========================================================= */
+.system__grid {
+  display: grid; grid-template-columns: 1.15fr 1fr; gap: 40px;
+  align-items: start;
+}
+.specimen {
+  background: linear-gradient(180deg, rgba(24,33,80,0.5), rgba(14,19,48,0.3));
+  border: 1px solid var(--line-faint);
+  border-radius: var(--radius);
+  padding: 30px 32px;
+}
+.spec-row { padding: 12px 0; border-bottom: 1px dashed var(--line-faint); }
+.spec-row:last-child { border-bottom: none; }
+.spec-display-xl {
+  font-family: "Fraunces", serif; font-weight: 900;
+  font-size: 3.4rem; line-height: 0.95; color: var(--parchment);
+  letter-spacing: -0.02em;
+}
+.spec-display-l {
+  font-family: "Fraunces", serif; font-weight: 500; font-style: italic;
+  font-size: 2rem; color: var(--amber);
+}
+.spec-label-line {
+  font-family: "Inter Tight", sans-serif; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.24em; font-size: 0.8rem;
+  color: var(--muted-on-dark);
+}
+.spec-body {
+  font-family: "Fraunces", serif; font-size: 1rem; line-height: 1.7;
+  color: var(--text-on-dark); max-width: 50ch;
+}
+.spec-meta {
+  font-family: "Inter Tight", sans-serif; font-size: 0.62rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--amber); margin-bottom: 6px; font-weight: 700;
+}
+
+/* palette swatches */
+.swatches { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.swatch {
+  border-radius: 12px;
+  border: 1px solid var(--line-faint);
+  overflow: hidden;
+  background: rgba(24,33,80,0.4);
+}
+.swatch__chip { height: 72px; }
+.swatch__meta { padding: 10px 12px; }
+.swatch__name {
+  font-family: "Inter Tight", sans-serif; font-weight: 700;
+  font-size: 0.72rem; letter-spacing: 0.04em; color: var(--text-on-dark);
+}
+.swatch__hex {
+  font-family: "Inter Tight", monospace, sans-serif;
+  font-size: 0.7rem; letter-spacing: 0.08em; color: var(--muted-on-dark);
+  margin-top: 2px;
+}
+
+/* =========================================================
+   7. FOOTER
+   ========================================================= */
+.footer {
+  border-top: 1px solid var(--line-faint);
+  background: linear-gradient(180deg, rgba(14,19,48,0), rgba(24,33,80,0.5));
+  padding: 50px 0 60px;
+}
+.footer__grid {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 30px; flex-wrap: wrap;
+}
+.footer__bio { max-width: 46ch; }
+.footer__name {
+  font-family: "Fraunces", serif; font-weight: 700; font-size: 1.5rem;
+  color: var(--parchment); margin: 0 0 8px; letter-spacing: -0.01em;
+}
+.footer__name .dot { color: var(--amber); }
+.footer__bio p { color: var(--muted-on-dark); font-size: 0.98rem; margin: 0; }
+.footer__links { display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
+.footer__chat {
+  font-family: "Inter Tight", sans-serif; font-weight: 700;
+  font-size: 0.95rem; color: var(--amber); text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.footer__chat:hover { text-decoration: underline; }
+.footer__linkedin {
+  font-family: "Inter Tight", sans-serif; font-weight: 600;
+  font-size: 0.86rem; color: var(--muted-on-dark);
+  text-decoration: none; letter-spacing: 0.04em;
+  border-bottom: 1px dashed var(--terracotta-line); padding-bottom: 2px;
+}
+.footer__linkedin:hover { color: var(--text-on-dark); }
+.footer__coord {
+  margin-top: 26px;
+  font-family: "Inter Tight", sans-serif; font-size: 0.62rem;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted-on-dark);
+  opacity: 0.7;
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+@media (max-width: 980px) {
+  .hero__grid { grid-template-columns: 1fr; gap: 30px; }
+  .constellation { min-height: 360px; }
+  .system__grid { grid-template-columns: 1fr; gap: 28px; }
+}
+@media (max-width: 720px) {
+  body { font-size: 17px; }
+  .stepnav { grid-template-columns: 1fr; gap: 16px; }
+  .stepnav__center { order: -1; }
+  .stepbtn { width: 100%; }
+  .swatches { grid-template-columns: 1fr; }
+  .mappa__stage { min-height: 460px; }
+  .tagstrip__inner { font-size: 0.62rem; letter-spacing: 0.12em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===================================================== -->
+<!-- 1. TAG STRIP                                          -->
+<!-- ===================================================== -->
+<div class="tagstrip">
+  <div class="tagstrip__inner">
+    <span class="tagstrip__pin" aria-hidden="true"></span>
+    <span>Skilletti · Round 6 — <b>Direzione 2: Cartografia Viva</b></span>
+  </div>
+</div>
+
+<!-- ===================================================== -->
+<!-- 2. HERO — atlante a costellazione                     -->
+<!-- ===================================================== -->
+<header class="hero">
+  <div class="hero__grid">
+
+    <!-- colonna testo -->
+    <div class="hero__text">
+      <h1 class="hero__wordmark">skilletti<span class="dot">.</span></h1>
+
+      <p class="hero__headline">
+        Una mappa per <em>imparare Claude&nbsp;Code da zero</em>, senza esperienza tecnica e senza fretta.
+      </p>
+
+      <p class="hero__lede">
+        Claude Code è un assistente che vive nel tuo computer e lavora accanto a te:
+        gli parli in italiano, lui legge i tuoi file, scrive e corregge codice,
+        cerca informazioni e porta a termine compiti reali. Qui lo affrontiamo come
+        un viaggio guidato — una skill alla volta, con parole semplici e tappe chiare,
+        finché muoverti dentro Claude diventa naturale.
+      </p>
+
+      <div class="hero__cta-row">
+        <button class="btn btn--primary" type="button">
+          Inizia
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <a class="textlink" href="#esplora">Cos'è una skill?</a>
+      </div>
+    </div>
+
+    <!-- visualizzazione firma: costellazione di temi -->
+    <div class="constellation" role="img" aria-label="Costellazione dei temi di Skilletti connessi al wordmark centrale">
+      <svg viewBox="0 0 600 540" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <!-- campo stellare decorativo -->
+        <g class="starfield" opacity="0.5">
+          <circle cx="60"  cy="70"  r="1.3" opacity="0.6"/>
+          <circle cx="540" cy="90"  r="1"   opacity="0.5"/>
+          <circle cx="120" cy="430" r="1.5" opacity="0.7"/>
+          <circle cx="500" cy="470" r="1.1" opacity="0.5"/>
+          <circle cx="320" cy="40"  r="1"   opacity="0.6"/>
+          <circle cx="40"  cy="260" r="1.2" opacity="0.5"/>
+          <circle cx="560" cy="300" r="1.4" opacity="0.6"/>
+          <circle cx="270" cy="510" r="1"   opacity="0.5"/>
+        </g>
+        <!-- connettori dal centro (300,270) ai nodi tema -->
+        <line class="c-line--lit" x1="300" y1="270" x2="110" y2="90"/>
+        <line class="c-line--lit" x1="300" y1="270" x2="500" y2="120"/>
+        <line class="c-line"     x1="300" y1="270" x2="80"  y2="320"/>
+        <line class="c-line"     x1="300" y1="270" x2="520" y2="340"/>
+        <line class="c-line--lit" x1="300" y1="270" x2="210" y2="470"/>
+        <line class="c-line"     x1="300" y1="270" x2="430" y2="470"/>
+        <!-- archi secondari tra nodi (rete) -->
+        <line class="c-line" x1="110" y1="90"  x2="500" y2="120" opacity="0.25"/>
+        <line class="c-line" x1="80"  y1="320" x2="210" y2="470" opacity="0.25"/>
+        <line class="c-line" x1="520" y1="340" x2="430" y2="470" opacity="0.25"/>
+      </svg>
+
+      <!-- nodo centrale = wordmark -->
+      <div class="node node--center" style="left:50%; top:50%;">
+        <div class="node__label">skilletti<span class="dot">.</span></div>
+      </div>
+
+      <!-- nodi tema (posizioni in % coerenti con i connettori) -->
+      <div class="node" style="left:18.3%; top:16.7%;">
+        <span class="node__dot" aria-hidden="true"></span>
+        <span class="node__label">Metodo</span>
+        <span class="node__coord">N 12·04</span>
+      </div>
+      <div class="node" style="left:83.3%; top:22.2%;">
+        <span class="node__dot" aria-hidden="true"></span>
+        <span class="node__label">Frontend</span>
+        <span class="node__coord">N 21·17</span>
+      </div>
+      <div class="node" style="left:13.3%; top:59.3%;">
+        <span class="node__dot" aria-hidden="true"></span>
+        <span class="node__label">Sicurezza</span>
+        <span class="node__coord">S 04·52</span>
+      </div>
+      <div class="node" style="left:86.7%; top:63%;">
+        <span class="node__dot" aria-hidden="true"></span>
+        <span class="node__label">Dati</span>
+        <span class="node__coord">S 09·31</span>
+      </div>
+      <div class="node" style="left:35%; top:87%;">
+        <span class="node__dot" aria-hidden="true"></span>
+        <span class="node__label">Scrittura</span>
+        <span class="node__coord">S 18·08</span>
+      </div>
+      <div class="node" style="left:71.7%; top:87%;">
+        <span class="node__dot" aria-hidden="true"></span>
+        <span class="node__label">Ricerca</span>
+        <span class="node__coord">S 22·44</span>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<div class="map-divider" aria-hidden="true"><span class="dot"></span></div>
+
+<!-- ===================================================== -->
+<!-- 3. STEP NAVIGATOR specimen                            -->
+<!-- ===================================================== -->
+<section class="block wrap" aria-labelledby="stepnav-h">
+  <div class="section-head">
+    <span class="num">Specimen · 01</span>
+    <h2 id="stepnav-h">Navigatore di tappe</h2>
+  </div>
+
+  <nav class="stepnav" aria-label="Navigazione tappe del percorso">
+    <button class="stepbtn" type="button">‹ Indietro</button>
+    <div class="stepnav__center">
+      <div class="stepnav__crumb">Step 2 di 5 — Installa</div>
+      <div class="stepnav__title">Metti Claude Code sul tuo computer</div>
+      <div class="stepnav__track" aria-hidden="true"><i></i></div>
+    </div>
+    <button class="stepbtn stepbtn--next" type="button">Avanti ›</button>
+  </nav>
+</section>
+
+<!-- ===================================================== -->
+<!-- 4. SKILLCARD specimen                                 -->
+<!-- ===================================================== -->
+<section class="block wrap" aria-labelledby="card-h">
+  <div class="section-head">
+    <span class="num">Specimen · 02</span>
+    <h2 id="card-h">Scheda skill</h2>
+  </div>
+
+  <div class="card-zone">
+    <article class="skillcard">
+      <div class="skillcard__top">
+        <span class="pill pill--essenziale">Essenziale</span>
+        <span class="pill pill--tema">Metodo</span>
+        <span class="pill pill--ctx">Claude Code</span>
+        <span class="pill pill--ctx">VS Code</span>
+      </div>
+
+      <h3 class="skillcard__title">Superpowers</h3>
+
+      <p class="skillcard__desc">
+        La skill che insegna a Claude come ragionare prima di scrivere: pianifica,
+        verifica, procede a piccoli passi. È la prima che installo a chiunque —
+        trasforma le risposte improvvisate in lavoro ordinato.
+      </p>
+
+      <div class="skillcard__foot">
+        <span class="skillcard__stars"><span>★</span> 18k stelle</span>
+        <a class="skillcard__go" href="#">
+          Apri la scheda
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<div class="map-divider" aria-hidden="true"><span class="dot"></span></div>
+
+<!-- ===================================================== -->
+<!-- 5. ESPLORA — mappa parole (STAR)                      -->
+<!-- ===================================================== -->
+<section class="esplora block" id="esplora" aria-labelledby="esplora-h">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="num">/ step-4 · esplora</span>
+      <h2 id="esplora-h">La mappa delle parole</h2>
+    </div>
+    <p class="esplora__intro">
+      Ogni tema è una costellazione di skill. Tocca un nodo per illuminare la rotta:
+      le linee accese mostrano cosa è collegato a cosa. Filtra prima per il contesto
+      in cui lavori.
+    </p>
+
+    <!-- riga filtro contesto -->
+    <div class="ctx-filter" role="group" aria-label="Filtra per contesto">
+      <button class="ctx-chip" type="button" aria-pressed="false">Tutti</button>
+      <button class="ctx-chip" type="button" aria-pressed="true">Claude Code</button>
+      <button class="ctx-chip" type="button" aria-pressed="false">VS Code</button>
+      <button class="ctx-chip" type="button" aria-pressed="false">Mobile</button>
+    </div>
+
+    <!-- mappa interattiva -->
+    <div class="mappa">
+      <span class="corner tl coord" aria-hidden="true">41.90°N</span>
+      <span class="corner tr coord" aria-hidden="true">12.49°E</span>
+      <span class="corner bl coord" aria-hidden="true">FOGLIO IV</span>
+      <span class="corner br coord" aria-hidden="true">SCALA 1:6</span>
+
+      <div class="mappa__stage" id="mappa-stage">
+        <svg viewBox="0 0 800 450" preserveAspectRatio="none" aria-hidden="true">
+          <!-- connettori hub(400,225) → nodi -->
+          <line class="m-line" data-link="metodo"    x1="400" y1="225" x2="150" y2="95"/>
+          <line class="m-line" data-link="frontend"  x1="400" y1="225" x2="650" y2="100"/>
+          <line class="m-line" data-link="sicurezza" x1="400" y1="225" x2="110" y2="300"/>
+          <line class="m-line" data-link="dati"      x1="400" y1="225" x2="690" y2="320"/>
+          <line class="m-line" data-link="scrittura" x1="400" y1="225" x2="290" y2="385"/>
+          <line class="m-line" data-link="ricerca"   x1="400" y1="225" x2="560" y2="390"/>
+        </svg>
+
+        <!-- hub centrale -->
+        <div class="mhub" style="left:50%; top:50%;">skilletti<span class="dot">.</span></div>
+
+        <!-- nodi cliccabili -->
+        <button class="mnode" type="button" data-node="metodo"    style="left:18.75%; top:21%;">Metodo <small>9</small></button>
+        <button class="mnode" type="button" data-node="frontend"  style="left:81.25%; top:22.2%;">Frontend <small>6</small></button>
+        <button class="mnode" type="button" data-node="sicurezza" style="left:13.75%; top:66.7%;">Sicurezza <small>4</small></button>
+        <button class="mnode" type="button" data-node="dati"      style="left:86.25%; top:71.1%;">Dati <small>5</small></button>
+        <button class="mnode" type="button" data-node="scrittura" style="left:36.25%; top:85.6%;">Scrittura <small>3</small></button>
+        <button class="mnode" type="button" data-node="ricerca"   style="left:70%; top:86.7%;">Ricerca <small>3</small></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== -->
+<!-- 6. SYSTEM block — type specimen + palette              -->
+<!-- ===================================================== -->
+<section class="block wrap" aria-labelledby="system-h">
+  <div class="section-head">
+    <span class="num">Sistema · 03</span>
+    <h2 id="system-h">Tipografia e palette</h2>
+  </div>
+
+  <div class="system__grid">
+
+    <!-- type specimen -->
+    <div class="specimen">
+      <div class="spec-row">
+        <div class="spec-meta">Fraunces · Display 900</div>
+        <div class="spec-display-xl">Atlante</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-meta">Fraunces · Italic 500</div>
+        <div class="spec-display-l">una skill alla volta</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-meta">Inter Tight · Label 700</div>
+        <div class="spec-label-line">Step 2 di 5 — Installa</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-meta">Fraunces · Body</div>
+        <p class="spec-body">
+          Claude Code legge i tuoi file, scrive codice e porta a termine compiti
+          reali mentre tu gli parli in italiano. Questo testo mostra il corpo:
+          leggibile, caldo, pensato per spiegare con calma.
+        </p>
+      </div>
+    </div>
+
+    <!-- palette swatches -->
+    <div>
+      <div class="spec-meta" style="margin-bottom:14px;">Palette — Cartografia Viva</div>
+      <div class="swatches">
+        <div class="swatch">
+          <div class="swatch__chip" style="background:#0E1330;"></div>
+          <div class="swatch__meta"><div class="swatch__name">BG deep indigo</div><div class="swatch__hex">#0E1330</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background:#182150;"></div>
+          <div class="swatch__meta"><div class="swatch__name">Secondary indigo</div><div class="swatch__hex">#182150</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background:#F3E9D6;"></div>
+          <div class="swatch__meta"><div class="swatch__name">Parchment card</div><div class="swatch__hex">#F3E9D6</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background:#1A1714;"></div>
+          <div class="swatch__meta"><div class="swatch__name">Card ink</div><div class="swatch__hex">#1A1714</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background:#F2A93B;"></div>
+          <div class="swatch__meta"><div class="swatch__name">Accent amber/gold</div><div class="swatch__hex">#F2A93B</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background:#C9743A;"></div>
+          <div class="swatch__meta"><div class="swatch__name">Terracotta line</div><div class="swatch__hex">#C9743A</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background:#EDE6D6;"></div>
+          <div class="swatch__meta"><div class="swatch__name">Text on dark</div><div class="swatch__hex">#EDE6D6</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__chip" style="background:#9AA0C2;"></div>
+          <div class="swatch__meta"><div class="swatch__name">Muted on dark</div><div class="swatch__hex">#9AA0C2</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================================================== -->
+<!-- 7. FOOTER                                             -->
+<!-- ===================================================== -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div class="footer__bio">
+        <p class="footer__name">Andrea<span class="dot">.</span></p>
+        <p>
+          Curo questa mappa per gli amici: trenta skill scelte a mano, spiegate
+          con parole semplici. Non sono uno sviluppatore di mestiere — sono uno
+          che ha imparato a usare Claude Code e vuole accorciarti la strada.
+        </p>
+      </div>
+      <div class="footer__links">
+        <a class="footer__chat" href="#">
+          Se ti serve aiuto, chatta con Claude
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a class="footer__linkedin" href="#">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer__coord">Cartografia Viva · Foglio IV · Edizione Round 6 · 41.90°N 12.49°E</div>
+  </div>
+</footer>
+
+<!-- ===================================================== -->
+<!-- JS minimo: mappa parole interattiva + filtri contesto -->
+<!-- ===================================================== -->
+<script>
+(function () {
+  // --- mappa parole: illumina il connettore del nodo selezionato ---
+  var stage = document.getElementById('mappa-stage');
+  if (stage) {
+    var nodes = stage.querySelectorAll('.mnode');
+    var lines = stage.querySelectorAll('.m-line');
+
+    function activate(name) {
+      nodes.forEach(function (n) { n.classList.toggle('is-active', n.dataset.node === name); });
+      lines.forEach(function (l) { l.classList.toggle('lit', l.dataset.link === name); });
+    }
+
+    nodes.forEach(function (n) {
+      n.addEventListener('click', function () { activate(n.dataset.node); });
+      // anteprima al passaggio: illumina il connettore del nodo sotto al mouse
+      n.addEventListener('mouseenter', function () {
+        lines.forEach(function (l) { l.classList.toggle('lit', l.dataset.link === n.dataset.node); });
+      });
+      // all'uscita: ripristina il connettore del nodo attivo
+      n.addEventListener('mouseleave', function () {
+        var active = document.querySelector('.mnode.is-active');
+        lines.forEach(function (l) { l.classList.toggle('lit', !!active && l.dataset.link === active.dataset.node); });
+      });
+    });
+
+    // stato iniziale: "Metodo" illuminato come esempio
+    activate('metodo');
+  }
+
+  // --- filtri contesto: comportamento single-select ---
+  var chips = document.querySelectorAll('.ctx-chip');
+  chips.forEach(function (c) {
+    c.addEventListener('click', function () {
+      chips.forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+      c.setAttribute('aria-pressed', 'true');
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
