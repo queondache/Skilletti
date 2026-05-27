@@ -75,6 +75,15 @@ export function Summary({ skills }: { skills: Skill[] }) {
             <span className="tabular-figures text-muted">({essenzialiCount})</span>
             <span aria-hidden="true" className="text-terracotta">→</span>
           </a>
+          {/* Prerequisito pratico — non è un tema: come installare l'ambiente.
+              Link d'ingresso, peso minore del chip Essenziali. */}
+          <a
+            href="#come-iniziare"
+            className="mt-2 flex items-baseline gap-1.5 text-[0.9375rem] text-muted transition-colors hover:text-ink"
+          >
+            Come iniziare
+            <span aria-hidden="true" className="text-terracotta/70">→</span>
+          </a>
         </div>
 
         {/* Divisore strutturale — verticale su desktop, orizzontale su mobile */}

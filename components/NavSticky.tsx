@@ -16,13 +16,14 @@ import { useEffect, useState } from 'react';
  * Comportamento condiviso:
  * - Nascosto sotto la soglia di scroll (85% del primo viewport) per far
  *   respirare l'hero.
- * - 5 ancore: essenziali · catalogo · metodo · template · vocabolario.
+ * - 6 ancore: essenziali · inizia · catalogo · metodo · template · vocabolario.
  * - Sezione attiva via IntersectionObserver (banda 10%-40% dall'alto).
  * - Rispetta `prefers-reduced-motion` (transizioni di opacità istantanee).
  */
 
 const SECTIONS = [
   { id: 'parti-da-qui', label: 'essenziali' },
+  { id: 'come-iniziare', label: 'inizia' },
   { id: 'catalogo', label: 'catalogo' },
   { id: 'workflow', label: 'metodo' },
   { id: 'template', label: 'template' },
@@ -89,7 +90,7 @@ export function NavSticky() {
           }
         >
           <ul
-            className="flex items-baseline justify-end gap-x-3 sm:gap-x-7 text-[9px] sm:text-[11px] font-medium uppercase tabular-figures"
+            className="flex flex-wrap items-baseline justify-end gap-x-3 gap-y-1 sm:gap-x-7 text-[9px] sm:text-[11px] font-medium uppercase tabular-figures"
             style={{ letterSpacing: 'var(--tracking-micro)' }}
           >
             {SECTIONS.map((s) => {

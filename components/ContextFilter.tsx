@@ -18,9 +18,9 @@ import type { DoveFunziona } from '@/types/skill';
  * Stato in URL (`?ctx=vscode`), deep-link sharable. Pattern data-attribute sul
  * DOM come il filtro tema: nessun re-render delle schede, niente stato globale.
  *
- * Mobile è reso ma disabilitato quando il conteggio è 0 (oggi nessuna skill
- * della lista gira sull'app mobile): toggle onesto e a prova di futuro, senza
- * mai svuotare la pagina.
+ * Un toggle è reso solo se almeno una skill del JSON dichiara quel contesto
+ * (conteggio > 0). Oggi nessuna skill gira sull'app mobile → il toggle Mobile
+ * non compare; riapparirà da solo appena esisterà una skill con `claude-mobile`.
  */
 
 type CtxSlug = 'all' | 'cli' | 'vscode' | 'mobile';
@@ -103,7 +103,7 @@ export function ContextFilter({ counts }: { counts: CtxCounts }) {
           active={active === 'all'}
           onClick={() => apply('all', true)}
         />
-        {TOGGLES.map((t) => {
+        {TOGGLES.filter((t) => counts[SLUG_TO_VALUE[t.slug]] > 0).map((t) => {
           const count = counts[SLUG_TO_VALUE[t.slug]];
           return (
             <span key={t.slug} className="inline-flex items-baseline gap-x-3">

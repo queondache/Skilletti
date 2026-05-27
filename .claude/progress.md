@@ -2,11 +2,12 @@
 
 > Snapshot di stato: fasi chiuse, fase corrente, blocchi aperti.
 
-## Stato attuale — 2026-05-26
+## Stato attuale — 2026-05-27
 
 Sito **completo e live su Vercel** (`skilletti.vercel.app`) con seed reale (12 skill).
-Round 1 + 2 + 2.5 + 3 (UX revamp) + **4 (refinements)** chiusi.
-**Rimangono Fase 4 (agent mensile) e Fase 5 (deploy GitHub Pages — opzionale, ora live su Vercel).**
+Round 1 + 2 + 2.5 + 3 (UX revamp) + 4 (refinements) + **5 (multi-contesto + UX
+modern, PR #7 mergiata)** chiusi. **5.5 (sezione "Come iniziare")** in PR aperta.
+**Rimane solo Fase 4 (agent mensile).** Fase 5 deploy non più rilevante: live su Vercel.
 
 `data/skills.json`: 12 skill — 4 essenziale · 6 forte · 2 situazionale.
 
@@ -73,6 +74,27 @@ zero overflow orizzontale, build verde. Lighthouse prod 100/100/100/100
 - **Template** `content/templates/claude-base.md` rinfrescato dai pattern universali
   del master `~/Dev/CLAUDE.md` (esempio didattico non-dev, no roba interna).
 
+### Round 5 — Multi-contesto + UX modern ✅ (PR #7 squash su main)
+- **TASK A**: `dove_funziona` da string → array. Nuovo enum
+  `[claude-code, claude-in-vscode, claude-mobile]`; rimosso `claude.ai`. 12 record
+  migrati (MCP→CLI, skill/plugin→CLI+VS Code). `ContextFilter.tsx` "mostra solo"
+  nel sommario, stato URL `?ctx=`, compone con `?tema=`. SkillCard micro-label.
+- **TASK B**: indice verticale marginalia destra (≥1440px) + barra orizzontale
+  sotto, pallino terracotta attivo; densità −20% padding; `Reveal.tsx`
+  (IntersectionObserver, reduced-motion safe); hover hairline terracotta.
+
+### Round 5.5 — Sezione "Come iniziare" 🟡 (branch `round5.5-come-iniziare`, PR aperta)
+- **TASK 1** (verifica mobile): audit `skill-creator` + `taste-skill` per tag
+  `claude-mobile`. Esito: **nessun cambio dati**. Doc ufficiali (`platform.claude.com`
+  "Where Skills work") confermano solo claude.ai web, **non** l'app mobile;
+  `taste-skill` non cita nemmeno claude.ai. Regola "se non esplicito, lascia" → 0 commit.
+- **TASK 2** (`2016f7e`): `ComeIniziare.tsx` — 3 blocchi (CLI / VS Code / Mobile),
+  comandi+URL verificati 1:1 contro docs, copy-button riusato. Tra Essenziali e
+  Catalogo. Nav +1 ancora "inizia" (6 voci, regge 1440+390). Summary: link
+  prerequisito separato dai chip tema.
+- **TASK 3**: docs sync (CLAUDE.md struttura + SPEC.md MVP + questo progress.md).
+- round 5.5: mobile toggle dynamic, hide if 0 skills (render solo se ≥1 skill ha `claude-mobile`).
+
 ---
 
 ## Fasi rimanenti
@@ -113,15 +135,13 @@ _(da popolare a partire dalla prima esecuzione agent)_
 
 ## Prossimo step
 
-- [x] ~~**SPEC.md update**~~ — fatto in Round 4 (Task 3a): §3/§7/§9/§10/§13/§14
-      allineati a stato live (Vercel, font duplice, open-pages, agent mensile, fonti GitHub).
-- [ ] **Fase 4 — agent mensile**: costruire `scripts/agent/` + workflow cron. Manca
-      ancora il prompt Fase 4 completo (due volte arrivato solo come placeholder).
-      Conferme già date: regola d'oro = gate umano sulla review PR (agent non verifica);
-      watchlist <1000★ nel body PR (mai in skills.json); agent mai merge autonomo.
-- [ ] **Fase 5 — deploy**: decidere se Vercel è definitivo o tenere anche GitHub Pages.
-      Se Vercel: branch protection su `main` + `gh secret scanning`. Nota: deploy
-      intermedi di verifica = preview (auth-walled), solo il finale va in prod.
+- [ ] **Merge PR Round 5.5** ("Come iniziare") — review + squash su main (Andrea).
+- [ ] **Fase 4 — agent mensile** (unico lavoro di prodotto rimasto): costruire
+      `scripts/agent/` + workflow cron. Manca ancora il prompt Fase 4 completo (due
+      volte arrivato solo come placeholder). Conferme già date: regola d'oro = gate
+      umano sulla review PR (agent non verifica); watchlist <1000★ nel body PR (mai
+      in skills.json); agent mai merge autonomo.
+- [ ] **Hardening repo** (minore): branch protection su `main` + `gh secret scanning`.
 - [ ] **Conflitto schema vs SPEC** (minore): `stelle:null` whitelist è
       `anthropics|firecrawl` in `skills.schema.json`, ma SPEC §6 cita anche
       Vercel/Google/Supabase. Decidere se allargare il pattern.

@@ -40,6 +40,7 @@ Amici di Andrea che **usano già Claude** (Claude.ai e/o Claude Code). Profilo: 
 - Sito statico con le schede skill (parti dal seed di Andrea, anche meno di 30)
 - Navigazione per **tema** e per **importanza**
 - Ogni scheda completa: voce personale, profilo sicurezza, "dove funziona", comando d'installazione
+- Sezione "Come iniziare": setup CLI, VS Code, Mobile per non-developer
 - Sezione didattica "Cosa sono skill, plugin, MCP, CLI"
 - Agent di ricerca settimanale che apre una **PR automatica** sul repo con 0-3 candidati nuovi
 - Health-check settimanale delle skill già in lista (segnala quelle morte)
