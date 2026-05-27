@@ -93,6 +93,7 @@ zero overflow orizzontale, build verde. Lighthouse prod 100/100/100/100
   Catalogo. Nav +1 ancora "inizia" (6 voci, regge 1440+390). Summary: link
   prerequisito separato dai chip tema.
 - **TASK 3**: docs sync (CLAUDE.md struttura + SPEC.md MVP + questo progress.md).
+- round 5.5: mobile toggle dynamic, hide if 0 skills (render solo se ≥1 skill ha `claude-mobile`).
 
 ---
 
