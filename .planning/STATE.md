@@ -9,10 +9,10 @@ See: .planning/PROJECT.md (updated 2026-05-27)
 
 ## Current Position
 
-Phase: tutti i blueprint A–F BLOCCATI (pre-execution)
-Plan: in attesa del comando "esegui tutto in fila"
-Status: READY TO EXECUTE — 6 blueprint approvati in chat. Esecuzione: docs commit → B→C→D→E→F (5 commit) → PR no merge.
-Last activity: 2026-05-27 — blueprint A–F bloccati; vedi .planning/round6-blueprints.md + DIRECTION-LOCKED.md
+Phase: B ✅ done → C of 5 (esecuzione)
+Plan: Fase B chiusa (01-migrazione-routing). Prossima: Fase C (componenti UX, reskin direzione)
+Status: IN ESECUZIONE — bridge GSD (gsd-execute-phase --interactive). B committata, build verde 6 route.
+Last activity: 2026-05-28 — Fase B completata: 6 route App Router, chrome wizard, contenuti migrati. Vedi 01-01-SUMMARY.md
 
 Progress: [░░░░░░░░░░] 0%
 

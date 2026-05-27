@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { fraunces, geist, geistMono } from './fonts';
-import { NavSticky } from '@/components/NavSticky';
+import { SiteHeader } from '@/components/SiteHeader';
+import { SiteFooter } from '@/components/SiteFooter';
 import { Reveal } from '@/components/Reveal';
 import './globals.css';
 
@@ -54,9 +55,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${fraunces.variable} ${geist.variable} ${geistMono.variable}`}
     >
       <body className="bg-paper text-ink antialiased">
-        <NavSticky />
+        <SiteHeader />
         <Reveal />
         {children}
+        <SiteFooter />
       </body>
     </html>
   );
