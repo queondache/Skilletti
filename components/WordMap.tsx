@@ -119,10 +119,10 @@ export function WordMap({ temi }: { temi: Tema[] }) {
             className={
               'absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded bg-paper/90 px-2 py-0.5 text-[0.9rem] font-medium transition-colors duration-150 ' +
               (isActive
-                ? 'text-terracotta'
+                ? 'text-terracotta-deep'
                 : dim
                   ? 'text-muted hover:text-ink'
-                  : 'text-ink hover:text-terracotta')
+                  : 'text-ink hover:text-terracotta-deep')
             }
             style={{ left: `${c.x}%`, top: `${c.y}%`, fontFamily: 'var(--font-display)' }}
           >
@@ -139,7 +139,7 @@ export function WordMap({ temi }: { temi: Tema[] }) {
         onClick={() => apply('all', true)}
         className={
           'absolute left-1/2 top-1/2 -translate-x-1/2 translate-y-3 whitespace-nowrap rounded bg-paper/90 px-2 py-0.5 text-[11px] font-medium uppercase tabular-figures transition-colors duration-150 ' +
-          (active === 'all' ? 'text-ink' : 'text-terracotta hover:text-terracotta-deep')
+          (active === 'all' ? 'text-ink' : 'text-terracotta-deep hover:text-ink')
         }
         style={{ letterSpacing: 'var(--tracking-micro)' }}
       >

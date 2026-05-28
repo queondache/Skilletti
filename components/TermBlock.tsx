@@ -29,7 +29,7 @@ export function TermBlock({
         </div>
         {/* prompt */}
         <div className="px-4 py-4 font-mono text-[13.5px] leading-relaxed text-ink">
-          <span className="select-none text-terracotta">❯ </span>
+          <span className="select-none text-terracotta-deep">❯ </span>
           <span>{command}</span>
         </div>
       </div>

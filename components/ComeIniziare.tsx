@@ -82,7 +82,7 @@ function SetupBlock({
       <div className="flex items-baseline gap-3">
         <span
           aria-hidden="true"
-          className="text-[0.9375rem] font-semibold tabular-figures text-terracotta"
+          className="text-[0.9375rem] font-semibold tabular-figures text-terracotta-deep"
           style={{ fontFamily: 'var(--font-mono)' }}
         >
           0{index}

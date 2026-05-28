@@ -9,10 +9,10 @@ See: .planning/PROJECT.md (updated 2026-05-27)
 
 ## Current Position
 
-Phase: E ✅ done → F of 5 (esecuzione)
-Plan: Fasi B+C+D+E chiuse. Prossima: Fase F (QA + Lighthouse 6 route + 12 screenshot + PR no merge)
-Status: IN ESECUZIONE — bridge GSD (gsd-execute-phase --interactive). B-E committate, build verde 6 route.
-Last activity: 2026-05-28 — Fase E completata: page-enter + hover lift + reveal multi-route fix; reduced-motion off-tutto. Vedi 04-01-SUMMARY.md
+Phase: F ✅ done — TUTTE le fasi B–F complete
+Plan: QA superata. Resta: push branch + apertura PR (no merge).
+Status: ESECUZIONE COMPLETA — Lighthouse 100/100/100 su 6 route ×2 (desktop+mobile). 5 commit di fase + 1 docs. PR da aprire.
+Last activity: 2026-05-28 — Fase F completata: QA + Lighthouse + fix contrasto AA + 12 screenshot. Vedi 05-01-SUMMARY.md
 
 Progress: [░░░░░░░░░░] 0%
 

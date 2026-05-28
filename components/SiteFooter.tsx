@@ -24,7 +24,7 @@ export function SiteFooter() {
         </a>
         <a
           href="https://claude.ai"
-          className="text-[12px] font-medium uppercase tabular-figures text-terracotta underline-offset-4 hover:underline"
+          className="text-[12px] font-medium uppercase tabular-figures text-terracotta-deep underline-offset-4 hover:underline"
           style={{ letterSpacing: 'var(--tracking-micro)' }}
         >
           Se ti serve aiuto, chatta con Claude →
@@ -32,7 +32,7 @@ export function SiteFooter() {
       </div>
 
       <div
-        className="mt-8 text-[11px] font-medium uppercase tabular-figures text-ink/55"
+        className="mt-8 text-[11px] font-medium uppercase tabular-figures text-muted"
         style={{ letterSpacing: 'var(--tracking-micro)' }}
       >
         2026 · Andrea Pesce · curato a mano

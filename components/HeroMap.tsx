@@ -67,7 +67,7 @@ export function HeroMap() {
 
       {/* Centro — invito a esplorare */}
       <span
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 translate-y-3 whitespace-nowrap text-[11px] font-medium uppercase tabular-figures text-terracotta transition-transform duration-200 group-hover:translate-y-4"
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 translate-y-3 whitespace-nowrap text-[11px] font-medium uppercase tabular-figures text-terracotta-deep transition-transform duration-200 group-hover:translate-y-4"
         style={{ letterSpacing: 'var(--tracking-micro)' }}
       >
         esplora →

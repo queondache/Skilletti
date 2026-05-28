@@ -139,7 +139,7 @@ Plans:
 | C. Componenti UX | v2.0 | 1/1 | Complete | 2026-05-28 |
 | D. Mappa parole | v2.0 | 1/1 | Complete | 2026-05-28 |
 | E. Animazioni minimali | v2.0 | 1/1 | Complete | 2026-05-28 |
-| F. QA + Lighthouse + PR | v2.0 | 0/1 | Not started | - |
+| F. QA + Lighthouse + PR | v2.0 | 1/1 | Complete | 2026-05-28 |
 
 ---
 *Roadmap created: 2026-05-27 — Round 6 milestone start*

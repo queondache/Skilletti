@@ -56,7 +56,7 @@ export function StepNav({ current }: { current: number }) {
             </Link>
             <a
               href="https://claude.ai"
-              className="text-[13px] font-medium uppercase tabular-figures text-terracotta underline-offset-4 hover:underline"
+              className="text-[13px] font-medium uppercase tabular-figures text-terracotta-deep underline-offset-4 hover:underline"
               style={{ letterSpacing: 'var(--tracking-micro)' }}
             >
               Chatta con Claude →

@@ -49,7 +49,7 @@ export default function HomePage() {
             <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
               <Link
                 href="/step-1-capisci"
-                className="inline-flex items-center rounded-[var(--radius)] bg-terracotta px-7 py-3.5 font-sans text-[15px] font-semibold text-paper transition-transform duration-200 hover:-translate-y-0.5"
+                className="inline-flex items-center rounded-[var(--radius)] bg-terracotta-deep px-7 py-3.5 font-sans text-[15px] font-semibold text-paper transition-transform duration-200 hover:-translate-y-0.5"
               >
                 Inizia
               </Link>
