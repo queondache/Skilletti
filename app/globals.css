@@ -164,10 +164,34 @@ html {
   }
 }
 
-/* ── Hover scheda — accento sobrio, niente ombra (resta piatto/museo).
-   La hairline superiore vira verso terracotta: "una linea che si rivela". */
+/* ── Hover scheda (Round 6) — lift sobrio + ombra morbida (Apple-clean),
+   oltre alla hairline che vira verso terracotta. */
 @media (prefers-reduced-motion: no-preference) {
   article[data-skill-card] {
-    transition: border-color 220ms ease-out;
+    transition: border-color 220ms ease-out, transform 220ms ease-out,
+      box-shadow 220ms ease-out;
+  }
+  article[data-skill-card]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 38px -24px rgba(26, 23, 20, 0.3);
+  }
+}
+
+/* ── Ingresso pagina (Round 6, Fase E) — transizione gentile tra step.
+   Ogni route fa fade + translate-up al mount; su navigazione client il <main>
+   si rimonta → l'animazione ridà il senso di "passaggio". reduced-motion off. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes page-enter {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  main {
+    animation: page-enter 220ms ease-out both;
   }
 }

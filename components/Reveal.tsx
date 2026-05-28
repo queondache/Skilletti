@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 /**
  * Reveal gentile all'ingresso nel viewport — vita senza chiasso (no parallax,
@@ -12,10 +13,13 @@ import { useEffect } from 'react';
  * visibili (vedi globals.css). Rispetta `prefers-reduced-motion`: niente
  * transizioni, tutto visibile da subito (gestito in CSS).
  *
- * Montato una volta nel layout. Usa un solo IntersectionObserver per tutti gli
- * elementi → costo trascurabile. Niente stato React, niente re-render.
+ * Round 6 (multi-route): ri-scansiona a ogni cambio rotta (usePathname) — il
+ * layout persiste tra le route, quindi i nuovi `[data-reveal]` vanno osservati
+ * di nuovo, altrimenti resterebbero invisibili dopo una navigazione client.
  */
 export function Reveal() {
+  const pathname = usePathname();
+
   useEffect(() => {
     const root = document.documentElement;
 
@@ -27,7 +31,7 @@ export function Reveal() {
 
     const items = Array.from(
       document.querySelectorAll<HTMLElement>('[data-reveal]'),
-    );
+    ).filter((el) => el.dataset.revealed !== 'true');
     if (items.length === 0) return;
 
     const observer = new IntersectionObserver(
@@ -53,7 +57,7 @@ export function Reveal() {
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
 
   return null;
 }

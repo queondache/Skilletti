@@ -138,7 +138,7 @@ Plans:
 | B. Migrazione routing | v2.0 | 1/1 | Complete | 2026-05-28 |
 | C. Componenti UX | v2.0 | 1/1 | Complete | 2026-05-28 |
 | D. Mappa parole | v2.0 | 1/1 | Complete | 2026-05-28 |
-| E. Animazioni minimali | v2.0 | 0/1 | Not started | - |
+| E. Animazioni minimali | v2.0 | 1/1 | Complete | 2026-05-28 |
 | F. QA + Lighthouse + PR | v2.0 | 0/1 | Not started | - |
 
 ---

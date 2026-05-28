@@ -9,10 +9,10 @@ See: .planning/PROJECT.md (updated 2026-05-27)
 
 ## Current Position
 
-Phase: D ✅ done → E of 5 (esecuzione)
-Plan: Fasi B+C+D chiuse. Prossima: Fase E (animazioni minimali + reduced-motion)
-Status: IN ESECUZIONE — bridge GSD (gsd-execute-phase --interactive). B+C+D committate, build verde 6 route.
-Last activity: 2026-05-28 — Fase D completata: mappa parole (WordMap) unico device tema, combine AND col contesto, no re-render. Vedi 03-01-SUMMARY.md
+Phase: E ✅ done → F of 5 (esecuzione)
+Plan: Fasi B+C+D+E chiuse. Prossima: Fase F (QA + Lighthouse 6 route + 12 screenshot + PR no merge)
+Status: IN ESECUZIONE — bridge GSD (gsd-execute-phase --interactive). B-E committate, build verde 6 route.
+Last activity: 2026-05-28 — Fase E completata: page-enter + hover lift + reveal multi-route fix; reduced-motion off-tutto. Vedi 04-01-SUMMARY.md
 
 Progress: [░░░░░░░░░░] 0%
 
