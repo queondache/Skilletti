@@ -7,14 +7,14 @@ import Link from 'next/link';
 
 type Node = { label: string; x: number; y: number };
 
-// Coordinate in viewBox 0..100. Centro implicito a (50,50).
+// Coordinate in viewBox 0..100 — stesse posizioni di WordMap (anteprima ≡ mappa).
 const NODES: Node[] = [
-  { label: 'Scrittura', x: 17, y: 20 },
+  { label: 'Design', x: 17, y: 20 },
   { label: 'Coding', x: 80, y: 16 },
-  { label: 'Design', x: 88, y: 52 },
+  { label: 'Marketing', x: 88, y: 52 },
   { label: 'Sicurezza', x: 74, y: 86 },
   { label: 'Workflow', x: 22, y: 84 },
-  { label: 'Ricerca', x: 10, y: 54 },
+  { label: 'Web', x: 10, y: 54 },
 ];
 
 export function HeroMap() {

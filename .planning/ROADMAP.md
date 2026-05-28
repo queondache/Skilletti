@@ -137,7 +137,7 @@ Plans:
 | A. Discovery estetica | v2.0 | 1/1 | Complete | 2026-05-27 |
 | B. Migrazione routing | v2.0 | 1/1 | Complete | 2026-05-28 |
 | C. Componenti UX | v2.0 | 1/1 | Complete | 2026-05-28 |
-| D. Mappa parole | v2.0 | 0/1 | Not started | - |
+| D. Mappa parole | v2.0 | 1/1 | Complete | 2026-05-28 |
 | E. Animazioni minimali | v2.0 | 0/1 | Not started | - |
 | F. QA + Lighthouse + PR | v2.0 | 0/1 | Not started | - |
 

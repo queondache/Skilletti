@@ -9,10 +9,10 @@ See: .planning/PROJECT.md (updated 2026-05-27)
 
 ## Current Position
 
-Phase: C ✅ done → D of 5 (esecuzione)
-Plan: Fasi B+C chiuse. Prossima: Fase D (mappa parole filtrante in /step-4-esplora)
-Status: IN ESECUZIONE — bridge GSD (gsd-execute-phase --interactive). B+C committate, build verde 6 route.
-Last activity: 2026-05-28 — Fase C completata: direzione "Terminale editoriale" applicata (font, palette, hero mappa-testo, terminale su installa). Vedi 02-01-SUMMARY.md
+Phase: D ✅ done → E of 5 (esecuzione)
+Plan: Fasi B+C+D chiuse. Prossima: Fase E (animazioni minimali + reduced-motion)
+Status: IN ESECUZIONE — bridge GSD (gsd-execute-phase --interactive). B+C+D committate, build verde 6 route.
+Last activity: 2026-05-28 — Fase D completata: mappa parole (WordMap) unico device tema, combine AND col contesto, no re-render. Vedi 03-01-SUMMARY.md
 
 Progress: [░░░░░░░░░░] 0%
 

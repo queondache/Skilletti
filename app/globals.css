@@ -114,8 +114,13 @@ html {
   }
 }
 
-/* Catalogo — fade dei gruppi non-target quando un filtro tema è attivo.
-   Toggle gestito da CatalogControls via `data-hidden` su `.tema-group`. */
+/* Catalogo — filtro tema (Round 6: WordMap, mappa parole).
+   `data-tema-hidden` = hard filter (display:none) → compone in AND col
+   filtro contesto. (Il vecchio `data-hidden` fade di CatalogControls resta
+   come no-op di compatibilità, non più usato.) */
+.tema-group[data-tema-hidden] {
+  display: none;
+}
 .tema-group[data-hidden] {
   opacity: 0.15;
   pointer-events: none;
