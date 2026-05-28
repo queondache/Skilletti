@@ -2,12 +2,16 @@
 
 > Snapshot di stato: fasi chiuse, fase corrente, blocchi aperti.
 
-## Stato attuale — 2026-05-27
+## Stato attuale — 2026-05-28
 
-Sito **completo e live su Vercel** (`skilletti.vercel.app`) con seed reale (12 skill).
-Round 1 + 2 + 2.5 + 3 (UX revamp) + 4 (refinements) + **5 (multi-contesto + UX
-modern, PR #7 mergiata)** chiusi. **5.5 (sezione "Come iniziare")** in PR aperta.
-**Rimane solo Fase 4 (agent mensile).** Fase 5 deploy non più rilevante: live su Vercel.
+Sito **v1 live su Vercel** (`skilletti.vercel.app`), Round 1–5.5 chiusi (PR #7, #8 mergiate).
+
+**Round 6 — Rifondazione (milestone v2.0) COMPLETATO** sul branch `round6-rifondazione`,
+**PR #9 aperta** (in attesa di review/merge di Andrea — NO merge autonomo).
+Da single-page a **sito didattico a 6 route** (landing + 5 step). Direzione estetica
+"Terminale editoriale". Lighthouse **100/100/100** su 6 route ×2 (desktop+mobile).
+Preview: `https://skilletti-git-round6-rifondazione-queondaches-projects.vercel.app`.
+Pianificazione GSD in `.planning/` (PROJECT/REQUIREMENTS/ROADMAP/STATE + round6-blueprints.md).
 
 `data/skills.json`: 12 skill — 4 essenziale · 6 forte · 2 situazionale.
 
@@ -135,8 +139,12 @@ _(da popolare a partire dalla prima esecuzione agent)_
 
 ## Prossimo step
 
-- [ ] **Merge PR Round 5.5** ("Come iniziare") — review + squash su main (Andrea).
-- [ ] **Fase 4 — agent mensile** (unico lavoro di prodotto rimasto): costruire
+- [ ] **Review + merge PR #9 (Round 6)** — Andrea: aprire il preview Vercel, controllare
+      i 12 screenshot in `.claude/screenshots/round6/`, poi squash-merge su `main`
+      (deploy prod automatico). NO merge autonomo da parte di CC.
+- [ ] **Round 7 — Contenuto**: riscrivere copy hero reale + bio footer (oggi placeholder),
+      4 mini-esempi essenziali, FAQ/about. Vedi `.planning/REQUIREMENTS.md` (Future).
+- [ ] **Fase 4 — agent mensile** (lavoro di prodotto, dopo v2): costruire
       `scripts/agent/` + workflow cron. Manca ancora il prompt Fase 4 completo (due
       volte arrivato solo come placeholder). Conferme già date: regola d'oro = gate
       umano sulla review PR (agent non verifica); watchlist <1000★ nel body PR (mai
