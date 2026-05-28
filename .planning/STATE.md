@@ -9,10 +9,10 @@ See: .planning/PROJECT.md (updated 2026-05-27)
 
 ## Current Position
 
-Phase: B ✅ done → C of 5 (esecuzione)
-Plan: Fase B chiusa (01-migrazione-routing). Prossima: Fase C (componenti UX, reskin direzione)
-Status: IN ESECUZIONE — bridge GSD (gsd-execute-phase --interactive). B committata, build verde 6 route.
-Last activity: 2026-05-28 — Fase B completata: 6 route App Router, chrome wizard, contenuti migrati. Vedi 01-01-SUMMARY.md
+Phase: C ✅ done → D of 5 (esecuzione)
+Plan: Fasi B+C chiuse. Prossima: Fase D (mappa parole filtrante in /step-4-esplora)
+Status: IN ESECUZIONE — bridge GSD (gsd-execute-phase --interactive). B+C committate, build verde 6 route.
+Last activity: 2026-05-28 — Fase C completata: direzione "Terminale editoriale" applicata (font, palette, hero mappa-testo, terminale su installa). Vedi 02-01-SUMMARY.md
 
 Progress: [░░░░░░░░░░] 0%
 

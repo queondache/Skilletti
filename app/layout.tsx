@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { fraunces, geist, geistMono } from './fonts';
+import { fraunces, interTight, jetbrainsMono } from './fonts';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { Reveal } from '@/components/Reveal';
@@ -52,7 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="it"
-      className={`${fraunces.variable} ${geist.variable} ${geistMono.variable}`}
+      className={`${fraunces.variable} ${interTight.variable} ${jetbrainsMono.variable}`}
     >
       <body className="bg-paper text-ink antialiased">
         <SiteHeader />

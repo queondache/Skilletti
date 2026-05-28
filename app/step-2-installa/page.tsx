@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { ComeIniziare } from '@/components/ComeIniziare';
+import { TermBlock } from '@/components/TermBlock';
 import { StepNav } from '@/components/StepNav';
 
 // Step 2 — Installa. Sezione "Come iniziare" migrata da v1 (setup CLI / VS Code
@@ -36,6 +37,11 @@ export default function Step2Installa() {
         >
           Come iniziare
         </h2>
+
+        <div className="mt-8">
+          <TermBlock />
+        </div>
+
         <ComeIniziare />
 
         <StepNav current={2} />

@@ -1,12 +1,9 @@
-// Sistema tipografico duplice (Round 3):
-// - Fraunces = display + voce (wordmark, titoli h1-h3, taglini italic).
-//   Variable: copre weight 100-900 + opsz 9-144 + italic.
-// - Geist = body (paragrafi, micro-label, dati, badge): grottesco moderno,
-//   regge linee più lunghe e densità informativa meglio del serif.
-// - Geist Mono = comando d'installazione.
-// Tutte inlineate a build time via next/font → zero FOUT. Fallback: Inter
-// (vedi --font-body in globals.css) → system sans.
-import { Fraunces, Geist, Geist_Mono } from 'next/font/google';
+// Sistema tipografico Round 6 — direzione "Terminale editoriale":
+// - Fraunces = display (wordmark, titoli) + voce/body. Variable: opsz 9-144 + italic + SOFT.
+// - Inter Tight = sans display per CTA e micro-label UPPERCASE (grottesco stretto, bold).
+// - JetBrains Mono = comandi terminale (il motivo command-line).
+// Tutte inlineate a build time via next/font → zero FOUT. Nessuna dipendenza npm.
+import { Fraunces, Inter_Tight, JetBrains_Mono } from 'next/font/google';
 
 export const fraunces = Fraunces({
   subsets: ['latin'],
@@ -15,14 +12,16 @@ export const fraunces = Fraunces({
   axes: ['opsz', 'SOFT'],
 });
 
-export const geist = Geist({
+export const interTight = Inter_Tight({
   subsets: ['latin'],
-  variable: '--font-geist',
+  variable: '--font-inter-tight',
   display: 'swap',
+  weight: ['500', '600', '700'],
 });
 
-export const geistMono = Geist_Mono({
+export const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
-  variable: '--font-geist-mono',
+  variable: '--font-jetbrains',
   display: 'swap',
+  weight: ['400', '500', '700'],
 });

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { Wordmark } from '@/components/Wordmark';
+import { HeroMap } from '@/components/HeroMap';
 import { STEPS } from '@/lib/steps';
 
 // Landing (Round 6 — wizard minimale). Hero placeholder + CTA "Inizia" + mappa
@@ -30,32 +31,41 @@ export default function HomePage() {
       >
         <Wordmark as="h1" size="hero" />
 
-        <p
-          className="lead mt-8 max-w-[var(--measure-prose)] text-[1.125rem] text-ink-soft prose-pretty"
-          style={{ lineHeight: 1.6, fontVariationSettings: '"opsz" 24' }}
-        >
-          {/* PLACEHOLDER ~60 parole — Andrea riscrive in Round 7 */}
-          Claude Code è l&rsquo;assistente di Anthropic che vive sul tuo computer e
-          lavora accanto a te: legge i tuoi file, scrive ed esegue codice,
-          automatizza i compiti ripetitivi. Le <em>skill</em>{' '}sono estensioni
-          che gli insegnano a fare cose specifiche meglio. Questa guida ti porta dal non
-          sapere cosa sia all&rsquo;avere installato le tue prime skill — un passo
-          alla volta, senza dare nulla per scontato.
-        </p>
+        <div className="mt-10 grid grid-cols-1 items-center gap-x-12 gap-y-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,42%)]">
+          <div>
+            <p
+              className="lead max-w-[var(--measure-prose)] text-[1.125rem] text-ink-soft prose-pretty"
+              style={{ lineHeight: 1.6, fontVariationSettings: '"opsz" 24' }}
+            >
+              {/* PLACEHOLDER ~60 parole — Andrea riscrive in Round 7 */}
+              Claude Code è l&rsquo;assistente di Anthropic che vive sul tuo computer e
+              lavora accanto a te: legge i tuoi file, scrive ed esegue codice,
+              automatizza i compiti ripetitivi. Le <em>skill</em>{' '}sono estensioni
+              che gli insegnano a fare cose specifiche meglio. Questa guida ti porta dal
+              non sapere cosa sia all&rsquo;avere installato le tue prime skill — un
+              passo alla volta, senza dare nulla per scontato.
+            </p>
 
-        <div className="mt-10 flex flex-wrap items-center gap-x-7 gap-y-4">
-          <Link
-            href="/step-1-capisci"
-            className="inline-flex items-center rounded-md bg-terracotta px-7 py-3.5 text-[15px] font-semibold text-paper transition-transform duration-200 hover:-translate-y-0.5"
-          >
-            Inizia
-          </Link>
-          <Link
-            href="/step-1-capisci"
-            className="text-[15px] font-medium text-ink underline-offset-4 hover:underline"
-          >
-            Cos&rsquo;è una skill?
-          </Link>
+            <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
+              <Link
+                href="/step-1-capisci"
+                className="inline-flex items-center rounded-[var(--radius)] bg-terracotta px-7 py-3.5 font-sans text-[15px] font-semibold text-paper transition-transform duration-200 hover:-translate-y-0.5"
+              >
+                Inizia
+              </Link>
+              <Link
+                href="/step-1-capisci"
+                className="font-sans text-[15px] font-medium text-ink underline-offset-4 hover:underline"
+              >
+                Cos&rsquo;è una skill?
+              </Link>
+            </div>
+          </div>
+
+          {/* Mappa-testo — anteprima di /step-4-esplora */}
+          <div className="w-full">
+            <HeroMap />
+          </div>
         </div>
       </section>
 
