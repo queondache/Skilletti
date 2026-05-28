@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>skilletti — Round 6 · Direzione 3: Rivista Contrasto</title>
+
+<!-- Google Fonts: Fraunces (display + body, con assi ottici/soft) + Inter Tight (CTA + kicker) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter+Tight:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<style>
+  /* ============================================================
+     DIREZIONE 3 — "RIVISTA CONTRASTO"
+     Magazine editoriale art-directed: carta bone, Fraunces enorme,
+     duotone melanzana + argilla, griglia asimmetrica, pull-quote,
+     capolettera, numeri-indice oversize.
+     ============================================================ */
+
+  :root {
+    /* ---- PALETTE (etichettata) ---- */
+    --bg:        #F0E9DC; /* bone / crema (carta) */
+    --primary:   #3A2140; /* melanzana (aubergine) */
+    --accent:    #C24A2A; /* argilla (clay) */
+    --ink:       #1C1614; /* inchiostro (testo forte) */
+    --muted-fg:  #6E6256; /* grigio caldo (testo secondario) */
+    --card:      #F7F2E8; /* scheda (carta più chiara) */
+    --hairline:  #DDD2C0; /* filetto / regola sottile */
+
+    /* derivati */
+    --primary-soft: #4A2E52;
+    --accent-soft:  rgba(194, 74, 42, 0.12);
+    --bg-on-primary: #EFE6D6;
+
+    /* tipografia */
+    --display: "Fraunces", Georgia, "Times New Roman", serif;
+    --sans:    "Inter Tight", system-ui, -apple-system, sans-serif;
+
+    /* griglia editoriale */
+    --margin: clamp(1.25rem, 5vw, 6rem);
+    --rule: 1px solid var(--hairline);
+  }
+
+  /* ---- reset essenziale ---- */
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--display);
+    font-optical-sizing: auto;
+    font-variation-settings: "SOFT" 40, "WONK" 0;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  /* texture carta: grana sottilissima via gradiente ripetuto */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(28,22,20,0.035) 1px, transparent 0);
+    background-size: 4px 4px;
+  }
+
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+
+  /* ---- focus visibile (AA) ---- */
+  a:focus-visible,
+  button:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* ---- helper kicker / etichette UPPERCASE in Inter Tight ---- */
+  .kicker {
+    font-family: var(--sans);
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-weight: 700;
+    font-size: 0.72rem;
+    color: var(--accent);
+  }
+  .kicker--muted { color: var(--muted-fg); }
+  .kicker--cream { color: var(--bg-on-primary); }
+
+  /* numero-indice editoriale oversize */
+  .index-num {
+    font-family: var(--display);
+    font-weight: 300;
+    font-style: italic;
+    font-variation-settings: "SOFT" 60, "opsz" 144;
+    line-height: 0.8;
+    color: var(--accent);
+    opacity: 0.85;
+  }
+
+  /* contenitore con margini editoriali generosi */
+  .wrap {
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: var(--margin);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* regola/filetto argilla */
+  .rule-clay {
+    height: 3px;
+    background: var(--accent);
+    border: 0;
+    width: 88px;
+    margin: 0;
+  }
+
+  /* ============================================================
+     1. TAG STRIP (top)
+     ============================================================ */
+  .tagstrip {
+    position: relative;
+    z-index: 2;
+    background: var(--primary);
+    color: var(--bg-on-primary);
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.6rem var(--margin);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 2px solid var(--accent);
+  }
+  .tagstrip .dot {
+    width: 7px; height: 7px;
+    background: var(--accent);
+    border-radius: 50%;
+    flex: none;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  /* ============================================================
+     2. HERO — editoriale asimmetrico
+     ============================================================ */
+  .hero {
+    padding-top: clamp(2rem, 5vw, 4.5rem);
+    padding-bottom: clamp(2.5rem, 6vw, 5rem);
+    position: relative;
+  }
+
+  .hero__masthead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-bottom: 1.1rem;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: clamp(2rem, 5vw, 4rem);
+  }
+  .wordmark {
+    font-family: var(--display);
+    font-weight: 600;
+    font-variation-settings: "SOFT" 50, "opsz" 90;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .wordmark .dot-accent { color: var(--accent); }
+  .hero__masthead-meta {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted-fg);
+    font-weight: 600;
+  }
+
+  /* griglia asimmetrica hero: colonna sinistra stretta (indice) + headline larga */
+  .hero__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+  @media (min-width: 900px) {
+    .hero__grid {
+      grid-template-columns: minmax(120px, 0.22fr) 1.6fr 1fr;
+      align-items: start;
+    }
+  }
+
+  .hero__index {
+    position: relative;
+  }
+  .hero__index .index-num {
+    font-size: clamp(5rem, 14vw, 11rem);
+    display: block;
+  }
+  .hero__index-label {
+    font-family: var(--sans);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.66rem;
+    font-weight: 700;
+    color: var(--muted-fg);
+    margin-top: 0.4rem;
+    max-width: 9ch;
+    line-height: 1.5;
+  }
+
+  .hero__headline {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings: "SOFT" 30, "opsz" 144, "WONK" 1;
+    /* MAXIMAL type scale */
+    font-size: clamp(2.7rem, 8vw, 7.2rem);
+    line-height: 0.92;
+    letter-spacing: -0.025em;
+    color: var(--primary);
+  }
+  .hero__headline em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+    font-variation-settings: "SOFT" 70, "opsz" 144;
+  }
+
+  .hero__aside {
+    padding-top: 0.6rem;
+  }
+  .hero__aside .rule-clay { margin-bottom: 1.4rem; }
+  .hero__lede {
+    font-family: var(--display);
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    line-height: 1.62;
+    color: var(--ink);
+    font-weight: 400;
+    margin: 0 0 1.8rem;
+    max-width: 40ch;
+  }
+  .hero__lede strong {
+    font-weight: 600;
+    color: var(--primary);
+  }
+
+  .hero__cta-row {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    flex-wrap: wrap;
+  }
+
+  /* CTA primaria — Inter Tight bold */
+  .btn-primary {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 0.92rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: #fff;
+    border: 0;
+    padding: 0.95rem 2.4rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    position: relative;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    box-shadow: 5px 5px 0 var(--primary);
+  }
+  .btn-primary:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 var(--primary);
+    background: #d4552f;
+  }
+  .btn-primary:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--primary);
+  }
+  .btn-primary .arrow { transition: transform 0.18s ease; }
+  .btn-primary:hover .arrow { transform: translateX(3px); }
+
+  /* link testuale secondario */
+  .link-text {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--primary);
+    text-decoration: none;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 2px;
+    transition: color 0.18s ease, border-color 0.18s ease;
+  }
+  .link-text:hover { color: var(--accent); }
+
+  /* ============================================================
+     sezioni generiche
+     ============================================================ */
+  section { position: relative; z-index: 1; }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 1.2rem;
+    margin-bottom: 2.4rem;
+    padding-top: clamp(2.5rem, 6vw, 5rem);
+  }
+  .section-head .index-num {
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-style: normal;
+    font-weight: 600;
+    opacity: 1;
+  }
+  .section-head h2 {
+    font-family: var(--display);
+    font-weight: 500;
+    font-variation-settings: "SOFT" 30, "opsz" 100;
+    font-size: clamp(1.6rem, 3.4vw, 2.8rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: var(--ink);
+  }
+  .section-head .kicker { align-self: center; }
+
+  /* ============================================================
+     3. STEP NAVIGATOR + 4. SKILLCARD  — affiancati in griglia
+     ============================================================ */
+  .specimens {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 4vw, 3rem);
+    border-top: var(--rule);
+    padding-bottom: 2rem;
+  }
+  @media (min-width: 1000px) {
+    .specimens { grid-template-columns: 0.9fr 1.1fr; align-items: start; }
+  }
+
+  /* --- STEP NAVIGATOR --- */
+  .stepnav {
+    background: var(--card);
+    border: 1.5px solid var(--ink);
+    padding: clamp(1.6rem, 3vw, 2.4rem);
+  }
+  .stepnav__top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.4rem;
+  }
+  .stepnav__count {
+    font-family: var(--sans);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.74rem;
+    color: var(--muted-fg);
+  }
+  .stepnav__count b { color: var(--accent); }
+  .stepnav__title {
+    font-family: var(--display);
+    font-weight: 500;
+    font-variation-settings: "SOFT" 40, "opsz" 100;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--primary);
+    margin: 0 0 1.6rem;
+  }
+  /* barra di avanzamento minimale — niente dots/carousel */
+  .stepnav__bar {
+    height: 4px;
+    background: var(--hairline);
+    position: relative;
+    margin-bottom: 1.6rem;
+  }
+  .stepnav__bar i {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 40%;
+    background: var(--accent);
+    transition: width 0.25s ease;
+  }
+  .stepnav__controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .stepbtn {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.86rem;
+    background: transparent;
+    border: 1.5px solid var(--ink);
+    color: var(--ink);
+    padding: 0.55rem 1.1rem;
+    cursor: pointer;
+    transition: background 0.16s ease, color 0.16s ease;
+  }
+  .stepbtn:hover { background: var(--ink); color: var(--bg); }
+  .stepbtn--next {
+    background: var(--primary);
+    color: var(--bg-on-primary);
+    border-color: var(--primary);
+  }
+  .stepbtn--next:hover { background: var(--accent); border-color: var(--accent); color:#fff; }
+  .stepbtn--prev { color: var(--muted-fg); border-color: var(--hairline); }
+
+  /* --- SKILLCARD --- */
+  .skillcard {
+    background: var(--card);
+    border: 1.5px solid var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+  .skillcard__top {
+    background: var(--primary);
+    color: var(--bg-on-primary);
+    padding: 0.7rem clamp(1.3rem, 2.5vw, 1.8rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .skillcard__theme {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--bg-on-primary);
+  }
+  .skillcard__theme::before {
+    content: "▪ ";
+    color: var(--accent);
+  }
+  .skillcard__body {
+    padding: clamp(1.3rem, 2.5vw, 1.9rem);
+  }
+  .skillcard__title {
+    font-family: var(--display);
+    font-weight: 500;
+    font-variation-settings: "SOFT" 40, "opsz" 120, "WONK" 1;
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 0.4rem 0 0.9rem;
+  }
+  .skillcard__desc {
+    font-family: var(--display);
+    font-size: 1.02rem;
+    line-height: 1.55;
+    color: var(--muted-fg);
+    margin: 0 0 1.4rem;
+    max-width: 42ch;
+  }
+  .skillcard__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    border-top: var(--rule);
+    padding-top: 1rem;
+  }
+  .ctx-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .ctx-tag {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    border: 1.2px solid var(--hairline);
+    padding: 0.28rem 0.7rem;
+    color: var(--muted-fg);
+    border-radius: 999px;
+  }
+  .skillcard__stars {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  /* ============================================================
+     PULL-QUOTE — full-bleed melanzana con testo crema
+     ============================================================ */
+  .quoteblock {
+    background: var(--primary);
+    color: var(--bg-on-primary);
+    margin-top: clamp(3rem, 7vw, 6rem);
+    padding-block: clamp(3.5rem, 9vw, 7rem);
+    position: relative;
+    overflow: hidden;
+  }
+  /* virgolettone gigante decorativo */
+  .quoteblock::after {
+    content: "\201C";
+    position: absolute;
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(18rem, 40vw, 34rem);
+    line-height: 0.6;
+    color: var(--accent);
+    opacity: 0.16;
+    top: -2rem;
+    right: 2vw;
+    pointer-events: none;
+  }
+  .quoteblock blockquote {
+    margin: 0;
+    max-width: 22ch;
+    position: relative;
+    z-index: 1;
+  }
+  .quoteblock .kicker { margin-bottom: 1.6rem; display: block; }
+  .quoteblock p {
+    font-family: var(--display);
+    font-weight: 400;
+    font-style: italic;
+    font-variation-settings: "SOFT" 60, "opsz" 144;
+    font-size: clamp(2rem, 6vw, 4.6rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .quoteblock p .clay { color: var(--accent); font-style: normal; }
+  .quoteblock cite {
+    display: block;
+    margin-top: 2rem;
+    font-family: var(--sans);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: rgba(239,230,214,0.7);
+  }
+
+  /* ============================================================
+     DROP-INITIAL — paragrafo editoriale con capolettera
+     ============================================================ */
+  .editorial {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    border-top: var(--rule);
+    padding-bottom: 1rem;
+  }
+  @media (min-width: 900px) {
+    .editorial { grid-template-columns: 1fr 1fr; }
+  }
+  .editorial__col p {
+    font-family: var(--display);
+    font-size: 1.08rem;
+    line-height: 1.68;
+    color: var(--ink);
+    margin: 0 0 1.2rem;
+    max-width: 52ch;
+  }
+  .dropcap::first-letter {
+    font-family: var(--display);
+    font-weight: 600;
+    font-variation-settings: "SOFT" 20, "opsz" 144;
+    font-size: 5.4rem;
+    line-height: 0.72;
+    float: left;
+    padding: 0.1rem 0.7rem 0 0;
+    color: var(--accent);
+  }
+  .editorial__col .kicker { display:block; margin-bottom: 1rem; }
+
+  /* ============================================================
+     5. ESPLORA — mappa parole + context filter
+     ============================================================ */
+  .esplora { border-top: var(--rule); padding-bottom: clamp(2rem, 5vw, 4rem); }
+
+  .ctx-filter {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.1rem;
+    margin-bottom: 2.6rem;
+    padding-bottom: 1.4rem;
+    border-bottom: var(--rule);
+  }
+  .ctx-filter > .kicker { margin-right: 0.4rem; }
+  .ctx-pill {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.84rem;
+    background: transparent;
+    border: 1.5px solid var(--hairline);
+    color: var(--muted-fg);
+    padding: 0.42rem 1.1rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.16s ease;
+  }
+  .ctx-pill:hover { border-color: var(--ink); color: var(--ink); }
+  .ctx-pill[aria-pressed="true"] {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--bg-on-primary);
+  }
+
+  /* mappa parole: chip a scala tipografica varia, disposizione fluida */
+  .wordmap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.7rem 1.4rem;
+    max-width: 70ch;
+  }
+  .wordchip {
+    font-family: var(--display);
+    font-weight: 500;
+    font-variation-settings: "SOFT" 40, "opsz" 100;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    background: none;
+    border: 0;
+    padding: 0.2rem 0;
+    cursor: pointer;
+    color: var(--primary);
+    position: relative;
+    transition: color 0.16s ease, transform 0.16s ease;
+  }
+  .wordchip::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 100%;
+    bottom: -2px;
+    height: 3px;
+    background: var(--accent);
+    transition: right 0.22s ease;
+  }
+  .wordchip:hover { color: var(--accent); transform: translateY(-2px); }
+  .wordchip:hover::after { right: 0; }
+  .wordchip.is-active { color: var(--accent); }
+  .wordchip.is-active::after { right: 0; }
+  /* scala tipografica volutamente irregolare = ritmo da rivista */
+  .wordchip.s1 { font-size: clamp(1.6rem, 4vw, 2.8rem); }
+  .wordchip.s2 { font-size: clamp(2.4rem, 6vw, 4.2rem); font-style: italic; color: var(--accent); }
+  .wordchip.s3 { font-size: clamp(1.3rem, 3vw, 2rem); }
+  .wordchip.s4 { font-size: clamp(2rem, 5vw, 3.4rem); }
+  .wordchip.s5 { font-size: clamp(1.5rem, 3.5vw, 2.4rem); }
+  .wordchip.s6 { font-size: clamp(1.2rem, 2.6vw, 1.7rem); }
+
+  /* ============================================================
+     6. SYSTEM block — specimen tipografico + palette
+     ============================================================ */
+  .system { border-top: var(--rule); padding-bottom: clamp(2.5rem, 6vw, 4.5rem); }
+  .system__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 5vw, 3.5rem);
+  }
+  @media (min-width: 980px) {
+    .system__grid { grid-template-columns: 1.3fr 1fr; align-items: start; }
+  }
+
+  .specimen-row {
+    border-bottom: var(--rule);
+    padding: 1rem 0;
+    display: flex;
+    align-items: baseline;
+    gap: 1.2rem;
+  }
+  .specimen-row .tag {
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted-fg);
+    flex: none;
+    width: 7ch;
+    font-weight: 600;
+  }
+  .sp-display-xl {
+    font-family: var(--display);
+    font-weight: 500;
+    font-variation-settings: "SOFT" 30, "opsz" 144;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--primary);
+  }
+  .sp-display-l {
+    font-family: var(--display);
+    font-weight: 500;
+    font-style: italic;
+    font-variation-settings: "SOFT" 60, "opsz" 100;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    color: var(--accent);
+    line-height: 1;
+  }
+  .sp-label {
+    font-family: var(--sans);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.8rem;
+    color: var(--ink);
+  }
+  .sp-body {
+    font-family: var(--display);
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: var(--ink);
+    max-width: 48ch;
+    margin: 0;
+  }
+
+  /* palette swatches */
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+  .swatch {
+    border: 1px solid var(--hairline);
+    overflow: hidden;
+  }
+  .swatch .chip {
+    height: 66px;
+  }
+  .swatch .meta {
+    padding: 0.55rem 0.7rem;
+    background: var(--card);
+  }
+  .swatch .name {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    display: block;
+  }
+  .swatch .hex {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    color: var(--muted-fg);
+    letter-spacing: 0.04em;
+  }
+
+  /* ============================================================
+     7. FOOTER
+     ============================================================ */
+  .footer {
+    background: var(--ink);
+    color: var(--bg);
+    margin-top: clamp(3rem, 7vw, 6rem);
+    position: relative;
+    z-index: 1;
+  }
+  .footer__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding-block: clamp(2.6rem, 5vw, 4rem);
+    align-items: end;
+  }
+  @media (min-width: 820px) {
+    .footer__inner { grid-template-columns: 1.5fr 1fr; }
+  }
+  .footer__wordmark {
+    font-family: var(--display);
+    font-weight: 600;
+    font-variation-settings: "SOFT" 50, "opsz" 90;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    line-height: 1;
+    letter-spacing: -0.025em;
+    margin: 0 0 1.2rem;
+  }
+  .footer__wordmark .dot-accent { color: var(--accent); }
+  .footer__bio {
+    font-family: var(--display);
+    font-size: 1.02rem;
+    line-height: 1.55;
+    color: rgba(240,233,220,0.78);
+    max-width: 46ch;
+    margin: 0;
+  }
+  .footer__bio b { color: var(--bg); font-weight: 600; }
+  .footer__links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    align-items: flex-start;
+  }
+  @media (min-width: 820px) { .footer__links { align-items: flex-end; text-align: right; } }
+  .footer__link {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--bg);
+    text-decoration: none;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 2px;
+    transition: color 0.16s ease;
+  }
+  .footer__link:hover { color: var(--accent); }
+  .footer__cta {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: gap 0.16s ease;
+  }
+  .footer__cta:hover { gap: 0.8rem; }
+
+  /* reduce-motion */
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+
+<body>
+
+  <!-- ============ 1. TAG STRIP ============ -->
+  <div class="tagstrip" role="note">
+    <span class="dot" aria-hidden="true"></span>
+    <span>SKILLETTI · ROUND 6 — DIREZIONE 3: RIVISTA CONTRASTO</span>
+  </div>
+
+  <!-- ============ 2. HERO ============ -->
+  <header class="hero">
+    <div class="wrap">
+
+      <div class="hero__masthead">
+        <div class="wordmark">skilletti<span class="dot-accent">.</span></div>
+        <div class="hero__masthead-meta">Numero 06 — Maggio · Una guida illustrata</div>
+      </div>
+
+      <div class="hero__grid">
+
+        <!-- numero-indice oversize -->
+        <div class="hero__index" aria-hidden="true">
+          <span class="index-num">01</span>
+          <div class="hero__index-label">L'inizio del percorso</div>
+        </div>
+
+        <!-- headline MAXIMAL -->
+        <h1 class="hero__headline">
+          Imparare a usare <em>Claude&nbsp;Code</em> partendo davvero da zero.
+        </h1>
+
+        <!-- aside con lede + CTA -->
+        <div class="hero__aside">
+          <hr class="rule-clay" />
+          <span class="kicker" style="display:block; margin-bottom:0.9rem;">Cos'è Claude Code</span>
+          <p class="hero__lede">
+            <strong>Claude Code è un assistente che lavora dentro il tuo computer:</strong>
+            legge i tuoi file, scrive codice, esegue comandi e ti accompagna passo
+            dopo passo. Non serve essere programmatori. Parli in italiano, lui capisce
+            cosa vuoi ottenere e lo costruisce con te. Questa rivista ti insegna a usarlo
+            con calma, una pagina alla volta.
+          </p>
+          <div class="hero__cta-row">
+            <a class="btn-primary" href="#step">
+              Inizia <span class="arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="link-text" href="#skill">Cos'è una skill?</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ 3 + 4. SPECIMEN: STEP NAVIGATOR + SKILLCARD ============ -->
+  <section id="step" aria-labelledby="step-h">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="index-num">02</span>
+        <h2 id="step-h">Il percorso, passo&nbsp;dopo&nbsp;passo</h2>
+        <span class="kicker">Componenti</span>
+      </div>
+
+      <div class="specimens">
+
+        <!-- STEP NAVIGATOR -->
+        <div class="stepnav" aria-label="Navigatore dei passi">
+          <div class="stepnav__top">
+            <span class="stepnav__count">Step <b>2</b> di 5</span>
+            <span class="kicker kicker--muted">Setup</span>
+          </div>
+          <p class="stepnav__title">Installa</p>
+          <div class="stepnav__bar" role="progressbar" aria-valuenow="2" aria-valuemin="1" aria-valuemax="5" aria-label="Avanzamento: passo 2 di 5">
+            <i></i>
+          </div>
+          <div class="stepnav__controls">
+            <button class="stepbtn stepbtn--prev" type="button">‹ Indietro</button>
+            <button class="stepbtn stepbtn--next" type="button">Avanti ›</button>
+          </div>
+        </div>
+
+        <!-- SKILLCARD -->
+        <article class="skillcard" aria-labelledby="card-title">
+          <div class="skillcard__top">
+            <span class="kicker kicker--cream">Essenziale</span>
+            <span class="skillcard__theme">Metodo</span>
+          </div>
+          <div class="skillcard__body">
+            <h3 class="skillcard__title" id="card-title">Superpowers</h3>
+            <p class="skillcard__desc">
+              La cassetta degli attrezzi che uso per prima. Insegna a Claude a
+              cercare le skill giuste e a usarle nell'ordine corretto, prima ancora
+              di scrivere una riga. È il punto di partenza che consiglio a tutti.
+            </p>
+            <div class="skillcard__meta">
+              <div class="ctx-tags">
+                <span class="ctx-tag">Claude Code</span>
+                <span class="ctx-tag">VS Code</span>
+              </div>
+              <span class="skillcard__stars">18k ★</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PULL-QUOTE full-bleed melanzana ============ -->
+  <section class="quoteblock" id="skill" aria-label="Citazione di apertura">
+    <div class="wrap">
+      <blockquote>
+        <span class="kicker kicker--cream">Cos'è una skill</span>
+        <p>Una skill è una <span class="clay">competenza</span> che insegni una volta e Claude ricorda per sempre.</p>
+        <cite>— Andrea, dalla pagina del metodo</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ============ DROP-INITIAL editoriale ============ -->
+  <section aria-label="Introduzione al metodo">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="index-num">03</span>
+        <h2>Perché vale la pena imparare</h2>
+        <span class="kicker">Il metodo</span>
+      </div>
+
+      <div class="editorial">
+        <div class="editorial__col">
+          <span class="kicker">In breve</span>
+          <p class="dropcap">
+            La prima volta che apri Claude Code può sembrare un terminale freddo e
+            ostile. In realtà è una conversazione: scrivi cosa vuoi ottenere, lui
+            propone, tu correggi. Questa rivista nasce per togliere quella paura
+            iniziale e mostrarti che il flusso è più vicino al parlare che al
+            programmare.
+          </p>
+          <p>
+            Ogni scheda che trovi qui dentro è una skill che ho provato sul campo,
+            con una nota personale sul perché la tengo in lista e quando la tiro
+            fuori. Niente elenchi sterili: solo strumenti che mi hanno cambiato il
+            modo di lavorare.
+          </p>
+        </div>
+        <div class="editorial__col">
+          <span class="kicker">Come leggere le schede</span>
+          <p>
+            Ogni scheda ha un'etichetta — <em>Essenziale</em> oppure un tema — e i
+            contesti in cui funziona: a riga di comando, dentro VS&nbsp;Code o da
+            mobile. Le stelle indicano quanto la community apprezza il progetto: un
+            segnale di fiducia, non un voto definitivo.
+          </p>
+          <p>
+            Il consiglio è semplice: parti dalle Essenziali, poi segui la curiosità
+            tra i temi. Non c'è un ordine giusto — c'è il tuo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5. ESPLORA — mappa parole + context filter ============ -->
+  <section class="esplora" aria-labelledby="esplora-h">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="index-num">04</span>
+        <h2 id="esplora-h">Esplora per tema</h2>
+        <span class="kicker">Mappa parole</span>
+      </div>
+
+      <!-- context filter row -->
+      <div class="ctx-filter" role="group" aria-label="Filtra per contesto">
+        <span class="kicker">Contesto</span>
+        <button class="ctx-pill" type="button" aria-pressed="true">Tutti</button>
+        <button class="ctx-pill" type="button" aria-pressed="false">Claude Code</button>
+        <button class="ctx-pill" type="button" aria-pressed="false">VS Code</button>
+        <button class="ctx-pill" type="button" aria-pressed="false">Mobile</button>
+      </div>
+
+      <!-- mappa parole / cluster di chip -->
+      <div class="wordmap" role="group" aria-label="Temi cliccabili">
+        <button class="wordchip s1" type="button">Metodo</button>
+        <button class="wordchip s2 is-active" type="button">Frontend</button>
+        <button class="wordchip s3" type="button">Sicurezza</button>
+        <button class="wordchip s4" type="button">Dati</button>
+        <button class="wordchip s5" type="button">Scrittura</button>
+        <button class="wordchip s6" type="button">Ricerca</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. SYSTEM block ============ -->
+  <section class="system" aria-labelledby="system-h">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="index-num">05</span>
+        <h2 id="system-h">Il sistema visivo</h2>
+        <span class="kicker">Specimen</span>
+      </div>
+
+      <div class="system__grid">
+
+        <!-- specimen tipografico -->
+        <div>
+          <div class="specimen-row">
+            <span class="tag">Display</span>
+            <span class="sp-display-xl">Fraunces Aa</span>
+          </div>
+          <div class="specimen-row">
+            <span class="tag">Corsivo</span>
+            <span class="sp-display-l">Fraunces italic — la voce</span>
+          </div>
+          <div class="specimen-row">
+            <span class="tag">Label</span>
+            <span class="sp-label">Inter Tight · Etichetta</span>
+          </div>
+          <div class="specimen-row" style="border-bottom:0;">
+            <span class="tag">Body</span>
+            <p class="sp-body">
+              Il testo lungo è in Fraunces con assi ottici e soft attivi: caldo,
+              leggibile, da rivista. Le etichette in Inter Tight danno il contrasto
+              netto tra serif espressivo e grottesco asciutto.
+            </p>
+          </div>
+        </div>
+
+        <!-- palette swatches etichettate -->
+        <div>
+          <span class="kicker" style="display:block; margin-bottom:1rem;">Palette</span>
+          <div class="swatches">
+            <div class="swatch">
+              <div class="chip" style="background:#F0E9DC;"></div>
+              <div class="meta"><span class="name">Bone / Crema</span><span class="hex">#F0E9DC</span></div>
+            </div>
+            <div class="swatch">
+              <div class="chip" style="background:#3A2140;"></div>
+              <div class="meta"><span class="name">Melanzana</span><span class="hex">#3A2140</span></div>
+            </div>
+            <div class="swatch">
+              <div class="chip" style="background:#C24A2A;"></div>
+              <div class="meta"><span class="name">Argilla</span><span class="hex">#C24A2A</span></div>
+            </div>
+            <div class="swatch">
+              <div class="chip" style="background:#1C1614;"></div>
+              <div class="meta"><span class="name">Inchiostro</span><span class="hex">#1C1614</span></div>
+            </div>
+            <div class="swatch">
+              <div class="chip" style="background:#6E6256;"></div>
+              <div class="meta"><span class="name">Grigio caldo</span><span class="hex">#6E6256</span></div>
+            </div>
+            <div class="swatch">
+              <div class="chip" style="background:#F7F2E8;"></div>
+              <div class="meta"><span class="name">Scheda</span><span class="hex">#F7F2E8</span></div>
+            </div>
+            <div class="swatch">
+              <div class="chip" style="background:#DDD2C0;"></div>
+              <div class="meta"><span class="name">Filetto</span><span class="hex">#DDD2C0</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7. FOOTER ============ -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__inner">
+        <div>
+          <div class="footer__wordmark">skilletti<span class="dot-accent">.</span></div>
+          <p class="footer__bio">
+            <b>Andrea</b> raccoglie qui le skill di Claude che usa davvero, con una
+            nota personale per ciascuna. Una guida curata, non un catalogo: poche
+            schede, scelte con cura, per chi parte da zero.
+          </p>
+        </div>
+        <div class="footer__links">
+          <a class="footer__link" href="#" rel="noopener">LinkedIn</a>
+          <a class="footer__cta" href="#">Se ti serve aiuto, chatta con Claude <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ JS minimo: stati attivi demo ============ -->
+  <script>
+    // Context filter: un solo pill attivo per volta (aria-pressed)
+    var pills = document.querySelectorAll('.ctx-pill');
+    pills.forEach(function (p) {
+      p.addEventListener('click', function () {
+        pills.forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+        p.setAttribute('aria-pressed', 'true');
+      });
+    });
+
+    // Mappa parole: toggle dell'evidenziazione (un solo tema attivo)
+    var chips = document.querySelectorAll('.wordchip');
+    chips.forEach(function (c) {
+      c.addEventListener('click', function () {
+        chips.forEach(function (x) { x.classList.remove('is-active'); });
+        c.classList.add('is-active');
+      });
+    });
+
+    // Step navigator: demo di avanzamento barra + etichetta
+    var steps = [
+      { n: 1, label: 'Crea l’account' },
+      { n: 2, label: 'Installa' },
+      { n: 3, label: 'Primo comando' },
+      { n: 4, label: 'Esplora le skill' },
+      { n: 5, label: 'Costruisci' }
+    ];
+    var cur = 1; // indice 0-based -> mostra step 2
+    var bar = document.querySelector('.stepnav__bar i');
+    var titleEl = document.querySelector('.stepnav__title');
+    var countEl = document.querySelector('.stepnav__count');
+    var barWrap = document.querySelector('.stepnav__bar');
+
+    // ricostruisco "Step N di 5" senza innerHTML (evito XSS, contenuto via textContent)
+    function renderCount(n) {
+      countEl.textContent = '';
+      countEl.appendChild(document.createTextNode('Step '));
+      var strong = document.createElement('b');
+      strong.textContent = String(n);
+      countEl.appendChild(strong);
+      countEl.appendChild(document.createTextNode(' di 5'));
+    }
+    function render() {
+      var s = steps[cur];
+      titleEl.textContent = s.label;
+      renderCount(s.n);
+      bar.style.width = (s.n / 5 * 100) + '%';
+      barWrap.setAttribute('aria-valuenow', String(s.n));
+    }
+    document.querySelector('.stepbtn--prev').addEventListener('click', function () {
+      cur = Math.max(0, cur - 1); render();
+    });
+    document.querySelector('.stepbtn--next').addEventListener('click', function () {
+      cur = Math.min(steps.length - 1, cur + 1); render();
+    });
+  </script>
+
+</body>
+</html>

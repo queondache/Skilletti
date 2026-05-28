@@ -1,5 +1,4 @@
 import { SkillCard } from '@/components/SkillCard';
-import { CatalogControls } from '@/components/CatalogControls';
 import type { Skill } from '@/types/skill';
 
 /**
@@ -47,17 +46,9 @@ export function Catalog({ skills }: { skills: Skill[] }) {
     skills: nonEssenziali.filter((s) => s.tema === t.match),
   })).filter((g) => g.skills.length > 0);
 
-  const controls: TemaInfo[] = groups.map((g) => ({
-    slug: g.slug,
-    short: g.short,
-    count: g.skills.length,
-  }));
-
   return (
     <>
-      <CatalogControls temi={controls} />
-
-      <div id="catalog-groups" className="mt-12">
+      <div id="catalog-groups" className="mt-4">
         {groups.map((g, i) => (
           <section
             key={g.slug}

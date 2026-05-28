@@ -6,26 +6,32 @@
  * border-rule, ecc.
  */
 @theme {
-  --color-paper: #FAF6F0;
-  --color-paper-deep: #F5EFE6;
-  --color-ink: #1A1815;
+  /* Direzione "Terminale editoriale" raffinata Apple-clean (Round 6, Fase A).
+     Token bloccati in .claude/round6-mockups/DIRECTION-LOCKED.md. */
+  --color-paper: #F8F5EF;
+  --color-paper-deep: #F2EEE6;
+  --color-ink: #1A1714;
   --color-ink-soft: #2D2A24;
-  --color-muted: #6B655C;
-  --color-rule: #E5DDD0;
-  --color-terracotta: #B85C38;
-  --color-terracotta-deep: #8E4426;
+  --color-muted: #6E685D;
+  --color-rule: #EAE4D8;
+  --color-terracotta: #C2563A;       /* accento coral-terracotta smorzato */
+  --color-terracotta-deep: #A8472C;
 
-  /* Sistema duplice (Round 3): Fraunces display/voce, Geist body, Geist Mono code.
-     Fallback body: Inter → system sans (vedi app/fonts.ts). */
+  /* Sistema tipografico Round 6: Fraunces display + voce/body, Inter Tight
+     (font-sans) per CTA/micro-label, JetBrains Mono per comandi. */
   --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
-  --font-body: var(--font-geist), Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-body: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter-tight), Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Angoli morbidi (Apple-clean) */
+  --radius: 10px;
 
   /* Tracking tokens — type-as-hero discipline */
   --tracking-wordmark: -0.035em;
   --tracking-display:  -0.02em;
   --tracking-body:      0em;
-  --tracking-micro:     0.18em;
+  --tracking-micro:     0.14em;
 
   /* Spazi editoriali — indent generoso (margine "di pagina") */
   --gutter-edge: clamp(1.5rem, 5vw, 4rem);
@@ -79,6 +85,12 @@ p, .prose-pretty {
   font-feature-settings: "tnum", "kern";
 }
 
+/* Round 6 — i micro-label UPPERCASE (kicker, chrome) vanno in Inter Tight
+   (font-sans), non in Fraunces body. Pattern: uppercase + tabular-figures. */
+.uppercase.tabular-figures {
+  font-family: var(--font-sans);
+}
+
 ::selection {
   background: var(--color-terracotta);
   color: var(--color-paper);
@@ -102,8 +114,13 @@ html {
   }
 }
 
-/* Catalogo — fade dei gruppi non-target quando un filtro tema è attivo.
-   Toggle gestito da CatalogControls via `data-hidden` su `.tema-group`. */
+/* Catalogo — filtro tema (Round 6: WordMap, mappa parole).
+   `data-tema-hidden` = hard filter (display:none) → compone in AND col
+   filtro contesto. (Il vecchio `data-hidden` fade di CatalogControls resta
+   come no-op di compatibilità, non più usato.) */
+.tema-group[data-tema-hidden] {
+  display: none;
+}
 .tema-group[data-hidden] {
   opacity: 0.15;
   pointer-events: none;
@@ -147,10 +164,34 @@ html {
   }
 }
 
-/* ── Hover scheda — accento sobrio, niente ombra (resta piatto/museo).
-   La hairline superiore vira verso terracotta: "una linea che si rivela". */
+/* ── Hover scheda (Round 6) — lift sobrio + ombra morbida (Apple-clean),
+   oltre alla hairline che vira verso terracotta. */
 @media (prefers-reduced-motion: no-preference) {
   article[data-skill-card] {
-    transition: border-color 220ms ease-out;
+    transition: border-color 220ms ease-out, transform 220ms ease-out,
+      box-shadow 220ms ease-out;
+  }
+  article[data-skill-card]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 38px -24px rgba(26, 23, 20, 0.3);
+  }
+}
+
+/* ── Ingresso pagina (Round 6, Fase E) — transizione gentile tra step.
+   Ogni route fa fade + translate-up al mount; su navigazione client il <main>
+   si rimonta → l'animazione ridà il senso di "passaggio". reduced-motion off. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes page-enter {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  main {
+    animation: page-enter 220ms ease-out both;
   }
 }
