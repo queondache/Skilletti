@@ -1,44 +1,37 @@
 # Skilletti — Tasks
 
-> Roadmap operativa per fase. Aggiornato a fine sessione.
+> Roadmap operativa. Per Round 6+ la fonte di verità è `.planning/ROADMAP.md` + `.planning/REQUIREMENTS.md` (GSD). Qui il riassunto operativo.
 
-## Fase corrente — Fase 2 (Dati + SkillCard) — parziale, in attesa di seed
+## Stato — Round 6 ✅ chiuso (mergiato su main)
 
-- [x] 2.0 — Dichiarazione dipendenze (react-markdown, ajv, ajv-formats, tsx, simple-git-hooks)
-- [x] 2.1 — types/skill.ts (16 campi + enum chiusi + DRAFT_PREFIX + TRUSTED_ORGS)
-- [x] 2.2 — data/skills.schema.json (Ajv, regola condizionale anthropics/null/note_stelle)
-- [x] 2.3 — scripts/validate-data.ts + prebuild + pre-commit (simple-git-hooks)
-- [x] 2.4 — lib/markdown.tsx (allowlist stretta + extractDraftMarker)
-- [x] 2.5 — components/SkillCard.tsx (server component + badge sicurezza + bozza)
-- [x] 2.6 — app/page.tsx con anteprima mock + placeholder "Parti da qui"
-- [x] 2.7 — Build verde + Lighthouse 100×4 + screenshot
-- [ ] **2.8 — Andrea consegna `data/skills.json`** (download in corso lato Andrea)
-- [ ] 2.9 — Rimuovere `lib/mock-skills.ts` + collegare `data/skills.json` reale
-- [ ] 2.10 — "Parti da qui": filtrare `importanza === 'essenziale'` + slice top 5 + render reale
-- [ ] 2.11 — Re-build + re-screenshot + re-Lighthouse a11y ≥95
+Sito didattico multi-step (6 route) live. Vedi `.planning/` per fasi A–F.
 
-## Prossimo — Fase 3 (Catalogo + Pedagogia)
+## Prossimo — Round 7 (Contenuto)
 
-In attesa di chiusura Fase 2.
+- [ ] 7.1 — Copy hero reale "cos'è Claude Code" (sostituisce placeholder ~60 parole in `app/page.tsx`) | ~30 min
+- [ ] 7.2 — Bio Andrea reale nel footer (`components/SiteFooter.tsx`, oggi placeholder) | ~15 min
+- [ ] 7.3 — 4 mini-esempi pratici per le skill essenziali (step-3-prime-skill) | ~90 min
+- [ ] 7.4 — FAQ (nuova sezione/route o blocco) | ~60 min
+- [ ] 7.5 — About completo (chi sono / perché Skilletti) | ~30 min
+- [ ] 7.0 — Avviare milestone con `/gsd:new-milestone` (REQUIREMENTS Round 7 già abbozzati) | ~10 min
 
-Step previsti:
-1. `components/CatalogFilters.tsx` — client component filtri tema + importanza combinabili
-2. `components/Catalog.tsx` — server component, render tutte le skill, filter via CSS `[data-tema][data-importanza]` per graceful degradation senza JS
-3. Deep-link `?tema=coding&importanza=essenziale` ripristina stato
-4. `components/Nav.tsx` — anchor links Intro / Parti da qui / Catalogo / Cosa sono / Footer
-5. `components/Pedagogia.tsx` + `content/pedagogia.mdx` — sezione didattica. Definizioni verificate contro `docs.claude.com` via context7
+## Sync repo (prossima sessione)
 
-## Backlog
+- [ ] `git fetch && git checkout main && git pull` (main locale dietro origin dopo merge #9) | ~2 min
+- [ ] (opz.) cleanup branch `round6-rifondazione` locale/remoto | ~2 min
 
-- Fase 4 — Agent settimanale (locale → cron). TRUSTED_ORGS già in types/skill.ts. Cap 50k token/run. Log costo in progress.md per 4 settimane.
-- Fase 5 — Deploy Pages (CI con `PAGES_BASE_PATH=/skilletti`) + sitemap + robots + meta OG + Lighthouse perf reale contro URL live
+## Backlog (lungo periodo)
 
-## Andrea — open items
-
-- [ ] `gh repo create queondache/Skilletti --public --source=. --remote=origin --push`
-- [ ] Download `data/skills.json` seed
+- [ ] **Fase 4 — Agent mensile**: `scripts/agent/` + workflow cron (`0 9 1 * *`), GitHub API + awesome-list (no Reddit/Twitter), Claude API come ranker su shortlist. Gate umano su PR (agent mai merge autonomo), watchlist <1000★ nel body PR mai in skills.json. Cap token/run + log costo. | ~1 giornata
+- [ ] **Round 8 — i18n** EN + ES (CC + copywriting skill) | dopo R7
+- [ ] **Round 9 — Dominio** skilletti.com + DNS Vercel + favicon/OG | dopo R8
+- [ ] (minore) Conflitto schema/SPEC `stelle:null` whitelist (anthropics|firecrawl vs SPEC §6) | ~15 min
+- [ ] (minore) Valutare `pdfplumber` come future skill | ~30 min
 
 ## Done
 
-- 2026-05-22 — Fase 1 v2 (Brand editoriale museum-grade) ✅ Lighthouse 100×4
-- 2026-05-23 — Fase 2 parziale (types + schema + validator + SkillCard mock) ✅ Lighthouse 100×4
+- 2026-05-22 — Fase 1 (Brand editoriale museum-grade) ✅ Lighthouse 100×4
+- 2026-05-23 — Fase 2 (types + schema + validator + SkillCard) ✅
+- 2026-05-26 — Round 3 (UX revamp) + Round 4 (refinements) ✅
+- 2026-05-27 — Round 5 (multi-contesto, PR #7) + Round 5.5 (Come iniziare, PR #8) ✅
+- 2026-05-28 — **Round 6 (Rifondazione multi-step, PR #9)** ✅ — 6 route, direzione "Terminale editoriale", mappa parole, Lighthouse 100/100/100 ×6 ×2

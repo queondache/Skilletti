@@ -4,14 +4,16 @@
 
 ## Stato attuale — 2026-05-28
 
-Sito **v1 live su Vercel** (`skilletti.vercel.app`), Round 1–5.5 chiusi (PR #7, #8 mergiate).
+Sito **live su Vercel** (`skilletti.vercel.app`). Round 1–5.5 + **Round 6** chiusi.
 
-**Round 6 — Rifondazione (milestone v2.0) COMPLETATO** sul branch `round6-rifondazione`,
-**PR #9 aperta** (in attesa di review/merge di Andrea — NO merge autonomo).
-Da single-page a **sito didattico a 6 route** (landing + 5 step). Direzione estetica
-"Terminale editoriale". Lighthouse **100/100/100** su 6 route ×2 (desktop+mobile).
-Preview: `https://skilletti-git-round6-rifondazione-queondaches-projects.vercel.app`.
-Pianificazione GSD in `.planning/` (PROJECT/REQUIREMENTS/ROADMAP/STATE + round6-blueprints.md).
+**Round 6 — Rifondazione (milestone v2.0) ✅ MERGIATO su `main` (PR #9), deploy prod partito.**
+Da single-page a **sito didattico a 6 route** (landing + 5 step): direzione estetica
+"Terminale editoriale", mappa parole filtrante, animazioni minimali. Lighthouse **100/100/100**
+(a11y/BP/SEO) su tutte le 6 route ×2 (desktop+mobile). Contenuti v1 migrati; **copy hero + bio
+footer sono placeholder** (→ Round 7). Pianificazione/esecuzione GSD in `.planning/`
+(PROJECT/REQUIREMENTS/ROADMAP/STATE + round6-blueprints.md + phases/01–05).
+
+NB: `main` locale è dietro `origin/main` (PR #9 squash-mergiata sul remote) — fare `git fetch`/pull alla prossima sessione.
 
 `data/skills.json`: 12 skill — 4 essenziale · 6 forte · 2 situazionale.
 
@@ -139,12 +141,13 @@ _(da popolare a partire dalla prima esecuzione agent)_
 
 ## Prossimo step
 
-- [ ] **Review + merge PR #9 (Round 6)** — Andrea: aprire il preview Vercel, controllare
-      i 12 screenshot in `.claude/screenshots/round6/`, poi squash-merge su `main`
-      (deploy prod automatico). NO merge autonomo da parte di CC.
-- [ ] **Round 7 — Contenuto**: riscrivere copy hero reale + bio footer (oggi placeholder),
-      4 mini-esempi essenziali, FAQ/about. Vedi `.planning/REQUIREMENTS.md` (Future).
-- [ ] **Fase 4 — agent mensile** (lavoro di prodotto, dopo v2): costruire
+- [ ] **Round 7 — Contenuto (prossima milestone)**: copy hero reale + bio footer reale
+      (oggi placeholder ~60 parole / 1 riga), **4 mini-esempi** per le essenziali, **FAQ**,
+      about completo. Avviabile con `/gsd:new-milestone`. Vedi `.planning/REQUIREMENTS.md`
+      (Future → Round 7) per i requisiti già abbozzati.
+- [ ] **Sync repo locale**: `git fetch && git checkout main && git pull` (main locale dietro
+      origin dopo il merge #9). Eventuale cleanup branch `round6-rifondazione`.
+- [ ] **(lungo periodo) Fase 4 — agent mensile**: costruire
       `scripts/agent/` + workflow cron. Manca ancora il prompt Fase 4 completo (due
       volte arrivato solo come placeholder). Conferme già date: regola d'oro = gate
       umano sulla review PR (agent non verifica); watchlist <1000★ nel body PR (mai
