@@ -23,7 +23,7 @@
   --color-red: #8A2A18;
 
   /* Toni derivati = opacità del rosso sul crema. Mai nuovi hex. */
-  --color-soft: rgba(138, 42, 24, 0.6);        /* testo secondario / didascalie */
+  --color-soft: rgba(138, 42, 24, 0.85); /* testo secondario — .85 = 4.95:1 su crema (AA) */
   --color-faint: rgba(138, 42, 24, 0.42);      /* testo terziario / placeholder */
   --color-line: rgba(138, 42, 24, 0.22);       /* linee, bordi card a riposo */
   --color-line-strong: rgba(138, 42, 24, 0.4); /* bordi enfatizzati / hover sottile */

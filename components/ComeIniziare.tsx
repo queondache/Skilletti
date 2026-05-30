@@ -70,16 +70,16 @@ function SetupCard({
       <div className="flex items-baseline gap-3">
         <span
           aria-hidden="true"
-          className="font-display text-[1.25rem] font-bold tabular-figures text-red/40"
+          className="font-display text-[1.25rem] font-bold tabular-figures text-red/70"
         >
           0{index}
         </span>
-        <h3
+        <h2
           className="text-[1.25rem] font-semibold text-red"
           style={{ fontFamily: 'var(--font-display)', letterSpacing: 'var(--tracking-display)' }}
         >
           {title}
-        </h3>
+        </h2>
       </div>
       {children}
     </div>

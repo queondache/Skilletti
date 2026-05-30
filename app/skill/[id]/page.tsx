@@ -167,7 +167,7 @@ export default async function SkillDetail({ params }: { params: Params }) {
 
             {/* Riconoscimenti */}
             <div
-              className="text-[11px] font-medium uppercase tabular-figures text-red/70"
+              className="text-[11px] font-medium uppercase tabular-figures text-red"
               style={{ letterSpacing: '0.06em' }}
             >
               {formatStars(skill.stelle, skill.note_stelle)} · {skill.licenza} · creato da{' '}

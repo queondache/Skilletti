@@ -39,7 +39,7 @@ export function Hero() {
 
       <p
         data-reveal
-        className="mt-8 max-w-[var(--measure-prose)] text-[1.0625rem] font-normal text-red/80 prose-pretty"
+        className="mt-8 max-w-[var(--measure-prose)] text-[1.0625rem] font-normal text-red/90 prose-pretty"
         style={{ lineHeight: 1.65 }}
       >
         Cercare skill online è diventato un magazzino: migliaia di voci, zero

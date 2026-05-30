@@ -6,7 +6,13 @@ import type { Skill } from '@/types/skill';
 // che porta `data-tema` (slug): il ChipFilter di Esplora toggla `data-chip-hidden`
 // su questi wrapper per filtrare senza re-render. Server component.
 
-export function SkillGrid({ skills }: { skills: Skill[] }) {
+export function SkillGrid({
+  skills,
+  headingLevel = 'h3',
+}: {
+  skills: Skill[];
+  headingLevel?: 'h2' | 'h3';
+}) {
   return (
     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
       {skills.map((skill) => (
@@ -16,7 +22,7 @@ export function SkillGrid({ skills }: { skills: Skill[] }) {
           data-tema={temaSlugOf(skill.tema) ?? ''}
           data-reveal
         >
-          <SkillGridCard skill={skill} />
+          <SkillGridCard skill={skill} headingLevel={headingLevel} />
         </div>
       ))}
     </div>

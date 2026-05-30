@@ -83,7 +83,7 @@ function Chip({
     >
       {label}
       {typeof count === 'number' && (
-        <span className={active ? 'text-cream/80' : 'text-soft/70'}>({count})</span>
+        <span className={active ? 'text-cream' : 'text-soft'}>({count})</span>
       )}
     </button>
   );

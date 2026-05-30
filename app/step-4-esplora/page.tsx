@@ -60,7 +60,7 @@ export default function Step4Esplora() {
 
         {/* Griglia — tutte le skill (essenziali per prime, badge nella card) */}
         <div className="mt-8">
-          <SkillGrid skills={skills} />
+          <SkillGrid skills={skills} headingLevel="h2" />
         </div>
 
         <StepFooterNav current={4} />

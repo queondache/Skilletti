@@ -14,15 +14,22 @@ function doveLabel(contexts: DoveFunziona[]): string {
   return contexts.map((c) => DOVE_FUNZIONA_LABEL[c]).join(' / ');
 }
 
-export function SkillGridCard({ skill }: { skill: Skill }) {
+export function SkillGridCard({
+  skill,
+  headingLevel = 'h3',
+}: {
+  skill: Skill;
+  headingLevel?: 'h2' | 'h3';
+}) {
   const isEssential = skill.importanza === 'essenziale';
+  // Il nome è il titolo della card. Il livello dipende dal contesto: sotto la
+  // sezione "essenziali" (home, h2) → h3; in Esplora la griglia sta sotto l'h1
+  // della pagina → h2. Niente aria-label: il nome accessibile del link è il suo
+  // testo (evita label-content-name-mismatch).
+  const Heading = headingLevel;
 
   return (
-    <Card
-      href={`/skill/${skill.id}/`}
-      ariaLabel={`Apri la scheda di ${skill.nome}`}
-      className="flex h-full flex-col"
-    >
+    <Card href={`/skill/${skill.id}/`} className="flex h-full flex-col">
       {/* Meta-riga */}
       <div
         className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[11px] font-medium uppercase tabular-figures text-soft"
@@ -43,12 +50,12 @@ export function SkillGridCard({ skill }: { skill: Skill }) {
       </div>
 
       {/* Nome */}
-      <h3
+      <Heading
         className="mt-3 text-[1.4rem] font-semibold text-red balance"
         style={{ lineHeight: 1.15, letterSpacing: 'var(--tracking-display)' }}
       >
         {skill.nome}
-      </h3>
+      </Heading>
 
       {/* Tagline */}
       <p
@@ -60,7 +67,7 @@ export function SkillGridCard({ skill }: { skill: Skill }) {
 
       {/* Invito a leggere */}
       <span
-        className="mt-5 inline-flex items-center gap-1.5 self-start text-[12px] font-medium uppercase tabular-figures text-red/80 transition-colors group-hover:text-red"
+        className="mt-5 inline-flex items-center gap-1.5 self-start text-[12px] font-medium uppercase tabular-figures text-red transition-colors group-hover:text-red"
         style={{ letterSpacing: 'var(--tracking-micro)' }}
       >
         Leggi la scheda

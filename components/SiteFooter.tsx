@@ -17,7 +17,7 @@ export function SiteFooter() {
       <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
         <a
           href="#"
-          className="text-[12px] font-medium uppercase tabular-figures text-red/70 underline-offset-4 hover:text-red hover:underline"
+          className="text-[12px] font-medium uppercase tabular-figures text-red underline-offset-4 hover:underline"
           style={{ letterSpacing: 'var(--tracking-micro)' }}
         >
           LinkedIn
