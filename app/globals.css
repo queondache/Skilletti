@@ -1,72 +1,95 @@
 @import "tailwindcss";
 
-/* Palette editoriale — carta da museo.
- * Tailwind v4 CSS-first config. Le variabili sotto generano
- * utility automatiche: bg-paper, bg-paper-deep, text-ink, text-terracotta,
- * border-rule, ecc.
- */
+/* ──────────────────────────────────────────────────────────────────────────
+ * Round 7 — Design system "due colori caldi".
+ * Contratto: .planning/round7-design-spec.md (vince su ogni altro istinto).
+ *
+ * SOLO due hex letterali:
+ *   crema sabbia  #EDE0C8  -> sfondo
+ *   rosso borbone #8A2A18  -> testo, linee, accenti
+ * Tutti i "toni" sono opacità del rosso (138,42,24) sul crema. Niente terzo
+ * colore, niente grigi, niente dark mode.
+ *
+ * Tailwind v4 CSS-first: le variabili --color-* / --font-* generano utility
+ * automatiche (bg-cream, text-red, border-line, font-display, ...).
+ *
+ * Compatibilità Round 6: i vecchi token (paper/ink/terracotta/rule/muted)
+ * restano definiti come ALIAS sui nuovi colori, così i componenti Round 6
+ * compilano e non sfondano in attesa del redesign delle viste (Fasi B-D).
+ * ────────────────────────────────────────────────────────────────────────── */
 @theme {
-  /* Direzione "Terminale editoriale" raffinata Apple-clean (Round 6, Fase A).
-     Token bloccati in .claude/round6-mockups/DIRECTION-LOCKED.md. */
-  --color-paper: #F8F5EF;
-  --color-paper-deep: #F2EEE6;
-  --color-ink: #1A1714;
-  --color-ink-soft: #2D2A24;
-  --color-muted: #6E685D;
-  --color-rule: #EAE4D8;
-  --color-terracotta: #C2563A;       /* accento coral-terracotta smorzato */
-  --color-terracotta-deep: #A8472C;
+  /* I due colori canonici — gli unici hex del sistema. */
+  --color-cream: #EDE0C8;
+  --color-red: #8A2A18;
 
-  /* Sistema tipografico Round 6: Fraunces display + voce/body, Inter Tight
-     (font-sans) per CTA/micro-label, JetBrains Mono per comandi. */
-  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
-  --font-body: var(--font-fraunces), Georgia, "Times New Roman", serif;
-  --font-sans: var(--font-inter-tight), Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
+  /* Toni derivati = opacità del rosso sul crema. Mai nuovi hex. */
+  --color-soft: rgba(138, 42, 24, 0.6);        /* testo secondario / didascalie */
+  --color-faint: rgba(138, 42, 24, 0.42);      /* testo terziario / placeholder */
+  --color-line: rgba(138, 42, 24, 0.22);       /* linee, bordi card a riposo */
+  --color-line-strong: rgba(138, 42, 24, 0.4); /* bordi enfatizzati / hover sottile */
+  --color-wash: rgba(138, 42, 24, 0.07);       /* fondino tenue (suggest, badge) */
+  --color-hover-wash: rgba(138, 42, 24, 0.12); /* fondino su hover */
 
-  /* Angoli morbidi (Apple-clean) */
-  --radius: 10px;
+  /* ── Alias di compatibilità Round 6 → mappati sui due colori. ──
+     Servono solo a tenere il build verde finché le viste non vengono
+     riscritte (Fasi B-D). Da rimuovere quando i componenti vecchi spariscono. */
+  --color-paper: var(--color-cream);
+  --color-paper-deep: var(--color-cream);
+  --color-ink: var(--color-red);
+  --color-ink-soft: var(--color-soft);
+  --color-muted: var(--color-soft);
+  --color-rule: var(--color-line);
+  --color-terracotta: var(--color-red);
+  --color-terracotta-deep: var(--color-red);
 
-  /* Tracking tokens — type-as-hero discipline */
-  --tracking-wordmark: -0.035em;
-  --tracking-display:  -0.02em;
-  --tracking-body:      0em;
-  --tracking-micro:     0.14em;
+  /* Sistema tipografico Round 7: Bricolage Grotesque (display caratteriale)
+     + Hanken Grotesk (body pulito). Nessun terzo carattere: sans e mono
+     ricadono su Hanken per compatibilità con le classi Round 6. */
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-hanken), ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* Spazi editoriali — indent generoso (margine "di pagina") */
+  /* Angoli morbidi — coerenza "linea che disegna". */
+  --radius: 12px;
+  --radius-pill: 999px;
+
+  /* Tracking — display caratteriale, body pulito. */
+  --tracking-wordmark: -0.03em;
+  --tracking-display: -0.02em;
+  --tracking-body: 0em;
+  --tracking-micro: 0.1em;
+
+  /* Spazi editoriali — indent generoso (margine "di pagina"). */
   --gutter-edge: clamp(1.5rem, 5vw, 4rem);
   --gutter-indent: clamp(2rem, 12vw, 9rem);
 
   --measure-tagline: 32ch;
-  --measure-prose:   62ch;
+  --measure-prose: 62ch;
 }
 
-/* Base typografica — calmo, libro/editoriale, non SaaS. */
+/* Base tipografica — rosso su crema, calmo e leggibile. */
 html {
-  background: var(--color-paper);
-  color: var(--color-ink);
+  background: var(--color-cream);
+  color: var(--color-red);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  /* Optical sizing usa l'asse opsz di Fraunces — il carattere si adatta
-     automaticamente alla taglia di rendering (più "umano" sul corpo,
-     più chiuso/contrastato sui display). */
   font-optical-sizing: auto;
-  font-feature-settings: "ss01", "kern", "liga", "calt";
+  font-feature-settings: "kern", "liga", "calt";
 }
 
 body {
-  background: var(--color-paper) !important;
-  color: var(--color-ink);
+  background: var(--color-cream) !important;
+  color: var(--color-red);
   min-height: 100dvh;
 }
 
-/* Famiglia display ancorata esplicitamente (Round 3 split): titoli e taglini
-   italic. Senza, erediterebbero --font-body (Geist). I titoli usano l'asse
-   opsz di Fraunces via font-variation-settings inline → famiglia qui, asse là.
-   `.lead` = taglina/intro editoriale italic (voce d'autore, resta serif). */
+/* Famiglia display ancorata esplicitamente: titoli e wordmark in Bricolage.
+   `.lead` = taglina/intro (voce d'autore). */
 h1, h2, h3, .lead {
   font-family: var(--font-display);
+  letter-spacing: var(--tracking-display);
 }
 
 /* Bilanciamento titoli — niente orfani sul wordmark né sulla tagline. */
@@ -79,32 +102,30 @@ p, .prose-pretty {
   text-wrap: pretty;
 }
 
-/* Cifre tabulari per micro-labels (versione, anno) */
+/* Cifre tabulari per micro-labels (versione, anno). */
 .tabular-figures {
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum", "kern";
 }
 
-/* Round 6 — i micro-label UPPERCASE (kicker, chrome) vanno in Inter Tight
-   (font-sans), non in Fraunces body. Pattern: uppercase + tabular-figures. */
+/* Round 6 → i micro-label UPPERCASE restano su body (Hanken): niente terzo font. */
 .uppercase.tabular-figures {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
 }
 
 ::selection {
-  background: var(--color-terracotta);
-  color: var(--color-paper);
+  background: var(--color-red);
+  color: var(--color-cream);
 }
 
-/* Focus visibile, accessibile, in tema con la palette */
+/* Focus visibile, accessibile, in tema (rosso). */
 :focus-visible {
-  outline: 2px solid var(--color-terracotta);
+  outline: 2px solid var(--color-red);
   outline-offset: 3px;
   border-radius: 2px;
 }
 
-/* Smooth scroll per anchor links (nav sticky + catalogo).
-   Disabilitato automaticamente se l'utente preferisce reduced-motion. */
+/* Smooth scroll per anchor links. Off con reduced-motion. */
 html {
   scroll-behavior: smooth;
 }
@@ -114,10 +135,105 @@ html {
   }
 }
 
-/* Catalogo — filtro tema (Round 6: WordMap, mappa parole).
-   `data-tema-hidden` = hard filter (display:none) → compone in AND col
-   filtro contesto. (Il vecchio `data-hidden` fade di CatalogControls resta
-   come no-op di compatibilità, non più usato.) */
+/* ── Componenti base Round 7 (Fase A) ────────────────────────────────────── */
+
+/* Skip-link accessibile — fuori schermo finché non riceve focus da tastiera. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--color-red);
+  color: var(--color-cream);
+  padding: 0.75rem 1.25rem;
+  border-radius: 0 0 var(--radius) 0;
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+/* Bottone — pill, due varianti. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1.5px solid var(--color-red);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn {
+    transition: background-color 200ms ease-out, color 200ms ease-out,
+      transform 200ms ease-out;
+  }
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+}
+.btn-primary {
+  background: var(--color-red);
+  color: var(--color-cream);
+}
+.btn-primary:hover {
+  background: transparent;
+  color: var(--color-red);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--color-red);
+}
+.btn-ghost:hover {
+  background: var(--color-wash);
+}
+
+/* Card outline — bordo rosso tenue, angoli morbidi, lift su hover. */
+.card {
+  background: var(--color-cream);
+  border: 1.5px solid var(--color-line);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: border-color 220ms ease-out, transform 220ms ease-out;
+  }
+  .card:hover {
+    border-color: var(--color-red);
+    transform: translateY(-2px);
+  }
+}
+
+/* Suggest — callout "il mio consiglio": box outline, wash, icona tonda. */
+.suggest {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  background: var(--color-wash);
+  border: 1.5px solid var(--color-line-strong);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+}
+.suggest-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--color-red);
+  color: var(--color-red);
+}
+
+/* ── Catalogo — filtri tema/contesto (Round 6, compatibilità). ──────────── */
 .tema-group[data-tema-hidden] {
   display: none;
 }
@@ -130,10 +246,6 @@ html {
     transition: opacity 200ms ease-out;
   }
 }
-
-/* Filtro contesto d'uso (ContextFilter) — hide reale, non fade: "mostra solo".
-   Le schede non-corrispondenti collassano (griglia/colonna), e i gruppi tema
-   rimasti vuoti spariscono per non lasciare titoli orfani. */
 [data-skill-card][data-ctx-hidden] {
   display: none;
 }
@@ -142,9 +254,8 @@ html {
 }
 
 /* ── Reveal gentile all'ingresso (Reveal.tsx) ────────────────────────────
-   La classe `reveal-ready` viene aggiunta su <html> SOLO via JS e SOLO se
-   l'utente non preferisce reduced-motion → senza JS / reduced-motion tutto
-   resta visibile (nessun contenuto nascosto a chi non ha l'animazione). */
+   `reveal-ready` aggiunta su <html> SOLO via JS e SOLO senza reduced-motion →
+   senza JS / reduced-motion tutto resta visibile. */
 [data-reveal] {
   transition: opacity 500ms ease-out, transform 500ms ease-out;
 }
@@ -164,22 +275,18 @@ html {
   }
 }
 
-/* ── Hover scheda (Round 6) — lift sobrio + ombra morbida (Apple-clean),
-   oltre alla hairline che vira verso terracotta. */
+/* ── Hover scheda (Round 6, compatibilità) — lift + hairline che vira al rosso. */
 @media (prefers-reduced-motion: no-preference) {
   article[data-skill-card] {
-    transition: border-color 220ms ease-out, transform 220ms ease-out,
-      box-shadow 220ms ease-out;
+    transition: border-color 220ms ease-out, transform 220ms ease-out;
   }
   article[data-skill-card]:hover {
     transform: translateY(-2px);
-    box-shadow: 0 16px 38px -24px rgba(26, 23, 20, 0.3);
+    border-color: var(--color-red);
   }
 }
 
-/* ── Ingresso pagina (Round 6, Fase E) — transizione gentile tra step.
-   Ogni route fa fade + translate-up al mount; su navigazione client il <main>
-   si rimonta → l'animazione ridà il senso di "passaggio". reduced-motion off. */
+/* ── Ingresso pagina (Round 6, Fase E) — fade + translate-up al mount. */
 @media (prefers-reduced-motion: no-preference) {
   @keyframes page-enter {
     from {
