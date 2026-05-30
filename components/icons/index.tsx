@@ -3,7 +3,7 @@
 // (ereditano il rosso borbone dal contesto). Nessuna animazione qui: il reveal
 // e lo stroke-dashoffset arrivano in Fase E. Tutte tree-shakeable (export nominati).
 
-import type { SVGProps } from 'react';
+import type { ReactElement, SVGProps } from 'react';
 
 // Props condivise: `size` controlla width/height (default 24), `className`
 // per utilities Tailwind. Tutto il resto passa allo <svg> (es. aria-hidden).
@@ -101,4 +101,48 @@ export function IconMano({ size = 24, ...props }: IconProps) {
       <path d="M15 11v-.5a1.5 1.5 0 0 1 3 0V15a5 5 0 0 1-5 5h-1.6a4 4 0 0 1-2.83-1.17l-3.2-3.2a1.5 1.5 0 0 1 2.12-2.12L9 14.5" />
     </svg>
   );
+}
+
+/** Freccia → — usata in CTA, link e navigatori. Stessa famiglia outline. */
+export function ArrowRightIcon({ size = 24, ...props }: IconProps) {
+  return (
+    <svg width={size} height={size} aria-hidden="true" {...base} {...props}>
+      <path d="M5 12h14" />
+      <path d="M13 6l6 6-6 6" />
+    </svg>
+  );
+}
+
+/** Freccia ← — back / prev. */
+export function ArrowLeftIcon({ size = 24, ...props }: IconProps) {
+  return (
+    <svg width={size} height={size} aria-hidden="true" {...base} {...props}>
+      <path d="M19 12H5" />
+      <path d="M11 6l-6 6 6 6" />
+    </svg>
+  );
+}
+
+// Alias semantici — i consumatori (Fase B–D) usano questi nomi; mappano sul
+// set base Fase A così l'API è coerente e tree-shakeable.
+export const CactusIcon = IconCactus;
+export const StarIcon = IconStella;
+export const BlocksIcon = IconBlocchi;
+export const TerminalIcon = IconTerminale;
+export const BookIcon = IconLibro;
+export const HandIcon = IconMano;
+
+// Mappa slug-step → icona di sezione (Percorso, sticky storytelling Fase C/E).
+const STEP_ICON: Record<string, (p: IconProps) => ReactElement> = {
+  'step-1-capisci': IconLibro,
+  'step-2-installa': IconTerminale,
+  'step-3-prime-skill': IconStella,
+  'step-4-esplora': IconCactus,
+  'step-5-costruisci': IconBlocchi,
+};
+
+/** Icona del passo dato il suo slug (fallback: libro). */
+export function StepIcon({ slug, ...props }: IconProps & { slug: string }) {
+  const Cmp = STEP_ICON[slug] ?? IconLibro;
+  return <Cmp {...props} />;
 }

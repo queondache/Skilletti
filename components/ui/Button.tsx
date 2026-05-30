@@ -1,6 +1,7 @@
 // Button base Round 7 (Fase A).
 // Varianti: `primary` (rosso pieno, testo crema) e `ghost` (outline rosso).
-// Polimorfico: `as="a"` (link) oppure `<button>`. Freccia opzionale.
+// Reso come <a> quando è presente `href` (link interno o, con `external`, esterno
+// in nuova scheda); altrimenti <button>. `arrow` aggiunge una freccia → in coda.
 // Server component: nessuna interattività propria, solo presentazione.
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react';
 
@@ -14,15 +15,18 @@ interface CommonProps {
   className?: string;
 }
 
-// Forma "link": as="a" abilita gli attributi dell'anchor (href, ...).
+// Forma "link": presenza di `href` → <a>. `external` apre in nuova scheda.
 type LinkProps = CommonProps &
-  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof CommonProps> & {
-    as: 'a';
+  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof CommonProps | 'href'> & {
+    href: string;
+    external?: boolean;
+    as?: 'a';
   };
 
-// Forma "button" (default): attributi nativi del button.
+// Forma "button" (default): attributi nativi del button, nessun href.
 type NativeButtonProps = CommonProps &
   Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof CommonProps> & {
+    href?: undefined;
     as?: 'button';
   };
 
@@ -58,20 +62,28 @@ export function Button(props: ButtonProps) {
   const { variant = 'primary', arrow = false, children, className = '' } = props;
   const classes = `btn ${variantClass[variant]} ${className}`.trim();
 
-  if (props.as === 'a') {
-    // Estraggo le props non-anchor per non passarle al DOM.
-    const { as: _as, variant: _v, arrow: _a, children: _c, className: _cn, ...rest } =
-      props;
+  // Link: presenza di `href`.
+  if (props.href != null) {
+    const {
+      as: _as,
+      variant: _v,
+      arrow: _a,
+      children: _c,
+      className: _cn,
+      external,
+      ...rest
+    } = props;
+    // `external` → nuova scheda con rel di sicurezza.
+    const relProps = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
     return (
-      <a className={classes} {...rest}>
+      <a className={classes} {...relProps} {...rest}>
         {children}
         {arrow && <Arrow />}
       </a>
     );
   }
 
-  const { as: _as, variant: _v, arrow: _a, children: _c, className: _cn, ...rest } =
-    props;
+  const { as: _as, variant: _v, arrow: _a, children: _c, className: _cn, ...rest } = props;
   return (
     <button className={classes} {...rest}>
       {children}
