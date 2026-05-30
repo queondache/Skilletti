@@ -1,3 +1,18 @@
+---
+gsd_state_version: 1.0
+milestone: v3.0
+milestone_name: Round 7 Redesign
+status: planning
+last_updated: "2026-05-30T08:55:18.612Z"
+last_activity: 2026-05-30
+progress:
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
+---
+
 # Project State
 
 ## Project Reference
@@ -9,18 +24,17 @@ See: .planning/PROJECT.md (updated 2026-05-27)
 
 ## Current Position
 
-Phase: F ✅ done — TUTTE le fasi B–F complete
-Plan: QA superata. Resta: push branch + apertura PR (no merge).
-Status: ESECUZIONE COMPLETA — Lighthouse 100/100/100 su 6 route ×2 (desktop+mobile). 5 commit di fase + 1 docs. PR da aprire.
-Last activity: 2026-05-28 — Fase F completata: QA + Lighthouse + fix contrasto AA + 12 screenshot. Vedi 05-01-SUMMARY.md
-
-Progress: [░░░░░░░░░░] 0%
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-05-30 — Milestone v3.0 started
 
 ## Accumulated Context
 
 ### Decisions
 
 Full log in PROJECT.md Key Decisions. Recenti:
+
 - Architettura: true multi-route (6 route App Router static export)
 - Branch off origin/main (6ca4bdb) — local main era stale, mancava round5.5
 - Hero viz = mappa-testo CSS (continuità con mappa parole Fase D)

@@ -24,16 +24,25 @@ senza sentirsi perso. Chiarezza didattica > completezza.
 - ✓ Sommario tematico con chip cliccabili — v1.0
 - ✓ Sezioni Metodo, Template, Vocabolario — v1.0
 - ✓ Nav sticky scroll-aware, Lighthouse desktop 100/100/100/100 — v1.0
+- ✓ Architettura multi-route (6 route App Router, static export) — Round 6 (v2.0)
+- ✓ Progressive disclosure: Capisci → Installa → Esplora → Costruisci — Round 6 (v2.0)
+
+## Current Milestone: v3.0 Round 7 Redesign
+
+**Goal:** Riscrivere il design da zero — da catalogo editoriale museale a prodotto di onboarding a Claude Code: UX-first, navigabile, sperimentale ma usabile. Si tengono routing 6 route, `skills.json` + schema (INTOCCATI) e i contenuti migrati; si butta il contenitore visivo di Round 6.
+
+**Contratto di design (locked):** `.planning/round7-design-spec.md` — la spec vince su ogni proposta `nothing-design` in conflitto.
 
 ### Active
 
-<!-- Round 6 — Rifondazione multi-step (milestone v2.0). Vedi REQUIREMENTS.md per REQ-ID. -->
+<!-- Round 7 — Redesign (milestone v3.0). Vedi REQUIREMENTS.md per REQ-ID. -->
 
-- [ ] Migrazione struttura single-page → 6 route App Router (static export)
-- [ ] Nuova direzione estetica (palette + sans display bold) + hero con visualizzazione
-- [ ] Mappa parole tematiche filtrante in /step-4-esplora
-- [ ] Animazioni minimali stile politico.eu + reduced-motion
-- [ ] QA: Lighthouse ≥95 desktop su 6 route, PR verso main
+- [ ] Design system due colori (crema `#EDE0C8` + rosso `#8A2A18`, toni = solo opacità rosso) + tipografia Bricolage Grotesque + Hanken Grotesk + set 6 icone outline + componenti base
+- [ ] Navigazione vetrina: menu sticky + back vero + struttura a pagine; eliminato il muro verticale di Round 6
+- [ ] Hero coreografato: pin-scroll (claim che si scrive + cactus che cresce) + percorso sticky storytelling
+- [ ] Viste ridisegnate: home, Capisci, Installa (suggerimenti), Esplora (griglia + chip, NO mappa parole), Costruisci, dettaglio skill
+- [ ] Animazioni icone al reveal + `prefers-reduced-motion` off-tutto
+- [ ] QA: tsc/build/validate verdi, Lighthouse desktop ≥95 / mobile ≥90, contrasto AA, 12 screenshot, PR verso main
 
 ### Out of Scope
 
@@ -100,4 +109,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-27 — Round 6 (milestone v2.0) milestone start*
+*Last updated: 2026-05-30 — Round 7 (milestone v3.0) milestone start*
