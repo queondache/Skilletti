@@ -2,6 +2,28 @@
 
 > Roadmap operativa per fase. Aggiornato a fine sessione.
 
+## Stato attuale — 2026-05-30
+
+**Round 7 — Redesign v3.0 DONE** (branch `round7-redesign`, PR #10 in review, non mergiata).
+Tutto implementato in 6 fasi (A–F). Dettaglio in `progress.md`.
+
+### Backlog Round 8+ (da definire dopo merge Round 7)
+
+- [ ] **Decisione filtro contesto** — reintrodurre il filtro CLI/VSCode/mobile (rimosso in Round 7) oppure tenere `dove_funziona` solo informativo su card/dettaglio
+- [ ] **Contenuti aggiuntivi** — pagina FAQ, sezione "about"/chi sono, copy reale, bio footer
+- [ ] Definire scope completo dopo review/merge PR #10
+
+### Fase 4 — Agent mensile (rimandato, backlog)
+
+- [ ] Costruire `scripts/agent/` — logica valutazione candidati
+- [ ] GitHub Action cron `0 9 1 * *`
+- [ ] Claude API per valutare/ordinare shortlist GitHub
+- [ ] PR automatica taggata `[agent]` — mai merge autonomo
+
+---
+
+## Storico fasi (precedenti a Round 7)
+
 ## Fase corrente — Fase 2 (Dati + SkillCard) — parziale, in attesa di seed
 
 - [x] 2.0 — Dichiarazione dipendenze (react-markdown, ajv, ajv-formats, tsx, simple-git-hooks)

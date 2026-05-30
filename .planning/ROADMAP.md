@@ -1,10 +1,13 @@
 # Roadmap: Skilletti
 
+**Stato**: Round 7 completato — PR #10 in review (non mergiata)
+
 ## Milestones
 
 - ✅ **v1.0 Catalogo museale** — Round 1–5.5 (shipped 2026-05-27, live su skilletti.vercel.app)
-- 🚧 **v2.0 Rifondazione multi-step** — Fasi A–F (Round 6, in progress)
-- 📋 **v2.1 Contenuto** — Round 7 (planned) · **v2.2 i18n** — Round 8 · **v2.3 Dominio/branding** — Round 9
+- ✅ **v2.0 Rifondazione multi-step** — Fasi A–F (Round 6, PR #9 in review)
+- ✅ **v3.0 Redesign** — Round 7, Fasi A–F (PR #10 in review, non mergiata)
+- 📋 **v2.2 i18n** — Round 8 · **v2.3 Dominio/branding** — Round 9
 
 ## Overview
 
@@ -122,9 +125,28 @@ Plans:
 Plans:
 - [ ] F-01: QA + Lighthouse 6 route + screenshot + apertura PR
 
-### 📋 v2.1 / v2.2 / v2.3 (Round 7–9, planned)
+### ✅ v3.0 Redesign (Round 7 — PR #10 in review)
 
-- **Round 7 (v2.1)**: copy reale hero + bio, 4 mini-esempi, FAQ, about
+Redesign da zero su branch `round7-redesign`: nuovo design system (due colori
+`#EDE0C8`/`#8A2A18`, font Bricolage Grotesque + Hanken Grotesk, 6 icone outline),
+navigazione vetrina, hero pin-scroll + percorso storytelling, viste ridisegnate
+(Esplora con chip per TEMA, NO mappa; 12 pagine statiche `/skill/[id]/`), animazioni
+icone al reveal + reduced-motion. Lighthouse desktop ≥96, mobile ≥96 su a11y/BP/SEO.
+`skills.json`/schema intatti, nessuna nuova dipendenza. PR #10 — non mergiata.
+
+#### Panoramica fasi (Round 7)
+
+| Fase | Nome                          | Stato |
+| ---- | ----------------------------- | ----- |
+| 7    | Design system (Round 7)       | Done  |
+| 8    | Navigazione vetrina           | Done  |
+| 9    | Hero pin-scroll + percorso    | Done  |
+| 10   | Viste ridisegnate             | Done  |
+| 11   | Animazioni icone              | Done  |
+| 12   | QA Round 7                    | Done  |
+
+### 📋 v2.2 / v2.3 (Round 8–9, planned)
+
 - **Round 8 (v2.2)**: i18n EN + ES
 - **Round 9 (v2.3)**: dominio skilletti.com + branding (favicon, OG image)
 

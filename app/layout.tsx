@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { fraunces, interTight, jetbrainsMono } from './fonts';
+import { bricolage, hanken } from './fonts';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { Reveal } from '@/components/Reveal';
@@ -44,17 +44,14 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#FAF6F0',
+  themeColor: '#EDE0C8',
   colorScheme: 'light',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="it"
-      className={`${fraunces.variable} ${interTight.variable} ${jetbrainsMono.variable}`}
-    >
-      <body className="bg-paper text-ink antialiased">
+    <html lang="it" className={`${bricolage.variable} ${hanken.variable}`}>
+      <body className="bg-cream text-red antialiased">
         <SiteHeader />
         <Reveal />
         {children}
