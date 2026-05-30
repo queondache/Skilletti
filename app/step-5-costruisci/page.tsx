@@ -5,7 +5,7 @@ import { Article } from '@/lib/markdown';
 import { TemplateSection } from '@/components/TemplateSection';
 import { Suggest } from '@/components/ui/Suggest';
 import { StepFooterNav } from '@/components/StepFooterNav';
-import { BlocksIcon } from '@/components/icons';
+import { IconReveal } from '@/components/IconReveal';
 
 // Step 5 — Costruisci. Metodo (content/workflow.mdx) + Template (i due file
 // copiabili). Ridisegnato sul sistema Round 7. Chiude con la closing card.
@@ -39,7 +39,7 @@ export default function Step5Costruisci() {
           className="flex items-center gap-2 text-[11px] font-medium uppercase tabular-figures text-soft"
           style={{ letterSpacing: 'var(--tracking-micro)' }}
         >
-          <BlocksIcon className="h-4 w-4 text-red" />
+          <IconReveal icon="blocchi" className="h-4 w-4 text-red" />
           costruisci · passo 5
         </div>
         <h1

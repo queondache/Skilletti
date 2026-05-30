@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { ComeIniziare } from '@/components/ComeIniziare';
 import { Suggest } from '@/components/ui/Suggest';
 import { StepFooterNav } from '@/components/StepFooterNav';
-import { TerminalIcon } from '@/components/icons';
+import { IconReveal } from '@/components/IconReveal';
 
 // Step 2 — Installa. "Come iniziare" ridisegnato (3 opzioni come card outline,
 // comandi copiabili verificati) + Suggest che consiglia l'estensione VS Code
@@ -24,7 +24,7 @@ export default function Step2Installa() {
           className="flex items-center gap-2 text-[11px] font-medium uppercase tabular-figures text-soft"
           style={{ letterSpacing: 'var(--tracking-micro)' }}
         >
-          <TerminalIcon className="h-4 w-4 text-red" />
+          <IconReveal icon="terminale" className="h-4 w-4 text-red" />
           installa · passo 2
         </div>
         <h1

@@ -3,7 +3,7 @@
 // badge opzionale. Usato almeno in Capisci e Installa (vedi spec §Contenuto).
 // Server component. Stile nelle classi globali `.suggest` / `.suggest-icon`.
 import type { ReactNode } from 'react';
-import { IconMano } from '@/components/icons';
+import { IconReveal } from '@/components/IconReveal';
 
 interface SuggestProps {
   title?: string; // default: "il mio consiglio"
@@ -21,7 +21,7 @@ export function Suggest({
   return (
     <aside className={`suggest ${className}`.trim()}>
       <span className="suggest-icon" aria-hidden="true">
-        <IconMano size={20} />
+        <IconReveal icon="mano" size={20} />
       </span>
       <div className="min-w-0">
         <p className="flex items-center gap-2 font-display text-base font-bold">

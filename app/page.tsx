@@ -3,7 +3,8 @@ import { Hero } from '@/components/Hero';
 import { Percorso } from '@/components/Percorso';
 import { SkillGridCard } from '@/components/SkillGridCard';
 import { Button } from '@/components/ui/Button';
-import { ArrowRightIcon, StarIcon } from '@/components/icons';
+import { ArrowRightIcon } from '@/components/icons';
+import { IconReveal } from '@/components/IconReveal';
 import { getEssentialSkills } from '@/lib/skills';
 
 // Home Round 7 — calma. Hero + Percorso (i 5 passi) + anteprima "Le essenziali"
@@ -37,7 +38,7 @@ export default function HomePage() {
           className="flex items-center gap-2 text-[11px] font-medium uppercase tabular-figures text-soft"
           style={{ letterSpacing: 'var(--tracking-micro)' }}
         >
-          <StarIcon className="h-3.5 w-3.5 text-red" />
+          <IconReveal icon="stella" className="h-3.5 w-3.5 text-red" />
           le essenziali
         </div>
         <h2

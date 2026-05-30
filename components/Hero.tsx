@@ -1,6 +1,7 @@
 import { Wordmark } from '@/components/Wordmark';
 import { Button } from '@/components/ui/Button';
-import { CactusIcon, ArrowRightIcon } from '@/components/icons';
+import { ArrowRightIcon } from '@/components/icons';
+import { IconReveal } from '@/components/IconReveal';
 
 // Hero Round 7 — primo viewport. Claim grande in Bricolage, tagline italic,
 // manifesto breve, due CTA (Inizia / Esplora). Un cactus outline accompagna il
@@ -20,12 +21,8 @@ export function Hero() {
     >
       <div className="flex items-start gap-4">
         <Wordmark as="h1" size="hero" />
-        <span
-          aria-hidden="true"
-          className="mt-3 hidden text-red/70 sm:block"
-          data-reveal
-        >
-          <CactusIcon className="h-16 w-16" />
+        <span aria-hidden="true" className="mt-3 hidden text-red/70 sm:block">
+          <IconReveal icon="cactus" className="h-16 w-16" />
         </span>
       </div>
 

@@ -3,7 +3,8 @@ import { loadSkills, getThemes } from '@/lib/skills';
 import { SkillGrid } from '@/components/SkillGrid';
 import { ChipFilter } from '@/components/ChipFilter';
 import { StepFooterNav } from '@/components/StepFooterNav';
-import { CactusIcon, StarIcon } from '@/components/icons';
+import { StarIcon } from '@/components/icons';
+import { IconReveal } from '@/components/IconReveal';
 
 // Step 4 — Esplora. Decisione approvata: assorbe anche step-3 (prime skill).
 // Catalogo a griglia + chip filtro per TEMA (niente mappa parole). Le quattro
@@ -30,7 +31,7 @@ export default function Step4Esplora() {
           className="flex items-center gap-2 text-[11px] font-medium uppercase tabular-figures text-soft"
           style={{ letterSpacing: 'var(--tracking-micro)' }}
         >
-          <CactusIcon className="h-4 w-4 text-red" />
+          <IconReveal icon="cactus" className="h-4 w-4 text-red" />
           esplora · passi 3–4
         </div>
         <h1

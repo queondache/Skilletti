@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import { Article } from '@/lib/markdown';
 import { Suggest } from '@/components/ui/Suggest';
 import { StepFooterNav } from '@/components/StepFooterNav';
-import { BookIcon } from '@/components/icons';
+import { IconReveal } from '@/components/IconReveal';
 
 // Step 1 — Capisci. Vocabolario migrato da v1 (content/pedagogia.mdx),
 // ridisegnato sul sistema Round 7 (due colori, Bricolage+Hanken). Chiude con un
@@ -35,7 +35,7 @@ export default function Step1Capisci() {
           className="flex items-center gap-2 text-[11px] font-medium uppercase tabular-figures text-soft"
           style={{ letterSpacing: 'var(--tracking-micro)' }}
         >
-          <BookIcon className="h-4 w-4 text-red" />
+          <IconReveal icon="libro" className="h-4 w-4 text-red" />
           capisci · passo 1
         </div>
         <h1
