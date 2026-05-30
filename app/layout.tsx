@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { bricolage, hanken } from './fonts';
-import { SiteHeader } from '@/components/SiteHeader';
+import { NavSticky } from '@/components/NavSticky';
 import { SiteFooter } from '@/components/SiteFooter';
 import { Reveal } from '@/components/Reveal';
 import './globals.css';
@@ -52,7 +52,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="it" className={`${bricolage.variable} ${hanken.variable}`}>
       <body className="bg-cream text-red antialiased">
-        <SiteHeader />
+        <a href="#contenuto" className="skip-link">Salta al contenuto</a>
+        <NavSticky />
         <Reveal />
         {children}
         <SiteFooter />

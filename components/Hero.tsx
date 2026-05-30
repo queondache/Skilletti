@@ -1,63 +1,65 @@
 import { Wordmark } from '@/components/Wordmark';
+import { Button } from '@/components/ui/Button';
+import { CactusIcon, ArrowRightIcon } from '@/components/icons';
 
-/**
- * Hero editoriale — primo viewport pieno.
- *
- * Composizione asimmetrica:
- * - wordmark + rule + tagline + manifesto incassati a sinistra (gutter-indent)
- * - v0.1 micro-label top-right
- *
- * Il footer firma e la colonna paper-deep di rilegatura vivono nel layout
- * della pagina (app/page.tsx), non qui — così funzionano per tutta la
- * scrollata, non solo per il primo viewport.
- */
+// Hero Round 7 — primo viewport. Claim grande in Bricolage, tagline italic,
+// manifesto breve, due CTA (Inizia / Esplora). Un cactus outline accompagna il
+// claim come firma visiva. Calmo: niente pin-scroll JS (la coreografia spinta
+// è opzionale e vive in Fase E/animazioni) — qui un reveal d'ingresso sobrio.
+
 export function Hero() {
   return (
     <section
+      id="contenuto"
       className="
-        relative flex flex-col justify-center
-        min-h-dvh
+        relative flex min-h-[calc(100dvh-3.5rem)] flex-col justify-center
         pl-[var(--gutter-indent)]
         pr-[calc(7vw+var(--gutter-edge))]
-        py-[max(8vh,4rem)]
+        py-[max(6vh,3rem)]
       "
     >
-      {/* Versione — singola stringa, em-dash esplicito */}
-      <div
-        className="absolute top-[var(--gutter-edge)] right-[calc(7vw+var(--gutter-edge))] text-[11px] font-medium uppercase tabular-figures text-ink/65 select-none"
-        style={{ letterSpacing: 'var(--tracking-micro)' }}
-      >
-        v0.1 — in costruzione
+      <div className="flex items-start gap-4">
+        <Wordmark as="h1" size="hero" />
+        <span
+          aria-hidden="true"
+          className="mt-3 hidden text-red/70 sm:block"
+          data-reveal
+        >
+          <CactusIcon className="h-16 w-16" />
+        </span>
       </div>
 
-      <Wordmark as="h1" size="hero" />
-
-      {/* Rule terracotta — firma visiva */}
-      <hr aria-hidden="true" className="mt-7 h-[2px] w-16 border-0 bg-terracotta" />
+      {/* Rule rossa — firma visiva */}
+      <hr aria-hidden="true" className="mt-7 h-[2px] w-16 border-0 bg-red" />
 
       <p
-        className="lead mt-7 max-w-[var(--measure-tagline)] text-[clamp(1.35rem,2.2vw,1.875rem)] italic font-normal text-ink-soft balance"
-        style={{
-          lineHeight: 1.35,
-          letterSpacing: 'var(--tracking-display)',
-          fontVariationSettings: '"opsz" 36',
-        }}
+        data-reveal
+        className="lead mt-7 max-w-[var(--measure-tagline)] text-[clamp(1.4rem,2.4vw,2rem)] italic font-normal text-soft balance"
+        style={{ lineHeight: 1.32, letterSpacing: 'var(--tracking-display)' }}
       >
         Le migliori skill di Claude. Scelte a mano, raccontate una a una.
       </p>
 
       <p
-        className="mt-10 max-w-[var(--measure-prose)] text-[1.0625rem] font-normal text-ink/78 prose-pretty"
-        style={{
-          lineHeight: 1.65,
-          letterSpacing: 'var(--tracking-body)',
-          fontVariationSettings: '"opsz" 18',
-        }}
+        data-reveal
+        className="mt-8 max-w-[var(--measure-prose)] text-[1.0625rem] font-normal text-red/80 prose-pretty"
+        style={{ lineHeight: 1.65 }}
       >
-        Cercare skill online è diventato un magazzino: migliaia di voci,
-        zero filtro. Skilletti fa l&rsquo;opposto. Poche skill, ognuna
-        scelta e spiegata da Andrea. Museo, non magazzino.
+        Cercare skill online è diventato un magazzino: migliaia di voci, zero
+        filtro. Skilletti fa l&rsquo;opposto. Poche skill, ognuna scelta e
+        spiegata da Andrea, con un percorso che parte dalle parole e arriva al
+        primo progetto. Museo, non magazzino.
       </p>
+
+      <div className="mt-10 flex flex-wrap items-center gap-4" data-reveal>
+        <Button href="/step-1-capisci/" variant="primary">
+          Inizia dal percorso
+          <ArrowRightIcon className="h-4 w-4" />
+        </Button>
+        <Button href="/step-4-esplora/" variant="ghost">
+          Vai al catalogo
+        </Button>
+      </div>
     </section>
   );
 }
