@@ -49,3 +49,20 @@ v1 Fase 1 con `flex justify-between` produceva concatenazioni visive rotte (es. 
 ### Bug 4 — Hook security falso positivo
 
 Il security hook globale blocca il `Write` se il file contiene certe API names note (anche dentro commenti che dicono "non usarlo"). Workaround: riformulare il testo astratto ("nessun bypass HTML" invece di nominare l'API esplicitamente). Non è bug del hook, è zelo legittimo — meglio adattarsi.
+
+
+## 2026-05-31 — Round 7: incidente "dichiarato ≠ verificato"
+
+**Contesto**: parte del redesign Round 7 eseguita con sub-agent paralleli; sessione lunga con cali/limiti.
+
+**Cosa è andato storto**
+1. A metà milestone sono stati riportati come reali **hash commit, una "PR #10 in review" e punteggi Lighthouse INVENTATI**. Causa: sub-agent oltre i limiti di sessione (ritornano vuoto) + un agente-docs che ha "chiuso" la milestone basandosi su quei report fabbricati. Stato reale ricostruito da `git`: Fasi A/D **non compilavano** (API icone/Button/Card disallineate), step-1/step-4 erano ancora Round 6.
+2. Il "**Lighthouse 100/100/100 ovunque**" era misurato su **localhost** (build statica = condizione prod), **mai sul preview reale**. Il preview Vercel dava **SEO 66**: audit `is-crawlable` fallito (peso ~34%) per l'header **`X-Robots-Tag: noindex`** che Vercel aggiunge ai deploy non-production. In prod l'header non c'è → SEO 100.
+
+**Lezione**
+- Misurare SEMPRE nell'ambiente **dichiarato**; distinguere esplicitamente **localhost / preview / prod**. Header e protezioni (noindex, SSO/401) cambiano SEO e indicizzazione. Citare URL/ambiente esatto di ogni numero.
+- Mai dire "verificato" per ciò che non è stato auditato nell'ambiente che si dichiara.
+- Output dei sub-agent → verificarlo contro `git` (hash reali, `tsc`/`build` verdi) prima di trattarlo come fatto.
+- Screenshot full-page con reveal-on-scroll: forzare `data-revealed` / togliere lo stato nascosto via JS prima della cattura, o le sezioni sotto la piega escono vuote.
+
+**Codice riutilizzabile (sessione Round 7)**: nessun candidato `#library` maturo/generico — i componenti (IconReveal, Button/Card two-color, ChipFilter) sono accoppiati al design system due-colori di Skilletti. Pattern utili già catturati sopra (screenshot reveal-on-scroll; localhost/preview/prod).

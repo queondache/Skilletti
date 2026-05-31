@@ -2,20 +2,20 @@
 
 > Snapshot di stato: fasi chiuse, fase corrente, blocchi aperti.
 
-## Stato attuale — 2026-05-30
+## Stato attuale — 2026-05-31
 
 Sito **v1 live su Vercel** (`skilletti.vercel.app`), Round 1–5.5 chiusi (PR #7, #8 mergiate).
 Round 6 — Rifondazione (PR #9, in review). 
 
 **Round 7 — Redesign v3.0 COMPLETATO** sul branch `round7-redesign`,
-**PR #10 aperta** (in review, NON mergiata — NO merge autonomo).
+**PR #10 MERGIATA su `main`** (squash); deploy prod partito → `skilletti.vercel.app`. Round 7 **chiuso**.
 Redesign da zero in 6 fasi: nuovo design system (due colori `#EDE0C8`/`#8A2A18`,
 font Bricolage Grotesque + Hanken Grotesk, 6 icone outline), navigazione vetrina
 (menu sticky + back vero + struttura a pagine), hero pin-scroll (claim word-reveal
 + cactus) + percorso sticky storytelling, viste ridisegnate (home/Capisci/Installa/
 Esplora con griglia+chip per TEMA, NO mappa/Costruisci/dettaglio skill — 12 pagine
 statiche `/skill/[id]/`), animazioni icone al reveal (stroke-dashoffset) +
-reduced-motion off-tutto, QA con **Lighthouse 100/100/100 (a11y/BP/SEO) su tutte le 6 route, sia desktop sia mobile**.
+reduced-motion off-tutto, QA con **Lighthouse 100/100/100 (a11y/BP/SEO) su tutte le 6 route, sia desktop sia mobile** (misura su build = condizione prod). NB: sul *preview* Vercel SEO risultava 66 per via dell’header `X-Robots-Tag: noindex` aggiunto ai deploy non-production — assente in prod (vedi lessons.md).
 PR: https://github.com/queondache/Skilletti/pull/10
 Preview: https://skilletti-git-round7-redesign-queondaches-projects.vercel.app
 
@@ -163,11 +163,6 @@ _(da popolare a partire dalla prima esecuzione agent)_
 
 ## Prossimo step
 
-- [ ] **Andrea: review/merge PR #10 (Round 7)** — aprire il preview Vercel
-      (https://skilletti-git-round7-redesign-queondache.vercel.app), controllare i 12
-      screenshot in `.claude/screenshots/round7/`, poi squash-merge su `main`. NO merge
-      autonomo da parte di CC.
-- [ ] **Decidere se reintrodurre il filtro per contesto** (CLI/VSCode/mobile, rimosso in
-      Round 7) o tenere `dove_funziona` solo informativo su card/dettaglio — vedi flag aperto.
-- [ ] **Fase 4 — agent mensile** resta in backlog: costruire `scripts/agent/` + workflow
-      cron `0 9 1 * *`. Regola d'oro = gate umano sulla review PR; agent mai merge autonomo.
+- [ ] **Round 8 — copy reale**: riscrivere hero, bio footer, eventuali mini-esempi pratici per le 4 essenziali, FAQ. Sostituire i placeholder plausibili lasciati in Round 7.
+- [ ] **Decisione filtro contesto**: confermare se reintrodurre il filtro CLI/VS Code/mobile (rimosso in Round 7 — ora solo chip per tema) o tenere `dove_funziona` solo informativo su card/dettaglio.
+- [ ] **Fase 4 (lungo periodo)**: agent mensile di scoperta skill (GitHub API + Claude ranker, PR automatica) — architettura definita, non ancora implementata.
