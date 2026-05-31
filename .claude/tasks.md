@@ -64,3 +64,19 @@ Step previsti:
 
 - 2026-05-22 — Fase 1 v2 (Brand editoriale museum-grade) ✅ Lighthouse 100×4
 - 2026-05-23 — Fase 2 parziale (types + schema + validator + SkillCard mock) ✅ Lighthouse 100×4
+
+
+## 2026-05-31 — Wrap-up Round 7
+
+### Completati
+- **Round 7 — Redesign (v3.0)**: design due colori #EDE0C8/#8A2A18, navigazione vetrina (menu sticky + back), hero + percorso, **12 skill detail statiche** `/skill/[id]/`, animazioni icone + reduced-motion, QA Lighthouse 100 (prod). **PR #10 mergiata su main (squash)**, deploy prod.
+
+### Prossimo — Round 8 (copy reale)
+- [ ] Hero: copy reale (sostituire placeholder plausibili).
+- [ ] Bio footer reale + LinkedIn reale (href segnaposto attuale).
+- [ ] Mini-esempi pratici per le 4 essenziali (eventuali).
+- [ ] FAQ.
+- [ ] Decisione filtro contesto: reintrodurre CLI/VS Code/mobile o tenere `dove_funziona` solo informativo.
+
+### Backlog lungo periodo
+- [ ] **Fase 4 — agent mensile** (GitHub API + Claude ranker, PR automatica). Architettura definita, non implementata.
