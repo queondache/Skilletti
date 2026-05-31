@@ -2,18 +2,42 @@
 
 > Snapshot di stato: fasi chiuse, fase corrente, blocchi aperti.
 
-## Stato attuale — 2026-05-28
+## Stato attuale — 2026-05-30
 
 Sito **v1 live su Vercel** (`skilletti.vercel.app`), Round 1–5.5 chiusi (PR #7, #8 mergiate).
+Round 6 — Rifondazione (PR #9, in review). 
 
-**Round 6 — Rifondazione (milestone v2.0) COMPLETATO** sul branch `round6-rifondazione`,
-**PR #9 aperta** (in attesa di review/merge di Andrea — NO merge autonomo).
-Da single-page a **sito didattico a 6 route** (landing + 5 step). Direzione estetica
-"Terminale editoriale". Lighthouse **100/100/100** su 6 route ×2 (desktop+mobile).
-Preview: `https://skilletti-git-round6-rifondazione-queondaches-projects.vercel.app`.
-Pianificazione GSD in `.planning/` (PROJECT/REQUIREMENTS/ROADMAP/STATE + round6-blueprints.md).
+**Round 7 — Redesign v3.0 COMPLETATO** sul branch `round7-redesign`,
+**PR #10 aperta** (in review, NON mergiata — NO merge autonomo).
+Redesign da zero in 6 fasi: nuovo design system (due colori `#EDE0C8`/`#8A2A18`,
+font Bricolage Grotesque + Hanken Grotesk, 6 icone outline), navigazione vetrina
+(menu sticky + back vero + struttura a pagine), hero pin-scroll (claim word-reveal
++ cactus) + percorso sticky storytelling, viste ridisegnate (home/Capisci/Installa/
+Esplora con griglia+chip per TEMA, NO mappa/Costruisci/dettaglio skill — 12 pagine
+statiche `/skill/[id]/`), animazioni icone al reveal (stroke-dashoffset) +
+reduced-motion off-tutto, QA con **Lighthouse 100/100/100 (a11y/BP/SEO) su tutte le 6 route, sia desktop sia mobile**.
+PR: https://github.com/queondache/Skilletti/pull/10
+Preview: https://skilletti-git-round7-redesign-queondaches-projects.vercel.app
 
-`data/skills.json`: 12 skill — 4 essenziale · 6 forte · 2 situazionale.
+`data/skills.json` + schema **intatti**, nessuna nuova dipendenza npm.
+
+### Round 7 — commit reali (branch `round7-redesign`)
+
+> Nota: l'esecuzione multi-agente iniziale ha prodotto commit incoerenti (Fasi A/D non
+> compilavano — API icone/Button/Card disallineate — e step-1/step-4 erano rimasti Round 6).
+> Riconciliato a mano. Hash reali sotto (i precedenti report con hash tipo `8af3a16` erano fabbricati).
+
+- **A** (`c5e4b40`) — Design system: due colori `#EDE0C8`/`#8A2A18`, font Bricolage + Hanken, 6 icone outline, componenti base Button/Card/Suggest.
+- **D** (`886e5c0`) — Viste ridisegnate (home/Capisci/Installa/Esplora/Costruisci/dettaglio, 12 pagine statiche `/skill/[id]/`) + SkillGrid/ChipFilter/Hero/Percorso/StepFooterNav/BackLink (B+C inclusi).
+- **fix A–D** (`f0bb9b8`) — riconciliazione: API icone/Button/Card, step-1 e step-4 ridisegnati (rimossa mappa parole + componenti Round 6 orfani), build verde.
+- **E** (`64ff92e`) — Animazioni icone al reveal (stroke-dashoffset) + reduced-motion off-tutto.
+- **F** (`3ec7538`) — QA: tsc/build/validate verdi; **Lighthouse 100/100/100 su 6 route desktop+mobile**; contrasto AA (`--color-soft` .85 = 4.95:1); 12 screenshot in `.claude/screenshots/round7/`.
+
+### Flag aperto Round 7
+
+Il filtro per contesto (CLI/VSCode/mobile) introdotto in Round 5 è stato **rimosso**:
+la spec Round 7 chiede chip per **tema**. Il campo `dove_funziona` resta visibile su
+card/dettaglio ma non è più filtrabile — in attesa di conferma Andrea.
 
 ---
 
@@ -139,17 +163,11 @@ _(da popolare a partire dalla prima esecuzione agent)_
 
 ## Prossimo step
 
-- [ ] **Review + merge PR #9 (Round 6)** — Andrea: aprire il preview Vercel, controllare
-      i 12 screenshot in `.claude/screenshots/round6/`, poi squash-merge su `main`
-      (deploy prod automatico). NO merge autonomo da parte di CC.
-- [ ] **Round 7 — Contenuto**: riscrivere copy hero reale + bio footer (oggi placeholder),
-      4 mini-esempi essenziali, FAQ/about. Vedi `.planning/REQUIREMENTS.md` (Future).
-- [ ] **Fase 4 — agent mensile** (lavoro di prodotto, dopo v2): costruire
-      `scripts/agent/` + workflow cron. Manca ancora il prompt Fase 4 completo (due
-      volte arrivato solo come placeholder). Conferme già date: regola d'oro = gate
-      umano sulla review PR (agent non verifica); watchlist <1000★ nel body PR (mai
-      in skills.json); agent mai merge autonomo.
-- [ ] **Hardening repo** (minore): branch protection su `main` + `gh secret scanning`.
-- [ ] **Conflitto schema vs SPEC** (minore): `stelle:null` whitelist è
-      `anthropics|firecrawl` in `skills.schema.json`, ma SPEC §6 cita anche
-      Vercel/Google/Supabase. Decidere se allargare il pattern.
+- [ ] **Andrea: review/merge PR #10 (Round 7)** — aprire il preview Vercel
+      (https://skilletti-git-round7-redesign-queondache.vercel.app), controllare i 12
+      screenshot in `.claude/screenshots/round7/`, poi squash-merge su `main`. NO merge
+      autonomo da parte di CC.
+- [ ] **Decidere se reintrodurre il filtro per contesto** (CLI/VSCode/mobile, rimosso in
+      Round 7) o tenere `dove_funziona` solo informativo su card/dettaglio — vedi flag aperto.
+- [ ] **Fase 4 — agent mensile** resta in backlog: costruire `scripts/agent/` + workflow
+      cron `0 9 1 * *`. Regola d'oro = gate umano sulla review PR; agent mai merge autonomo.

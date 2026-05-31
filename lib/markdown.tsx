@@ -52,7 +52,7 @@ const COMPONENTS: Components = {
       <a
         href={href}
         {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-        className="underline decoration-terracotta/40 decoration-1 underline-offset-4 hover:decoration-terracotta visited:decoration-muted/50"
+        className="font-medium text-red underline decoration-red/40 decoration-1 underline-offset-4 hover:decoration-red"
         {...rest}
       >
         {children}
@@ -62,7 +62,7 @@ const COMPONENTS: Components = {
   code({ children, ...rest }) {
     return (
       <code
-        className="rounded-sm bg-paper-deep px-1 py-px font-mono text-[0.9em] text-ink-soft"
+        className="rounded-sm border border-line px-1 py-px text-[0.9em] text-red"
         style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace' }}
         {...rest}
       >
@@ -107,30 +107,29 @@ const ARTICLE_ALLOWED: ReadonlyArray<string> = [...ALLOWED, 'h1', 'h2', 'h3'];
 const ARTICLE_COMPONENTS: Components = {
   ...COMPONENTS,
   h1({ children }) {
-    // # Markdown → h3 semantico, look "sottosezione editoriale"
+    // # Markdown → h2 semantico (la pagina fornisce l'h1): sequenza corretta.
     return (
-      <h3
-        className="mt-12 first:mt-0 text-[clamp(1.375rem,2vw,1.625rem)] font-semibold text-ink balance"
+      <h2
+        className="mt-12 first:mt-0 text-[clamp(1.375rem,2vw,1.625rem)] font-semibold text-red balance"
         style={{
           lineHeight: 1.2,
           letterSpacing: 'var(--tracking-display)',
-          fontVariationSettings: '"opsz" 48',
         }}
       >
         {children}
-      </h3>
+      </h2>
     );
   },
   h2({ children }) {
     return (
-      <h4 className="mt-10 first:mt-0 text-[1.1875rem] font-semibold text-ink balance" style={{ lineHeight: 1.25 }}>
+      <h3 className="mt-10 first:mt-0 text-[1.1875rem] font-semibold text-red balance" style={{ lineHeight: 1.25 }}>
         {children}
-      </h4>
+      </h3>
     );
   },
   h3({ children }) {
     return (
-      <h5 className="mt-8 first:mt-0 text-[1.0625rem] font-semibold text-ink balance">{children}</h5>
+      <h4 className="mt-8 first:mt-0 text-[1.0625rem] font-semibold text-red balance">{children}</h4>
     );
   },
   p({ children }) {
@@ -141,8 +140,8 @@ const ARTICLE_COMPONENTS: Components = {
     // il gap iniziale così tutti gli Article partono allo stesso modo.
     return (
       <p
-        className="mt-5 first:mt-0 [&:first-child]:italic [&:first-child]:text-ink-soft max-w-[var(--measure-prose)] text-[1.0625rem] text-ink/85 prose-pretty"
-        style={{ lineHeight: 1.6, fontVariationSettings: '"opsz" 24' }}
+        className="mt-5 first:mt-0 [&:first-child]:italic [&:first-child]:text-soft max-w-[var(--measure-prose)] text-[1.0625rem] text-red/90 prose-pretty"
+        style={{ lineHeight: 1.6 }}
       >
         {children}
       </p>

@@ -1,27 +1,19 @@
-// Sistema tipografico Round 6 — direzione "Terminale editoriale":
-// - Fraunces = display (wordmark, titoli) + voce/body. Variable: opsz 9-144 + italic + SOFT.
-// - Inter Tight = sans display per CTA e micro-label UPPERCASE (grottesco stretto, bold).
-// - JetBrains Mono = comandi terminale (il motivo command-line).
-// Tutte inlineate a build time via next/font → zero FOUT. Nessuna dipendenza npm.
-import { Fraunces, Inter_Tight, JetBrains_Mono } from 'next/font/google';
+// Sistema tipografico Round 7 — direzione "due colori caldi":
+// - Bricolage Grotesque = display caratteriale (wordmark, titoli, numeri giganti).
+// - Hanken Grotesk = body pulito e caldo (lettura, UI, micro-label).
+// Entrambi inlineati a build time via next/font → zero FOUT. Nessuna dipendenza npm.
+import { Bricolage_Grotesque, Hanken_Grotesk } from 'next/font/google';
 
-export const fraunces = Fraunces({
+export const bricolage = Bricolage_Grotesque({
   subsets: ['latin'],
-  variable: '--font-fraunces',
+  variable: '--font-bricolage',
   display: 'swap',
-  axes: ['opsz', 'SOFT'],
+  weight: ['400', '500', '700', '800'],
 });
 
-export const interTight = Inter_Tight({
+export const hanken = Hanken_Grotesk({
   subsets: ['latin'],
-  variable: '--font-inter-tight',
+  variable: '--font-hanken',
   display: 'swap',
-  weight: ['500', '600', '700'],
-});
-
-export const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-jetbrains',
-  display: 'swap',
-  weight: ['400', '500', '700'],
+  weight: ['400', '500', '600'],
 });

@@ -2,11 +2,15 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import type { Metadata } from 'next';
 import { Article } from '@/lib/markdown';
-import { StepNav } from '@/components/StepNav';
+import { Suggest } from '@/components/ui/Suggest';
+import { StepFooterNav } from '@/components/StepFooterNav';
+import { IconReveal } from '@/components/IconReveal';
 
-// Step 1 — Capisci. Vocabolario migrato da v1 (content/pedagogia.mdx).
-// Stesso trattamento markdown del monolite: togli l'h1 autonomo e promuovi
-// ## → # così Article rende h3 (gerarchia h2 sezione → h3 sottosezioni).
+// Step 1 — Capisci. Vocabolario migrato da v1 (content/pedagogia.mdx),
+// ridisegnato sul sistema Round 7 (due colori, Bricolage+Hanken). Chiude con un
+// suggerimento esplicito ("il mio consiglio", spec §Contenuto) + il navigatore.
+// Trattamento markdown del monolite: togli l'h1 autonomo e promuovi ## → # così
+// Article rende h3 (gerarchia h1 sezione → h3 sottosezioni).
 
 const pedagogiaMdx = readFileSync(
   resolve(process.cwd(), 'content/pedagogia.mdx'),
@@ -25,30 +29,43 @@ export const metadata: Metadata = {
 
 export default function Step1Capisci() {
   return (
-    <main className="relative bg-paper text-ink">
-      <section
-        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] min-[1440px]:pr-[calc(7vw+var(--gutter-edge)+8rem)] py-12 sm:py-20"
-      >
+    <main id="contenuto" className="relative bg-cream text-red">
+      <section className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-12 sm:py-16">
         <div
-          className="text-[11px] font-medium uppercase tabular-figures text-muted"
+          className="flex items-center gap-2 text-[11px] font-medium uppercase tabular-figures text-soft"
           style={{ letterSpacing: 'var(--tracking-micro)' }}
         >
-          capisci
+          <IconReveal icon="libro" className="h-4 w-4 text-red" />
+          capisci · passo 1
         </div>
-        <h2
+        <h1
           data-reveal
-          className="mt-2 text-[clamp(2rem,3.5vw,3rem)] font-semibold text-ink balance"
-          style={{
-            lineHeight: 1.1,
-            letterSpacing: 'var(--tracking-display)',
-            fontVariationSettings: '"opsz" 96',
-          }}
+          className="mt-2 text-[clamp(2rem,3.5vw,3rem)] font-bold text-red balance"
+          style={{ lineHeight: 1.1, letterSpacing: 'var(--tracking-display)' }}
         >
           Un piccolo vocabolario
-        </h2>
-        <Article className="mt-8">{pedagogiaMdx}</Article>
+        </h1>
+        <p
+          className="mt-4 max-w-[var(--measure-prose)] text-[1.0625rem] italic text-soft prose-pretty"
+          style={{ lineHeight: 1.6 }}
+        >
+          Quattro parole e sei a posto. Niente manuale: solo il minimo per
+          orientarti prima di installare qualcosa.
+        </p>
 
-        <StepNav current={1} />
+        <Article className="mt-10 max-w-[var(--measure-prose)]">{pedagogiaMdx}</Article>
+
+        {/* Suggerimento esplicito — spec §Contenuto */}
+        <div className="mt-12 max-w-[var(--measure-prose)]">
+          <Suggest>
+            Non cercare di memorizzare tutto. L&rsquo;unica parola che conta davvero
+            all&rsquo;inizio è <strong>skill</strong>: il resto lo incontri
+            strada facendo. Quando questa pagina ti annoia, è il segnale giusto per
+            passare all&rsquo;installazione.
+          </Suggest>
+        </div>
+
+        <StepFooterNav current={1} />
       </section>
     </main>
   );

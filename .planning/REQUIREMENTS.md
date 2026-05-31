@@ -81,25 +81,25 @@ Requisiti per la rifondazione multi-step. Ognuno mappato a esattamente una fase 
 |-------------|-------|--------|
 | DESIGN-01 | Fase A | Decided (Dir 1 raffinata) |
 | DESIGN-02 | Fase A | Decided (Fraunces + Inter Tight + JetBrains Mono) |
-| STRUCT-01 | Fase B | Pending |
-| STRUCT-02 | Fase B | Pending |
-| STRUCT-03 | Fase B | Pending |
-| STRUCT-04 | Fase B | Pending |
-| STRUCT-05 | Fase B | Pending |
-| STRUCT-06 | Fase B | Pending |
-| DESIGN-03 | Fase C | Pending |
-| DESIGN-04 | Fase C | Pending |
-| MAP-01 | Fase D | Pending |
-| MAP-02 | Fase D | Pending |
-| MAP-03 | Fase D | Pending |
-| MOTION-01 | Fase E | Pending |
-| MOTION-02 | Fase E | Pending |
-| QA-01 | Fase F | Pending |
-| QA-02 | Fase F | Pending |
-| QA-03 | Fase F | Pending |
-| QA-04 | Fase F | Pending |
-| QA-05 | Fase F | Pending |
-| QA-06 | Fase F | Pending |
+| STRUCT-01 | Fase B | Done |
+| STRUCT-02 | Fase B | Done |
+| STRUCT-03 | Fase B | Done |
+| STRUCT-04 | Fase B | Done |
+| STRUCT-05 | Fase B | Done |
+| STRUCT-06 | Fase B | Done |
+| DESIGN-03 | Fase C | Done |
+| DESIGN-04 | Fase C | Done |
+| MAP-01 | Fase D | Done |
+| MAP-02 | Fase D | Done |
+| MAP-03 | Fase D | Done |
+| MOTION-01 | Fase E | Done |
+| MOTION-02 | Fase E | Done |
+| QA-01 | Fase F | Done |
+| QA-02 | Fase F | Done |
+| QA-03 | Fase F | Done |
+| QA-04 | Fase F | Done |
+| QA-05 | Fase F | Done |
+| QA-06 | Fase F | Done |
 
 **Coverage:**
 - v2.0 requirements: 21 total
@@ -108,4 +108,4 @@ Requisiti per la rifondazione multi-step. Ognuno mappato a esattamente una fase 
 
 ---
 *Requirements defined: 2026-05-27*
-*Last updated: 2026-05-27 after Round 6 milestone start*
+*Last updated: 2026-05-30 — Round 7 Redesign v3.0 completato (PR #10 in review); traceability marcata Done*

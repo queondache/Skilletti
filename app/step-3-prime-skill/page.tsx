@@ -1,66 +1,57 @@
-import type { Metadata } from 'next';
-import { SkillCard } from '@/components/SkillCard';
-import { StepNav } from '@/components/StepNav';
-import type { Skill } from '@/types/skill';
-import skillsData from '@/data/skills.json';
+'use client';
 
-// Step 3 — Prime skill. Le essenziali migrate da v1 ("Parti da qui").
-// Schema garantito da prebuild validate-data → cast diretto sicuro.
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { StarIcon, ArrowRightIcon } from '@/components/icons';
 
-const skills = skillsData as Skill[];
-
-const PARTI_DA_QUI_LIMIT = 5;
-const partiDaQui = skills
-  .filter((s) => s.importanza === 'essenziale')
-  .slice(0, PARTI_DA_QUI_LIMIT);
-
-export const metadata: Metadata = {
-  title: 'Prime skill — le essenziali',
-  description:
-    'Le skill di Claude da cui partire: quelle che cambiano come lavori prima di tutte le altre. Una alla volta.',
-  alternates: { canonical: '/step-3-prime-skill' },
-  openGraph: { url: '/step-3-prime-skill', title: 'Prime skill · skilletti' },
-};
+// Step 3 — Prime skill. Decisione (approvata): Esplora assorbe questo passo.
+// La route resta fisica (6 route preservate) ma confluisce in /step-4-esplora:
+// redirect lato client + fallback <noscript> e contenuto statico minimo, così
+// non è mai una pagina bianca. Il menu mappa già step-3 → Esplora come attivo.
+//
+// `metadata` non è esportabile da un client component: il titolo è gestito dal
+// template del layout; il contenuto statico qui sotto copre SEO/no-JS.
 
 export default function Step3PrimeSkill() {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace('/step-4-esplora/');
+  }, [router]);
+
   return (
-    <main className="relative bg-paper text-ink">
-      <section
-        className="relative pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] min-[1440px]:pr-[calc(7vw+var(--gutter-edge)+8rem)] py-12 sm:py-20"
-      >
+    <main id="contenuto" className="relative bg-cream text-red">
+      <section className="relative flex min-h-[60vh] flex-col justify-center pl-[var(--gutter-indent)] pr-[calc(7vw+var(--gutter-edge))] py-16">
         <div
-          className="text-[11px] font-medium uppercase tabular-figures text-muted"
+          className="flex items-center gap-2 text-[11px] font-medium uppercase tabular-figures text-soft"
           style={{ letterSpacing: 'var(--tracking-micro)' }}
         >
+          <StarIcon className="h-4 w-4 text-red" />
           prime skill
         </div>
-        <h2
-          data-reveal
-          className="mt-2 text-[clamp(2rem,3.5vw,3rem)] font-semibold text-ink balance"
-          style={{
-            lineHeight: 1.1,
-            letterSpacing: 'var(--tracking-display)',
-            fontVariationSettings: '"opsz" 96',
-          }}
+        <h1
+          className="mt-2 text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-red balance"
+          style={{ lineHeight: 1.1, letterSpacing: 'var(--tracking-display)' }}
         >
-          Le essenziali
-        </h2>
+          Le prime skill vivono dentro Esplora
+        </h1>
         <p
-          className="lead mt-4 max-w-[var(--measure-prose)] text-[1.0625rem] italic text-ink-soft prose-pretty"
-          style={{ lineHeight: 1.6, fontVariationSettings: '"opsz" 24' }}
+          className="mt-4 max-w-[var(--measure-prose)] text-[1.0625rem] text-soft prose-pretty"
+          style={{ lineHeight: 1.6 }}
         >
-          Per chi parte da zero o quasi: le skill che cambiano il modo in cui
-          lavori con Claude prima di tutte le altre. Provale in quest&rsquo;ordine,
-          una alla volta, senza fretta.
+          Ti stiamo portando al catalogo, dove le quattro essenziali sono
+          evidenziate in cima. Se non succede nulla, vai pure a mano:
         </p>
-
-        <div className="mt-10 grid max-w-[820px] grid-cols-1 gap-x-16 gap-y-2 xl:max-w-[1180px] xl:grid-cols-2 xl:items-start">
-          {partiDaQui.map((skill) => (
-            <SkillCard key={skill.id} skill={skill} variant="doorway" />
-          ))}
-        </div>
-
-        <StepNav current={3} />
+        <p className="mt-6">
+          <Link
+            href="/step-4-esplora/"
+            className="inline-flex items-center gap-2 text-[15px] font-semibold text-red underline decoration-red/50 underline-offset-4 hover:decoration-red"
+          >
+            Apri il catalogo
+            <ArrowRightIcon className="h-4 w-4" />
+          </Link>
+        </p>
       </section>
     </main>
   );
